@@ -2,42 +2,40 @@
 <html>
 <head>
     <title>Admin Login</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     {{-- <link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}" />
     <link rel="stylesheet" href="{{asset('assets/css/style.css')}}" /> --}}
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
 </head>
 <body>
-    <div class="col-lg-12">
-        <div class="white_box mb_30">
-            <div class="row justify-content-center" >
-                
-                <div class="col-lg-5">
-                    <!-- sign_in  -->
-                    <div class="modal-content cs_modal">
-                        <div class="modal-header justify-content-center theme_bg_1">
-                            <h5 class="modal-title text_white">Admin Login</h5>
-                        </div>
-                        <div class="image-logo p-4" style="background: #fff;">
-                            {{-- <img src="{{asset('upload/img-frontend/logoweb.jpg')}}" alt="" style="width:100%; height:300px "> --}}
-                        </div>
-                        <div class="modal-body">
-                            <form  method="POST" action="{{ route('admin.login') }}">
-                            @csrf
-                                <div class="form-group">
-                                    <input type="text" class="form-control" name="email" placeholder="Nhập địa chỉ email">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control" name="password" placeholder="Nhập mật khẩu">
-                                </div>
-                                <button class="btn_1 full_width text-center" type="submit">Đăng nhập</button>
-                         
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-        </div>
-    </div>
+    {{-- <img src="{{  }}" alt=""> --}}
+    <div class="login-box">
+        <h2>Login</h2>
+        <form action="{{route('admin.login')}}" method="POST" >
+            @csrf
+          <div class="user-box">
+            <input type="text" name="email" required="">
+            <label>Email</label>
+          </div>
+          <div class="user-box">
+            <input type="password" name="password" required="">
+            <label>Mật khẩu</label>
+          </div>
+          <a href="">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <input type="submit" value="Đăng nhập" hidden>Đăng nhập  
+          </a>
+        </form>
+      </div>
+      
 
 </body>
 </html>
