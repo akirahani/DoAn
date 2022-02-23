@@ -1,7 +1,6 @@
 @extends('backend.layouts.index')
 @section('content')
-<div class="page-content">
-    <div class="container-fluid">
+
 
         <!-- start page title -->
         <div class="row">
@@ -1538,7 +1537,5 @@
             </div>
             <!-- end col -->
         </div><!-- end row -->
-    </div>
-    <!-- container-fluid -->
-</div>
+
 @endsection

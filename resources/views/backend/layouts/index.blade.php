@@ -31,7 +31,11 @@
             @include('backend.layouts.sidebar')
 
             <div class="main-content">
-                @yield('content')
+                <div class="page-content">
+                    <div class="container-fluid">
+                        @yield('content')
+                    </div>
+                </div>
             </div>
             <!-- end main content-->
             @include('backend.layouts.footer')
@@ -40,7 +44,7 @@
 
         
         <!-- Right Sidebar -->
-        {{-- <div class="right-bar">
+        <div class="right-bar">
             <div data-simplebar class="h-100">
                 <div class="rightbar-title d-flex align-items-center bg-dark p-3">
 
@@ -61,11 +65,7 @@
                             id="layout-vertical" value="vertical">
                         <label class="form-check-label" for="layout-vertical">Vertical</label>
                     </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout"
-                            id="layout-horizontal" value="horizontal">
-                        <label class="form-check-label" for="layout-horizontal">Horizontal</label>
-                    </div>
+           
 
                     <h6 class="mt-4 mb-3 pt-2">Layout Mode</h6>
 
@@ -171,7 +171,7 @@
                 </div>
 
             </div> <!-- end slimscroll-menu-->
-        </div> --}}
+        </div>
         <div class="rightbar-overlay"></div>
 
         <!-- JAVASCRIPT -->
