@@ -116,7 +116,7 @@
                         </div>
                     </div><!-- end card body -->
                 </div><!-- end card -->
-            </div><!-- end col -->    
+            </div><!-- end col -->
         </div><!-- end row-->
 
         <div class="row">
@@ -236,7 +236,7 @@
                         <div class="card bg-primary text-white shadow-primary card-h-100">
                             <!-- card body -->
                             <div class="card-body p-0">
-                                <div id="carouselExampleCaptions" class="carousel slide text-center widget-carousel" data-bs-ride="carousel">                                                   
+                                <div id="carouselExampleCaptions" class="carousel slide text-center widget-carousel" data-bs-ride="carousel">
                                     <div class="carousel-inner">
                                         <div class="carousel-item active">
                                             <div class="text-center p-4">
@@ -288,7 +288,7 @@
                                         <!-- end carousel-item -->
                                     </div>
                                     <!-- end carousel-inner -->
-                                    
+
                                     <div class="carousel-indicators carousel-indicators-rounded">
                                         <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
                                             aria-current="true" aria-label="Slide 1"></button>
@@ -556,7 +556,7 @@
                                             <label class="input-group-text">Total</label>
                                             <input type="text" class="form-control" placeholder="$36,854.25">
                                         </div>
-                                    </div>  
+                                    </div>
 
                                     <div class="text-center">
                                         <button type="button" class="btn btn-success w-md">Buy Coin</button>
@@ -581,7 +581,7 @@
                                         <label>Add Amount :</label>
                                         <div class="input-group mb-3">
                                             <label class="input-group-text">Amount</label>
-                                            
+
                                             <select class="form-select" style="max-width: 90px;">
                                                 <option value="BT" selected>BTC</option>
                                                 <option value="ET">ETH</option>
@@ -591,11 +591,11 @@
                                         </div>
 
                                         <div class="input-group mb-3">
-                                        
+
                                             <label class="input-group-text">Price</label>
-                                            
+
                                             <input type="text" class="form-control" placeholder="$23,754.25">
-                                            
+
                                             <label class="input-group-text">$</label>
                                         </div>
 
@@ -603,7 +603,7 @@
                                             <label class="input-group-text">Total</label>
                                             <input type="text" class="form-control" placeholder="$6,852.41">
                                         </div>
-                                    </div>  
+                                    </div>
 
                                     <div class="text-center">
                                         <button type="button" class="btn btn-danger w-md">Sell Coin</button>
@@ -619,7 +619,7 @@
                 <!-- end card -->
             </div>
             <!-- end col -->
-            
+
             <div class="col-xl-4">
                 <div class="card">
                     <div class="card-header align-items-center d-flex">
@@ -628,17 +628,17 @@
                             <ul class="nav justify-content-end nav-tabs-custom rounded card-header-tabs" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" data-bs-toggle="tab" href="#transactions-all-tab" role="tab">
-                                        All 
+                                        All
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-bs-toggle="tab" href="#transactions-buy-tab" role="tab">
-                                        Buy 
+                                        Buy
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" data-bs-toggle="tab" href="#transactions-sell-tab" role="tab">
-                                        Sell  
+                                        Sell
                                     </a>
                                 </li>
                             </ul>
@@ -1007,7 +1007,7 @@
                                                     </div>
                                                 </td>
                                             </tr>
-                                           
+
                                             <tr>
                                                 <td>
                                                     <div class="font-size-22 text-success">
@@ -1066,7 +1066,7 @@
                                                 </td>
                                             </tr>
 
-                                            
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -1250,7 +1250,7 @@
                                                 </td>
                                             </tr>
 
-                                            
+
 
                                             <tr>
                                                 <td style="width: 50px;">
@@ -1345,7 +1345,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </li>
 
                                 <li class="activity-list activity-border">
@@ -1381,7 +1381,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </li>
 
                                 <li class="activity-list activity-border">
@@ -1417,7 +1417,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </li>
 
                                 <li class="activity-list activity-border">
@@ -1453,7 +1453,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </li>
 
 
@@ -1490,7 +1490,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </li>
 
                                 <li class="activity-list">
@@ -1526,10 +1526,10 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div> 
+                                    </div>
                                 </li>
                             </ul>
-                        </div>    
+                        </div>
                     </div>
                     <!-- end card body -->
                 </div>

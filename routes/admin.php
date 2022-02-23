@@ -8,4 +8,5 @@ Route::match(['get', 'post'], '/', 'Admin\Auth\LoginController@login')->name('ad
 Route::middleware('auth:admin')->group(function (){
     Route::get('/home', 'Admin\HomeController@index')->name('dashboard');
     Route::get('/logout','Admin\Auth\LogoutController@logout');
+    Route::get('/san-pham','Admin\ProductController@index');
 });
