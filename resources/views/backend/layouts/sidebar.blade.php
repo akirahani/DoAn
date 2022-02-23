@@ -22,7 +22,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
-                            <a href="apps-calendar.html">
+                            <a href="{{url('/admin/san-pham')}}">
                                 <span data-key="t-calendar">Calendar</span>
                             </a>
                         </li>

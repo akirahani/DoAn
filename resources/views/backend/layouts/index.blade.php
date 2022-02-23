@@ -11,6 +11,7 @@
 
         <!-- plugin css -->
         <link href="{{asset('assets2/libs/admin-resources/jquery.vectormap/jquery-jvectormap-1.2.2.css')}}" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="{{asset('css-product/style.css')}}" type="text/css" />
 
         <!-- preloader css -->
         <link rel="stylesheet" href="{{asset('assets2/css/preloader.min.css')}}" type="text/css" />
@@ -31,14 +32,18 @@
             @include('backend.layouts.sidebar')
 
             <div class="main-content">
-                @yield('content')
+                <div class="page-content">
+                    <div class="container-fluid">
+                            @yield('content')
+                    </div>
+                </div>
             </div>
             <!-- end main content-->
             @include('backend.layouts.footer')
         </div>
         <!-- END layout-wrapper -->
 
-        
+
         <!-- Right Sidebar -->
         {{-- <div class="right-bar">
             <div data-simplebar class="h-100">
