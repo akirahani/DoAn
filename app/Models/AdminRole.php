@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class AdminRole extends Model
 {
     use HasFactory;
+    protected $table = 'admin_roles';
+    protected $fillable = ['user_id','role_id'];
+
+
 }

@@ -22,7 +22,7 @@
         <link href="{{asset('assets2/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- App Css-->
         <link href="{{asset('assets2/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
-
+        <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
     </head>
     <body>
         <div id="layout-wrapper">

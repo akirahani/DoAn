@@ -19,11 +19,11 @@
         <form action="{{route('admin.login')}}" method="POST" >
             @csrf
           <div class="user-box">
-            <input type="text" name="email" required="">
+            <input type="text" name="email" required="" class="form-control">
             <label>Email</label>
           </div>
           <div class="user-box">
-            <input type="password" name="password" required="">
+            <input type="password" name="password" required="" class="form-control">
             <label>Mật khẩu</label>
           </div>
           <a href="">
