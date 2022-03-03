@@ -16,4 +16,3 @@ Route::middleware('auth:admin')->group(function(){
     Route::post('/product/update','Admin\ProductController@update');
     Route::get('/product/delete/{id}','Admin\ProductController@delete');
 });
-
