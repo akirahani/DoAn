@@ -24,12 +24,12 @@ class RoleController extends Controller
         $role->name = $input['name'];
         $role->display_name = $input['display_name'];
         $role->save(); 
-        $role->permissions()->attach($input['permission']);
+        $role->permission()->attach($input['permission']);
         return redirect()->route('role.index');
     }
     public function edit($id){
         $role = Role::find($id);
-        $permission =$role->permissions()->get();
+        $permission =$role->permission()->get();
         $permissions= Permission::all();                                    
         return view('backend.content.person.role_permisson.edit',compact('role','permission','permissions'));
     }
@@ -44,7 +44,7 @@ class RoleController extends Controller
         ];
         $roles = $role->find($id);
         $roles->update($data);
-        $roles->permissions()->sync($permission);
+        $roles->permission()->sync($permission);
         return redirect()->route('role.index');
     }
     public function delete($id, Role $role){

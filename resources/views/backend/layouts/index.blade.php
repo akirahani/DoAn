@@ -22,6 +22,7 @@
         <link href="{{asset('assets2/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- App Css-->
         <link href="{{asset('assets2/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
+    
         <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
     </head>
     <body>
@@ -197,5 +198,18 @@
         <script src="{{asset('assets2/js/app.js')}}"></script>
 
     </body>
+    
+    <script src="https://cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
 
+    <script>
+            CKEDITOR.replace('editor',{
+                filebrowserImageUploadUrl: "{{route('news.add',['_token' => csrf_token() ])}}",
+                filebrowserUploadMethod:'form',
+            }); 
+            CKEDITOR.replace('content',{
+                filebrowserImageUploadUrl: "{{route('news.add',['_token' => csrf_token() ])}}",
+                filebrowserUploadMethod:'form',
+            });
+           
+     </script>
 </html>
