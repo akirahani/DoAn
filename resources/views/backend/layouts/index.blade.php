@@ -22,7 +22,7 @@
         <link href="{{asset('assets2/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
         <!-- App Css-->
         <link href="{{asset('assets2/css/app.min.css')}}" id="app-style" rel="stylesheet" type="text/css" />
-
+        <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
     </head>
     <body>
         <div id="layout-wrapper">
@@ -34,7 +34,7 @@
             <div class="main-content">
                 <div class="page-content">
                     <div class="container-fluid">
-                            @yield('content')
+                        @yield('content')
                     </div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
 
 
         <!-- Right Sidebar -->
-        {{-- <div class="right-bar">
+        <div class="right-bar">
             <div data-simplebar class="h-100">
                 <div class="rightbar-title d-flex align-items-center bg-dark p-3">
 
@@ -66,11 +66,7 @@
                             id="layout-vertical" value="vertical">
                         <label class="form-check-label" for="layout-vertical">Vertical</label>
                     </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="layout"
-                            id="layout-horizontal" value="horizontal">
-                        <label class="form-check-label" for="layout-horizontal">Horizontal</label>
-                    </div>
+
 
                     <h6 class="mt-4 mb-3 pt-2">Layout Mode</h6>
 
@@ -176,7 +172,7 @@
                 </div>
 
             </div> <!-- end slimscroll-menu-->
-        </div> --}}
+        </div>
         <div class="rightbar-overlay"></div>
 
         <!-- JAVASCRIPT -->
