@@ -4,11 +4,11 @@
     <h1>Danh sách tin tức</h1>
     <hr>
     <a href="{{url('/admin/news/add')}}" class="btn btn-success"><i class="fas fa-plus"></i></a>
-  </div>
+</div>
 
     <div class="detail-main-news">
-        <table class="table table-dark">
-            <thead>
+        <table class="table ">
+            <thead class="table-dark">
                 <tr>
     
                     <th style="width:20%" scope="col">Tiêu đề</th>

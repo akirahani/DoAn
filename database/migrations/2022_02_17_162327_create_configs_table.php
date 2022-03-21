@@ -15,6 +15,16 @@ class CreateConfigsTable extends Migration
     {
         Schema::create('configs', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('logo');
+            $table->string('favicon');
+            $table->string('address');
+            $table->string('tel');
+            $table->string('description');
+            $table->string('sub_description');
+            $table->string('facebook');
+            $table->string('twitter');
+            $table->string('instagram');
             $table->timestamps();
         });
     }

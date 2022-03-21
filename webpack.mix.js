@@ -10,8 +10,24 @@ const mix = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
+mix.options({
+    postCss: [
+        require('autoprefixer'),
+    ],
+});
 
-mix.js('resources/js/app.js', 'public/js')
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ]);
+mix.setPublicPath('public');
+
+mix.webpackConfig({
+    resolve:{
+        extensions: ['.js', '.vue'],
+        alias: {
+            '@': __dirname + 'resoures'
+        }
+    },
+    output: {
+        chunkFilename: 'js/chunk/[name].js'
+    },
+}).react();
+mix.js('resources/react-app/src/index.js', 'public/js/app.js').version();
+mix.copy('resource/react-app/public','public');

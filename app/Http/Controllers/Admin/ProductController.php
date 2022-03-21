@@ -59,33 +59,15 @@ class ProductController extends Controller
         return redirect()->route('admin.product');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, Product $product)
     {
-
         $admin = Auth::guard('admin')->user();
         $input = $request->all();
         $id = $input['id'];
         $arr = array(
             'name'=>$input['name'],
             'godname'=>$input['godname'],
-
         );
         if($request->hasFile('image')){
             $image = $request->file('image');
@@ -103,20 +85,6 @@ class ProductController extends Controller
         return view('backend.content.product.edit', compact('product','category'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function delete($id,Product $product)
     {
         $product->where('id',$id)->delete();

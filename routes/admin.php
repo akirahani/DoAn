@@ -37,11 +37,8 @@ Route::middleware('auth:admin')->group(function(){
         Route::get('/news/delete/{id}','Admin\NewsController@delete')->name('news.delete');
         //config
         Route::get('/config', 'Admin\ConfigController@index')->name('config.index');
-        Route::get('/config/add', 'Admin\ConfigController@add')->name('config.add');
-        Route::post('/config/insert', 'Admin\ConfigController@insert')->name('config.insert');
         Route::get('/config/edit/{id}','Admin\ConfigController@edit')->name('config.edit');
         Route::post('/config/update','Admin\ConfigController@update')->name('config.update');
-        Route::get('/config/delete/{id}','Admin\ConfigController@delete')->name('config.delete');
         //navbar
         Route::get('/navbar', 'Admin\NavbarController@index')->name('navbar.index');
         Route::get('/navbar/add', 'Admin\NavbarController@add')->name('navbar.add');

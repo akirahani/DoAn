@@ -9,15 +9,15 @@
             <form action="{{route('news.update')}}" method="POST"  enctype="multipart/form-data" runat="server">
                 @csrf
                 <input type="text" value="{{$news->id}}" name ="id" hidden>
-                    <div class="form-group  col-12">
+                    <div class="mb-3">
                         <label for="input-6">Tiêu đề</label>
                         <input name="title" type="text" value="{{$news->title}}"  class="form-control form-control-rounded" id="input-6" required>
                     </div>
-                    <div class="form-group col-12">
+                    <div class="mb-3">
                         <label for="input-7">Nội dung</label>
                         <textarea name="content" id="content" value="{!!$news->content!!}"> {!!$news->content!!}</textarea>
                     </div>
-                    <div class="form-group col-12">
+                    <div class="mb-3">
                         <label for="input-9">Ảnh tin tức</label>
                         <div class="img-main " style="border: 2px dashed #0087F7; border-radius: 5px;">
                             <img  class="img-display"/> 

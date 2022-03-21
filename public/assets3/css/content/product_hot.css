@@ -1,0 +1,88 @@
+.title-product-hot {
+    padding: 4px;
+}
+
+.title-product-hot h2 {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: rgba(238, 180, 20, 0.933);
+    text-align: center;
+}
+
+.product-thumb {
+    box-shadow: 6px 3px 0px 0px #ccc;
+    border-color: #f9f9f9;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 30px;
+    text-align: left;
+    transition: all ease 0.3s;
+    border-radius: 10px
+}
+
+.product-thumb:hover .image img {
+    transform: scale(1.1, 1.1)
+}
+
+.product-thumb:hover .caption {
+    background-color: #3d4fc7
+}
+
+.product-thumb:hover .caption .name {
+    color: #fff
+}
+
+.product-thumb .image img {
+    width: 100%;
+    -webkit-transition: all 300ms ease-in-out;
+    -moz-transition: all 300ms ease-in-out;
+    -o-transition: all 300ms ease-in-out;
+    -ms-transition: all 300ms ease-in-out;
+    transition: all 300ms ease-in-out
+}
+
+.product-thumb .image .top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation-name: fade;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-delay: 2s;
+    animation-duration: 3s;
+    animation-direction: alternate
+}
+
+.product-thumb .caption {
+    padding: 10px;
+}
+
+.product-thumb .caption .name {
+    font-size: 17px;
+    color: rgb(23, 23, 23);
+    text-transform: capitalize;
+    min-height: 30px;
+    padding-top: 3%;
+    padding-right: 30px;
+    position: relative;
+    line-height: 1.5
+}
+
+.product-thumb .caption .name:before {
+    position: absolute;
+    content: "\f105";
+    font-family: FontAwesome;
+    color: rgb(23, 23, 23);
+    top: 5px;
+    right: 10px;
+    z-index: 4;
+    font-size: 20px
+}
+
+.product-thumb .thumb-image .image {
+    height: 300px;
+}
+
+.product-thumb .thumb-image .image img {
+    height: 320px;
+}

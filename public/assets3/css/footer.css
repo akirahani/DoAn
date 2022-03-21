@@ -1,0 +1,108 @@
+.detail-footer {
+    background: #fff;
+    padding: 0;
+    margin: 0 auto;
+}
+
+
+/* hotline */
+
+.hotline {
+    background: linear-gradient(to right, #5d4cb5 0%, #56499c 52%, #2c2551 100%);
+    height: 55px;
+}
+
+.detail-hotline {
+    text-align: center;
+    font-size: 2rem;
+    color: #eee;
+    text-transform: uppercase;
+}
+
+
+/*  */
+
+.image-logo-footer {
+    padding: 8%;
+    width: 280px;
+}
+
+.image-logo-footer img {
+    width: 100%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+}
+
+.rektangel {
+    width: 100%;
+    height: 3px;
+    background: #eee;
+}
+
+.title-content-footer h3 {
+    text-transform: uppercase;
+    color: #2C2551;
+    font-size: 18px;
+}
+
+.bottom-line {
+    width: 25px;
+    height: 3px;
+    background-color: #E21D24;
+}
+
+.name-company span {
+    text-transform: uppercase;
+    padding-bottom: 10px;
+    color: #e2520f;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.content-bottom-line {
+    padding-left: 0;
+    margin-top: 3%;
+    list-style: none;
+}
+
+.content-bottom-line li {
+    /* box-sizing: border-box; */
+    display: list-item !important;
+    color: #2C2552;
+    font-size: 18px;
+    padding: 2px;
+}
+
+.social_network {
+    list-style: none;
+    display: flex;
+}
+
+.social_network {
+    list-style: none;
+    display: flex;
+}
+
+.social_network li {
+    margin: 0 10px;
+    font-size: 25px;
+}
+
+.social_network li a {
+    color: #e2520f;
+}
+
+.text-email-contact {
+    position: relative;
+    border: 2px solid rgb(24, 199, 193);
+}
+
+.btn-sumit {
+    position: absolute;
+    z-index: 30;
+    top: 73px;
+    right: 25px;
+    font-size: 15px;
+}
