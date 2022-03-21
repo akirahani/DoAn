@@ -16,10 +16,10 @@
                         <span data-key="t-dashboard">Dashboard</span>
                     </a>
                 </li>
-              
+
                 {{-- list-detail-2 --}}
                 <li class="menu-title mt-2" data-key="t-components">Nghiệp vụ bán hàng</li>
-                
+
                   {{-- product --}}
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
@@ -28,14 +28,15 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
-                            <a href="apps-calendar.html">
+                            <a href="{{url('/admin/product')}}">
                                 <span data-key="t-calendar">Danh sách sản phẩm</span>
                             </a>
                         </li>
 
                         <li>
-                            <a href="apps-chat.html">
+                            <a href="{{url('/admin/product/insert')}}">
                                 <span data-key="t-chat">Thêm sản phẩm</span>
+
                             </a>
                         </li>
 
@@ -57,7 +58,7 @@
                                 <li><a href="apps-invoices-detail.html" data-key="t-invoice-detail">Invoice Detail</a></li>
                             </ul>
                         </li>
-                        
+
                     </ul>
                 </li>
                 {{-- category_product --}}

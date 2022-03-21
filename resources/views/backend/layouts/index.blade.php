@@ -67,7 +67,7 @@
                             id="layout-vertical" value="vertical">
                         <label class="form-check-label" for="layout-vertical">Vertical</label>
                     </div>
-           
+
 
                     <h6 class="mt-4 mb-3 pt-2">Layout Mode</h6>
 
