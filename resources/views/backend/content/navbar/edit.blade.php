@@ -2,7 +2,7 @@
 @extends('backend.layouts.index')
 @section('content')
 <div class="col-lg-12">
-    <h1>Thêm danh mục điều hướng</h1>
+    <h1>Sửa danh mục điều hướng</h1>
     <div class="card">
         <div class="card-body">
             <hr>

@@ -31,7 +31,10 @@
                             <a href="{{url('/admin/product')}}"  data-key="t-alerts">Danh sách sản phẩm</a>
                         </li>
                         <li>
-                            <a href="#">Loại sản phẩm</a>
+                            <a href="{{url('/admin/category')}}">Loại sản phẩm</a>
+                        </li>
+                        <li>
+                            <a href="{{url('/admin/trademark')}}">Thương hiệu</a>
                         </li>
                     </ul>
                 </li>

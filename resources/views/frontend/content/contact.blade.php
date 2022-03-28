@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="{{ asset('assets3/css/content/contact.css') }}">
-
 <div class="full-width-section"
     style=");background-repeat:no-repeat;background-position:right bottom;background-color:#f3f4f6;">
 

@@ -16,7 +16,8 @@
                 <div class="col-xl-8 col-lg-9 col-md-9 d-none d-md-block text-right">
                     <ul class="list-inline mb-0">
                         <li class="list-inline-item">
-                            <a href="#" class="top-link"><i class="fa fa-map-marker mr-2"></i>{{$config->address}}</a>
+                            <a href="#" class="top-link"><i
+                                    class="fa fa-map-marker mr-2"></i>{{ $config->address }}</a>
                         </li>
                         {{-- <li class="list-inline-item">
                             <a href="#" class="top-link"> <i class="fa fa-sign-in mr-2"></i>Đăng ký Nhà Phân
@@ -27,7 +28,8 @@
                         </li> --}}
                         <li class="list-inline-item hotline_top">
                             <a href="tel:0977120388" class="top-link" style="color:#fff"><i
-                                    class="fa fa-phone animated infinite tada  mr-2" style="color:#fff"></i>{{$config->tel}}
+                                    class="fa fa-phone animated infinite tada  mr-2"
+                                    style="color:#fff"></i>{{ $config->tel }}
                             </a>
                         </li>
                     </ul>

@@ -1,13 +1,10 @@
-{{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"> --}}
-
-<link rel="stylesheet" href="{{ asset('assets3/css/footer.css') }}">
 <div class="detail-footer row">
     <div class="col-md-12 hotline">
         <p class="detail-hotline mt-2">Hotline: 1800 845696</p>
     </div>
     <div class="col-md-3 logo_social_network mt-5">
         <div class="image-logo-footer col-lg-12">
-            <img src="./assets/image/config/logo/{{ $config->logo }}" alt="" >
+            <img src="./assets/image/config/logo/{{ $config->logo }}" alt="">
         </div>
     </div>
     <div class="col-md-4 product-link p-4">
@@ -48,13 +45,13 @@
         </div>
         <ul class="content-bottom-line mt-3">
             <li>
-               Sơn thấm
+                Sơn thấm
             </li>
             <li>
-               Sơn Chà
+                Sơn Chà
             </li>
             <li>
-               Sơn lót
+                Sơn lót
             </li>
             <li>
                 Sơn abv
@@ -78,5 +75,4 @@
         </ul>
     </div>
 </div>
-<hr>  
-
+<hr>

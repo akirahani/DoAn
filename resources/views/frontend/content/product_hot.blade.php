@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="{{ asset('assets3/css/content/product_hot.css') }}">
- 
 <div class="all-wrapper-product-hot p-4 container p-5"  >
     <div class="title-product-hot">
         <h2>Sản phẩm nổi bật</h2>

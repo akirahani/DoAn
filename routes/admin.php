@@ -53,6 +53,20 @@ Route::middleware('auth:admin')->group(function(){
         Route::get('/product/edit/{id}','Admin\ProductController@edit')->name('admin.product.edit');
         Route::post('/product/update','Admin\ProductController@update');
         Route::get('/product/delete/{id}','Admin\ProductController@delete');
+        //trademark
+        Route::get('/trademark','Admin\TrademarkController@index')->name('admin.trademark');
+        Route::get('/trademark/insert','Admin\TrademarkController@insert')->name('admin.trademark.insert');
+        Route::post('/trademark/store','Admin\TrademarkController@store')->name('admin.trademark.store');
+        Route::get('/trademark/edit/{id}','Admin\TrademarkController@edit')->name('admin.trademark.edit');
+        Route::post('/trademark/update','Admin\TrademarkController@update');
+        Route::get('/trademark/delete/{id}','Admin\TrademarkController@delete');
+        //category
+        Route::get('/category','Admin\CategoryController@index')->name('admin.category');
+        Route::get('/category/insert','Admin\CategoryController@insert')->name('admin.category.insert');
+        Route::post('/category/store','Admin\CategoryController@store')->name('admin.category.store');
+        Route::get('/category/edit/{id}','Admin\CategoryController@edit')->name('admin.category.edit');
+        Route::post('/category/update','Admin\CategoryController@update');
+        Route::get('/category/delete/{id}','Admin\CategoryController@delete');
     // });
  
 });

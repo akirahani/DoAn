@@ -1,10 +1,3 @@
-{{-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<link rel="shortcut icon" src="./assets/image/config/favicon/{{ $config->favicon }}">
-<link rel="stylesheet" href="{{ asset('assets3/css/config_web.css') }}">
-<link rel="stylesheet" href="{{ asset('assets3/css/header_main.css') }}">
-<script src="{{asset('assets3/js/jquery-2.1.1.min.js')}}"></script>
-<script src="{{asset('assets3/js/header.js')}}"></script> --}}
 @include('frontend.layouts.top_header')
 <div class="header-main ">
     <div class="container">
@@ -75,4 +68,3 @@
     @include('frontend.layouts.mobile_menu')
 </div>
 
-@include('frontend.layouts.banner')
