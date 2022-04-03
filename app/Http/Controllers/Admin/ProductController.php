@@ -7,49 +7,45 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
-
+use App\Models\Trademark;
+use DB;
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $admin = Auth::guard('admin')->user();
         $product = Product::all();
-
-        return view('backend.content.product.index',compact('product','admin'));
+        $category = DB::table('products')
+        ->select('*','categories.name as name')
+        ->join('categories','categories.id','=','products.category_id')
+        ->get();
+        $trademark = DB::table('products')
+        ->select('*','trademarks.name as name')
+        ->join('trademarks','trademarks.id','=','products.category_id')
+        ->get();
+        return view('backend.content.product.index',compact('product','admin','category','trademark'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function insert()
     {
         $admin = Auth::guard('admin')->user();
         $product = Product::all();
-        // dd($product);
         $category = Category::all();
-        return view('backend.content.product.insert',compact('category','product'));
+        $trademark = Trademark::all();
+        return view('backend.content.product.insert',compact('category','product','trademark'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $admin = Auth::guard('admin')->user();
         $product = new Product();
         $input = $request->all();
-        $product->name = $request['name'];
-        $product->godname = $request['godname'];
+        $product->name = $input['name'];
+        $product->category_id = $input['category_id'];
+        $product->trademark_id = $input['trademark_id'];
+        $product->quantity = $input['quantity'];
+        $product->price = $input['price'];
+        $product->price_sale = $input['price_sale'];
+        $product->status = $input['status'];
+        $product->description = $input['description'];
         if($request->hasfile('image')){
             $image = $request ->file('image');
             $product->image = time().'.'.$image->getClientOriginalExtension();
@@ -67,7 +63,13 @@ class ProductController extends Controller
         $id = $input['id'];
         $arr = array(
             'name'=>$input['name'],
-            'godname'=>$input['godname'],
+            'category_id' => $input['category_id'],
+            'trademark_id' => $input['trademark_id'],
+            'quantity' => $input['quantity'],
+            'price' => $input['price'],
+            'price_sale' => $input['price_sale'],
+            'status' => $input['status'],
+            'description' => $input['description']
         );
         if($request->hasFile('image')){
             $image = $request->file('image');
@@ -81,8 +83,17 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        $category = Category::all();
-        return view('backend.content.product.edit', compact('product','category'));
+        $category = DB::table('products')
+        ->select('*','categories.name as name')
+        ->join('categories','categories.id','=','products.category_id')
+        ->get();
+        $trademark = DB::table('products')
+        ->select('*','trademarks.name as name')
+        ->join('trademarks','trademarks.id','=','products.category_id')
+        ->get();
+        $cate = Category::all();
+        $trade = Trademark::all();
+        return view('backend.content.product.edit', compact('product','category','trademark','cate','trade'));
     }
 
     public function delete($id,Product $product)

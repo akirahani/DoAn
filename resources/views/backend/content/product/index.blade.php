@@ -11,6 +11,7 @@
           <tr >
               <th  scope="col">Tên sản phẩm</th>
               <th  scope="col">Tên thương hiệu</th>
+              <th  scope="col">Tên loại</th>
               <th  scope="col">Ảnh sản phẩm</th>
               <th  scope="row">Tác vụ</th>
           </tr>
@@ -19,7 +20,8 @@
           @foreach($product as $val)
           <tr id="product{{$val->id}}">
               <td  scope="row">{{$val['name']}}</td>
-              <td  scope="row">{{$val['godname']}}</td>
+              <td  scope="row">{{$trademark[0]->name}}</td>
+              <td  scope="row">{{$category[0]->name}}</td>
               <td class="image-son" scope="row">
                   <img src="/assets/image/upload/{{$val['image']}}" alt="" style="">
               </td>
