@@ -20,7 +20,4 @@
     <link rel="stylesheet" href="{{ asset('assets3/css/content/trademark.css') }}">
     <link rel="stylesheet" href="{{ asset('assets3/css/footer.css') }}">
 </head>
-<body>
-    
-</body>
-</html>
+

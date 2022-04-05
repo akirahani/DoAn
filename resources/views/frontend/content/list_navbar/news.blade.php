@@ -4,7 +4,7 @@
     .tab-in {
         width: 100%;
         height: 35px;
-        background: #7b7c7f
+        background: linear-gradient(rgb(248, 144, 84), #399edc);
     }
 
     .fa-home {
@@ -14,12 +14,16 @@
     }
 
     .inline a {
-        color: rgb(234, 213, 213);
+        color: rgb(208, 108, 57);
         padding-left: 2%;
     }
-
+    .title-page h1{
+        text-align: center;
+        color: rgb(208, 108, 57);
+        margin-top:2%;
+    }
     .line-up {
-        margin: 10px 40px 0 30px;
+        margin: 10px 350px 0 350px;
         height: 7px;
         border-radius: 2rem;
         background: rgb(209, 124, 19);
@@ -35,7 +39,6 @@
         padding-right: 40px;
     }
     .news-info{
-        border-radius: 10px;
         box-shadow: 5px 10px  #888888;
         width:320px; 
 
@@ -44,7 +47,6 @@
         width: 100%;
         height: 250px;
         object-fit: cover;
-        border-radius: 10px;
     }
 
     .image-news {
@@ -67,6 +69,7 @@
         <a class="title-news" style="padding-left:6px; color:#fff">Tin tức</a>
     </div>
 </div>
+<div class="title-page"><h1>NEWS</h1></div>
 <div class="line-up"></div>
 <div class="all-news mt-3 ">
     
@@ -74,7 +77,7 @@
             @foreach ($news as $val)
             <div class=" colum-row-news col-md-3 mb-5 p-4">
                 <div class="news-info">
-                    <a href="" class="link-news">
+                    <a href="{{url('/news/detail',$val->id)}}" class="link-news">
                         <div class="image-news ">
                             <figure> <img class="image-in mt-3 ml-2" src="assets/image/img_news/{{ $val->image }}" alt="news"
                                     style="width: 100%;"></figure>

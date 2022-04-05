@@ -48,4 +48,10 @@ class HomeController extends Controller
         $admin = Auth::guard('admin')->user();
         return view('frontend.content.list_navbar.product',compact('admin','config','menu'));
     }
+    // detail
+    public function news_detail($id){
+        $news = News::find($id);
+        $admin = Auth::guard('admin')->user();
+        return view('frontend.content.detail.news',compact('news','admin')); 
+    }
 }

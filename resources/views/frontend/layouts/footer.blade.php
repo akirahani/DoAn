@@ -2,12 +2,8 @@
     <div class="col-md-12 hotline">
         <p class="detail-hotline mt-2">Hotline: 1800 845696</p>
     </div>
-    <div class="col-md-3 logo_social_network mt-5">
-        <div class="image-logo-footer col-lg-12">
-            <img src="./assets/image/config/logo/{{ $config->logo }}" alt="">
-        </div>
-    </div>
-    <div class="col-md-4 product-link p-4">
+    <div class="col-md-1 nothing"></div>
+    <div class="col-md-5 product-link p-4">
         <div class="title-content-footer">
             <h3>Về chúng tôi</h3>
             <div class="bottom-line"></div>
@@ -58,7 +54,7 @@
             </li>
         </ul>
     </div>
-    <div class="col-md-3 contact-email p-4">
+    <div class="col-md-4 contact-email p-4">
         <ul class="social_network p-5">
             <li>
                 <a href=""><i class="fa-brands fa-facebook"></i></a>

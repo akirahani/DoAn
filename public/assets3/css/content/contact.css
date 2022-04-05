@@ -1,185 +1,55 @@
-        .full-width-section {
-            background-image: url('../../image/reservation-bg.jpg');
-            background-attachment: fixed;
-            height: 100%;
-        }
-        
-        .full-width-section {
-            float: left;
-            width: 100%;
-            clear: both;
-            position: relative;
-            /* position: absolute; */
-        }
-        
-        .column {
-            box-sizing: border-box;
-            margin: 0 0 0 2%;
-            float: left;
-            min-height: 1px;
-            /* position: absolute; */
-        }
-        
-        .column.first {
-            margin-left: 0
-        }
-        
-        .dt-sc-full-width,
-        .dt-sc-one-column {
-            width: 100%
-        }
-        
-        .column.dt-sc-full-width,
-        .column.dt-sc-one-column {
-            margin-left: 0
-        }
-        
-        .dt-sc-one-fourth {
-            width: 23.4%
-        }
-        
-        .dt-sc-one-half {
-            width: 48.9%
-        }
-        
-        .fullwidth {
-            width: 100%
-        }
-        
-        body {
-            font-weight: 400;
-            font-size: 14px;
-            line-height: 28px;
-            background: #fff;
-            color: #515151;
-            font-family: 'Open Sans', sans-serif
-        }
-        
-        * {
-            box-sizing: border-box;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box
-        }
-        
-        h2 {
-            color: #333;
-            font-weight: 400;
-            line-height: normal;
-            margin-bottom: 20px
-        }
-        
-        h2 a {
-            color: #333
-        }
-        
-        h2 {
-            font-size: 30px
-        }
-        
-        .dt-sc-appointment-contactdetails-form .dt-sc-one-half.first input,
-        textarea,
-        #lastname,
-        #emailid,
-        .dt-sc-appointment-contactdetails-form .dt-sc-one-half.first input.text {
-            border-radius: 5px;
-            border: 1px solid #d7dce2;
-            color: #696969;
-            display: inline-block;
-            font-size: 13px;
-            margin: 10px 0;
-            background-color: #fff;
-            padding: 16px 17px;
-            width: 100%;
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            font-family: 'Open Sans', sans-serif
-        }
-        
-        textarea {
-            height: 120px;
-            overflow: auto;
-            resize: none;
-            padding: 16px 15px;
-            width: 100%
-        }
-        
-        input[type="submit"]:hover,
-        input[type="reset"]:hover {
-            color: #fff
-        }
-        
-        input[type="submit"],
-        input[type="reset"],
-        input[type="button"],
-        button.button {
-            color: #fff;
-            cursor: pointer;
-            float: left;
-            font-size: 14px;
-            padding: 16px 20px;
-            border-radius: 5px;
-            text-transform: uppercase;
-            margin: 10px 0 0 0;
-            background: -webkit-linear-gradient(left, #9105ea, #f73c95);
-            background: -o-linear-gradient(left, #9105ea, #f73c95);
-            background: -moz-linear-gradient(left, #9105ea, #f73c95);
-            background: linear-gradient(to right, #9105ea, #f73c95);
-            filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#f73c95', endColorstr='#9105ea', GradientType=1);
-            color: #fff;
-            font-family: 'Open Sans', sans-serif
-        }
-        
-        .aligncenter,
-        img.aligncenter {
-            clear: both;
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            text-align: center
-        }
-        
-        .text-aligncenter {
-            display: block;
-            text-align: center
-        }
-        
-        @media only screen and (max-width:767px) {
-            .column {
-                margin-right: 0
-            }
-            .dt-sc-one-fourth,
-            .dt-sc-one-half,
-            .dt-sc-one-third,
-            .dt-sc-three-fourth,
-            .dt-sc-two-third,
-            .dt-sc-one-fifth,
-            .dt-sc-four-fifth,
-            .dt-sc-three-fifth,
-            .dt-sc-two-fifth,
-            .dt-sc-one-sixth,
-            .dt-sc-two-sixth,
-            .dt-sc-three-sixth,
-            .dt-sc-four-sixth,
-            .dt-sc-five-sixth,
-            .column.no-space.dt-sc-one-fourth,
-            .column.no-space.dt-sc-one-third,
-            .column.no-space.dt-sc-one-half,
-            .column.no-space.dt-sc-one-fifth,
-            .column.no-space.dt-sc-one-sixth,
-            .column.no-space.dt-sc-three-fourth,
-            .column.no-space.dt-sc-two-third,
-            .column.no-space.dt-sc-four-fifth,
-            .column.no-space.dt-sc-three-fifth,
-            .column.no-space.dt-sc-two-fifth,
-            .column.no-space.dt-sc-two-sixth,
-            .column.no-space.dt-sc-three-sixth,
-            .column.no-space.dt-sc-four-sixth,
-            .column.no-space.dt-sc-five-sixth,
-            .dt-sc-pricing-table.no-space .dt-sc-one-fourth,
-            .page-with-sidebar .blog-items.apply-isotope .dt-sc-one-half,
-            .page-with-sidebar .blog-items .dt-sc-one-third,
-            .page-with-sidebar {
-                width: 100%;
-                margin: 0 0 20px 0
-            }
-        }
+.input-form input {
+    width: 100%;
+    height: 60px;
+}
+
+.main-contact {
+    background-image: url('../../image/reservation-bg.jpg');
+    width: 100%;
+    background-attachment: fixed;
+}
+
+.form-in-contact h2 {
+    text-align: center;
+    font-family: italic;
+    font-weight: 600;
+}
+
+.inline a {
+    color: rgb(208, 108, 57);
+    padding-left: 2%;
+}
+
+.title-page h1 {
+    text-align: center;
+    color: rgb(208, 108, 57);
+    margin-top: 2%;
+}
+
+.line-up {
+    margin: 10px 350px 0 350px;
+    height: 7px;
+    border-radius: 2rem;
+    background: rgb(209, 124, 19);
+}
+
+.button-submit-contact {
+    text-transform: uppercase;
+    background: -webkit-linear-gradient(left, #9105ea, #f73c95);
+    background: -o-linear-gradient(left, #9105ea, #f73c95);
+    background: -moz-linear-gradient(left, #9105ea, #f73c95);
+    background: linear-gradient(to right, #9105ea, #f73c95);
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#f73c95', endColorstr='#9105ea', GradientType=1);
+    color: #fff;
+    font-family: 'Open Sans', sans-serif;
+    height: 50px;
+}
+
+@media only screen and (max-width:767px) {
+    .input-form {
+        margin-right: 0
+    }
+    .input-form input {
+        width: 100%;
+    }
+}

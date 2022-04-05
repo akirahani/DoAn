@@ -1,36 +1,29 @@
-<div class="full-width-section"
-    style=");background-repeat:no-repeat;background-position:right bottom;background-color:#f3f4f6;">
 
-    <div class="container">
-        <div class="column dt-sc-one-half    first "
-            style="background-color:rgba(255,255,255,0.5);      padding: 55px;   ">
-            <div class="dt-sc-margin55"></div>
-            <h2 class="aligncenter ">Liên hệ với chúng tôi</h2>
-            <p class="aligncenter"><i>
-                    Vui lòng chia sẻ thông tin chi tiết của bạn bên dưới và chúng tôi sẽ sớm liên hệ với bạn.</i>
-            </p>
-            <div class="dt-sc-margin15"></div>
-            <form class="dt-sc-appointment-contactdetails-form" name="appointment-contactdetails-form" method="post"
-                action="#">
-                <div class="column dt-sc-one-half first"><input type="text" id="firstname" name="firstname" value=""
-                        placeholder="First Name" required=""></div>
-                <div class="column dt-sc-one-half"><input type="text" id="lastname" name="lastname" value=""
-                        placeholder="Last Name" required=""></div>
-                <div class="column dt-sc-one-half first"><input type="text" id="phone" name="phone" value=""
-                        placeholder="Phone" required=""></div>
-                <div class="column dt-sc-one-half"><input type="text" id="emailid" name="emailid" value=""
-                        placeholder="Email" required=""></div>
-                <div class="column dt-sc-one-column first">
-                    <textarea id="address" name="address" placeholder="Address" required=""></textarea>
+<div class="main-contact">
+    <div class="form-in-contact p-5 w-50 ml-5 mb-2">
+        <h2 style="">Liên hệ với chúng tôi</h2>
+        <p class="aligncenter"><i>
+            Vui lòng chia sẻ thông tin chi tiết của bạn bên dưới và chúng tôi sẽ sớm liên hệ với bạn.</i>
+        </p>
+        <form action="" method="">
+            <div class="flex-in row">
+                <div class="input-form mb-2 p-3 col-lg-6">
+                    <input type="text" class="form-control" placeholder="First Name" name="firstname">
                 </div>
-                <div class="dt-sc-margin10"></div>
-                <input class="fullwidth" value="Next" type="submit"><input type="hidden" id="staffids"
-                    name="staffids" value="">
-                <input type="hidden" id="serviceids" name="serviceids" value="">
-            </form>
-            <div class="dt-sc-margin65"></div>
-        </div>
-        <div class="column dt-sc-one-half     " style="         "></div>
+                <div class="input-form mb-2 p-3 col-lg-6">
+                    <input type="text" class="form-control" placeholder="Last Name" name="lastname">
+                </div>
+                <div class="input-form mb-2 p-3 col-lg-6">
+                    <input type="text" class="form-control" placeholder="Phone" name="phone">
+                </div>
+                <div class="input-form mb-2 p-3 col-lg-6">
+                    <input type="text" class="form-control" placeholder="Email" name="email">
+                </div>
+            </div>
+            <div class="input-form mb-3">
+                <textarea name=""  class="form-control" rows="7" placeholder="Address" name="address" style="width:100%;"></textarea>
+            </div>
+            <input class="form-control button-submit-contact " type="submit" value="Gửi">
+        </form>
     </div>
-
-</div>
+</div>   
