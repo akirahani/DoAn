@@ -6,14 +6,10 @@
     <div id="all-wrapper-ui">
         <div class="all-wrapper-header">
             @include('frontend.layouts.header')
-            @include('frontend.layouts.banner')
         </div>
         <div class="all-wrapper-content">
             <div class="main-content">
-                @include('frontend.content.product_hot')
-                @include('frontend.content.trademark')
-                @include('frontend.content.contact')
-                @include('frontend.content.news')
+              @yield('content')
             </div>
         </div>
         <div class="all-wrapper-footer">
