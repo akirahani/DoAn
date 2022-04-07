@@ -8,7 +8,7 @@
     }
 
     .fa-home {
-        color: rgb(33, 32, 31);
+        color: rgb(237, 175, 113);
         font-size: 20px;
         padding: 8px 0 0 30px;
     }

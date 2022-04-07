@@ -13,7 +13,7 @@
                 <div class="wt-logo  text-left">
                     <div class="logo  text-left">
                         <a href="{{ url('/') }}">
-                            <img src="./assets/image/config/logo/{{ $config->logo }}" title="CÔNG TY SƠN SÁU ĐÀ NẴNG"
+                            <img src="../../assets/image/config/logo/{{ $config->logo }}" title="CÔNG TY SƠN SÁU ĐÀ NẴNG"
                                 alt="CÔNG TY SƠN SÁU ĐÀ NẴNG" style="width:100px">
                         </a>
                     </div>

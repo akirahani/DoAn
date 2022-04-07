@@ -20,10 +20,13 @@
           @foreach($product as $val)
           <tr id="product{{$val->id}}">
               <td  scope="row">{{$val['name']}}</td>
-              <td  scope="row">{{$trademark[0]->name}}</td>
-              <td  scope="row">{{$category[0]->name}}</td>
+        
+              <td  scope="row">{{$val->trademark_id}}</td>
+          
+              <td  scope="row">{{$val->category_id}}</td>
+
               <td class="image-son" scope="row">
-                  <img src="/assets/image/upload/{{$val['image']}}" alt="" style="">
+                  <img src="/assets/image/upload/{{$val->image}}" alt="" style="">
               </td>
               <td  scope="row">
                   <a href="{{url('/admin/product/edit',$val['id'])}}" class="btn btn-info"><i class="fas fa-edit"></i></a>

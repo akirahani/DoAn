@@ -206,6 +206,10 @@
                 filebrowserImageUploadUrl: "{{route('news.add',['_token' => csrf_token() ])}}",
                 filebrowserUploadMethod:'form',
             }); 
+            CKEDITOR.replace('editor1',{
+                filebrowserImageUploadUrl: "{{route('news.add',['_token' => csrf_token() ])}}",
+                filebrowserUploadMethod:'form',
+            }); 
             CKEDITOR.replace('content',{
                 filebrowserImageUploadUrl: "{{route('news.add',['_token' => csrf_token() ])}}",
                 filebrowserUploadMethod:'form',

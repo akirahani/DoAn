@@ -67,7 +67,7 @@
     </div>
 </div>
 
-<div class="all-introduce mt-2" style="background-image:url('assets3/image/image-introduce.jpg'); ">
+<div class="all-introduce " style="background-image:url('../../assets3/image/banner3.1.jpg'); ">
     <div class="text-center">
         <h1>Introduce</h1>
     </div>

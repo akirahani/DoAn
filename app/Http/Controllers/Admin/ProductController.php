@@ -16,13 +16,23 @@ class ProductController extends Controller
         $admin = Auth::guard('admin')->user();
         $product = Product::all();
         $category = DB::table('products')
-        ->select('*','categories.name as name')
+        ->select('categories.*')
         ->join('categories','categories.id','=','products.category_id')
         ->get();
         $trademark = DB::table('products')
-        ->select('*','trademarks.name as name')
-        ->join('trademarks','trademarks.id','=','products.category_id')
+        ->select('trademarks.*')
+        ->join('trademarks','trademarks.id','=','products.trademark_id')
         ->get();
+        foreach($product as $key=>$val){
+            foreach($category as $k=> $value){
+                if($val->category_id == $value->id)
+                $val->category_id = $value->name ;
+            }
+            foreach($trademark as $k=>$vals){
+                if($val->trademark_id == $vals->id)
+                $val->trademark_id = $vals->name ;
+            }
+        }
         return view('backend.content.product.index',compact('product','admin','category','trademark'));
     }
     public function insert()
@@ -46,6 +56,21 @@ class ProductController extends Controller
         $product->price_sale = $input['price_sale'];
         $product->status = $input['status'];
         $product->description = $input['description'];
+        $product->ingredient = $input['ingredient'];
+        $product->color = $input['color'];
+        $product->face_paint = $input['face_paint'];
+        $product->solid_content = $input['solid_content'];
+        $product->proportion = $input['proportion'];
+        $product->wet_paint_film = $input['wet_paint_film'];
+        $product->dry_paint_film = $input['dry_paint_film'];
+        $product->dry_time = $input['dry_time'];
+        $product->complete_dry = $input['complete_dry'];
+        $product->surface_dry = $input['surface_dry'];
+        $product->theoretical_attrition = $input['theoretical_attrition'];
+        $product->paint_next_layer = $input['paint_next_layer'];
+        $product->tool = $input['tool'];
+        $product->solvent = $input['solvent'];
+        $product->tutorial = $input['tutorial'];
         if($request->hasfile('image')){
             $image = $request ->file('image');
             $product->image = time().'.'.$image->getClientOriginalExtension();
@@ -69,7 +94,22 @@ class ProductController extends Controller
             'price' => $input['price'],
             'price_sale' => $input['price_sale'],
             'status' => $input['status'],
-            'description' => $input['description']
+            'description' => $input['description'],
+            'ingredient' => $input['ingredient'],
+            'color' => $input['color'],
+            'face_paint' => $input['face_paint'],
+            'solid_content' => $input['solid_content'],
+            'proportion' => $input['proportion'],
+            'wet_paint_film' => $input['wet_paint_film'],
+            'dry_paint_film' => $input['dry_paint_film'],
+            'dry_time' => $input['dry_time'],
+            'complete_dry' => $input['complete_dry'],
+            'surface_dry' => $input['surface_dry'],
+            'theoretical_attrition' => $input['theoretical_attrition'],
+            'paint_next_layer' => $input['paint_next_layer'],
+            'tool' => $input['tool'],
+            'solvent' => $input['solvent'],
+            'tutorial' => $input['tutorial'],
         );
         if($request->hasFile('image')){
             $image = $request->file('image');

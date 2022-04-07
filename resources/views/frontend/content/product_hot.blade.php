@@ -8,14 +8,14 @@
             <div class="product-thumb " style="">
                 <div class="thumb-image">
                     <div class="image">
-                        <a href="#">
+                        <a href="{{url('/product/detail',$val->id)}}">
                             <img src="assets/image/upload/{{$val->image}}"
-                                alt="Bột trét tường" style="padding: 15%">
+                                alt="{{$val->name}}" style="padding: 15%">
                         </a>
                     </div>
                 </div>
                 <div class="caption text-center">
-                    <a href="https://lusunpaint.com/bot-tret-tuong" title="Bột trét tường">
+                    <a href="{{url('/product/detail',$val->id)}}" title="{{$val->name}}">
                         <h5 class="name text-uppercase">{{$val->name}}</h5>
                     </a>
                 </div>
