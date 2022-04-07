@@ -1,12 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Website Bán Sơn</title>
+
+   @include('frontend.layouts.asset')
 </head>
+
 <body>
-    <h1>Sơn Kove</h1>
+    <div id="all-wrapper-ui">
+        <div class="all-wrapper-header">
+            @include('frontend.layouts.header')
+        </div>
+        <div class="all-wrapper-content">
+            <div class="main-content">
+              @yield('content')
+            </div>
+        </div>
+        <div class="all-wrapper-footer">
+            @include('frontend.layouts.footer')
+        </div>
+    </div>
+    <script type="text/javascript"
+    src="{{ asset('assets3/js/cdn.jsdelivr.net.npm.slick-carousel@1.8.1.slick.slick.min.js') }}"></script>
+    
+    <script type="text/javascript"
+    src="{{ asset('assets3/js/slick-config.js') }}">
+    </script>
 </body>
+
+
 </html>

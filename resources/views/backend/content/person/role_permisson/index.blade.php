@@ -1,7 +1,7 @@
 @extends('backend.layouts.index')
 @section('content')
 <div class="head-start-role mb-3">
-    <h1>Tài khoản</h1>
+    <h1>Vai trò</h1>
     <hr>
     <a href="{{url('/admin/role/add')}}" class="btn btn-success"><i class="fas fa-plus"></i></a>
   </div>

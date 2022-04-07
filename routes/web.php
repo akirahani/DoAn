@@ -2,15 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::namespace('User')->group(function () {
-    Route::get('/', function () {
-        return view('frontend.index');  
-    Route::get('/login', 'LoginController@showLoginForm');
-    Route::post('/login', 'LoginController@login')->name('user.login');
-    Route::group(['middleware' => ['auth']], function () {
-        Route::get('/home', 'HomeController@index');
-    });
-  });
-
-
-});
+Route::get('/', 'Frontend\HomeController@index');
+Route::get('/introduce', 'Frontend\HomeController@introduce');
+Route::get('/news', 'Frontend\HomeController@news');
+Route::get('/product', 'Frontend\HomeController@product');
+Route::get('/contact', 'Frontend\HomeController@contact');
+// detail
+Route::get('/news/detail/{id}', 'Frontend\HomeController@news_detail');
+Route::get('/product/detail/{id}', 'Frontend\HomeController@product_detail');
+    // Route::group(['middleware' => ['auth']], function () {
+    //     Route::get('/home', '');
+    // });
+//   });

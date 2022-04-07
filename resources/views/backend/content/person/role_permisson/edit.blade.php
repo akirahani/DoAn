@@ -34,7 +34,7 @@
                                 @foreach ($permissions as $permission)
                                     <div class="p-3 all-permission">
                                         <input name="permission[]" type="checkbox"  value="{{$permission->id}}"  
-                                        @if (in_array($permission->id, $role->permissions()->pluck('id')->toArray())) checked @endif>
+                                        @if (in_array($permission->id, $role->permission()->pluck('id')->toArray())) checked @endif>
                                         {{trans('translate.'.$permission->name)}}
                                     </div>
                                 @endforeach  

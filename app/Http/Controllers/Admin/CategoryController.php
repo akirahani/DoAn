@@ -4,82 +4,66 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Models\Category;
 class CategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public $cate_option;
     public function index()
     {
-        //
+        $category = Category::all();
+        return view('backend.content.category.index',compact('category'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function catelevel($id, $text=""){
+        $category = Category::all();
+        foreach($category as $val){
+            if($val['parent_id']==$id){
+                $this->cate_option .=  "<option value='".$val['id']."'>".$text.$val['name']."</option>";
+                $this->catelevel($val['id'],$text."--");
+                }
+            }
+            return $this->cate_option;
+        }
+    public function add()
     {
-        //
+        $level = $this->catelevel(0);
+        return view('backend.content.category.insert',compact('level'));
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function insert(Request $request)
     {
-        //
+        $category = new Category();
+        $input = $request->all();
+        $category->name = $input['name'];
+        $category->parent_id = $input['parent_id'];
+        $category->manual = $input['manual'];
+        $category->save();
+        return redirect()->route('admin.category');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    
+    public function update(Request $request, Category $category)
     {
-        //
+        $input = $request->all();
+        $id = $input['id'];
+        $arr = array(
+            'name'=>$input['name'],
+            'parent_id'=>$input['parent_id'],
+            'manual'=>$input['manual'],
+        );
+        $category->where('id',$id)->update($arr);
+        return redirect()->route('admin.category');
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $category = Category::find($id);
+        $level = $this->catelevel(0);
+        return view('backend.content.category.edit', compact('category','level'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function delete($id,Category $category)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $category->where('id',$id)->delete();
+        return response()->json([
+            "success"=>"Bạn xóa thành công"
+        ]);
     }
 }
