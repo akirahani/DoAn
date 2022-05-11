@@ -37,6 +37,15 @@
         border-radius: 10px;
         box-shadow: 5px 10px #888888;
     }
+    .grid-product{
+        padding: 30px;
+        list-style:none;
+        display:grid;
+        grid-template-columns: 25% 25% 25% 25% ;
+    }
+    .grid-product .product-click{
+        padding-right: 15px;
+    }
 </style>
 <div class="tab-in">
     <div class="inline">
@@ -49,14 +58,15 @@
 <div class="line-up"></div>
 <div class="all-full-product">
     <div class="main-product row">
-        <div class="get-category col-md-3 p-5">
+        <div class="col-md-1"></div>
+        <div class="get-category col-md-2">
             <ul class="border p-5 mt-4" style="list-style:none; width:100%;">
                 <div>
                     <p>Thương hiệu</p>
                 </div>
                 @foreach($trademark as $val)
                 <li>
-                    <input type="checkbox" value="{{$val->id}}" >{{$val->name}}
+                    <input type="checkbox" name="trademark" value="{{$val->id}}" >{{$val->name}}
                 </li>
                 @endforeach
                 <hr>
@@ -65,35 +75,58 @@
                 </div>
                 @foreach($cate as $val)
                 <li>
-                    <input type="checkbox" value="{{$val->id}}" >{{$val->name}}
+                    <input type="checkbox" name="category" value="{{$val->id}}" >{{$val->name}}
                 </li>
                 @endforeach
             </ul>
         </div>
-        <div class="get-all col-md-9">
-            <div class="rows-product row mt-5 p-3">
-                <div class="row pt-3 p-3">
-                    @foreach($product as $val)
-                    <div class="col-lg-3l col-xl-3 col-md-6 col-sm-6 col-xs-12 ">
-                        <a href="{{url('/product/detail',$val->id)}}">
-                            <div class="product-thumb " style="">
-                                <div class="thumb-image">
-                                    <div class="image">
-                                        <img src="assets/image/upload/{{$val->image}}"
-                                            alt="{{$val->name}}" style="padding: 15%">
-                                    </div>
-                                </div>
-                                <div class="caption text-center">
-                                    <h5 class="name text-uppercase">{{$val->name}}</h5>
+        <div class="get-all col-md-8">
+            <div class="grid-product">
+                @foreach($product as $val)
+                <div class="product-click">
+                    <a href="{{url('/product/detail',$val->id)}}">
+                        <div class="product-thumb " style="">
+                            <div class="thumb-image">
+                                <div class="image">
+                                    <img src="assets/image/upload/{{$val->image}}"
+                                        alt="{{$val->name}}" style="padding: 15%">
                                 </div>
                             </div>
-                        </a>
-                    </div>
-                    @endforeach
+                            <div class="caption text-center">
+                                <h5 class="name text-uppercase">{{$val->name}}</h5>
+                            </div>
+                        </div>
+                    </a>
                 </div>
-            </div>
+                @endforeach
+            </div>  
         </div>
+        <div class="col-md-1"></div>
     </div>
-
 </div>
+
+<script>
+    $('input[name="category"]').click(function(){
+       var id = $(this).val();
+            $.ajax({
+                type: "GET",
+                data : {'category_id':id},
+                url: "/product/ajax",
+                success:function(data){
+                    $('.get-all .grid-product').html(data);
+                }
+            });
+    });
+    $('input[name="trademark"]').click(function(){
+       var id = $(this).val();
+       $.ajax({
+            type: "GET",
+            data : {'trademark_id':id},
+            url: "/product/ajax",
+            success:function(data){
+                $('.get-all .grid-product').html(data);
+            }
+       });
+    });
+</script>
 @endsection
