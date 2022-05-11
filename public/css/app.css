@@ -1,1 +1,87 @@
+.form form input[name="ten"],
+.form form input[name="email"],
+.form form input[name="dienthoai"] {
+    background: rgba(255, 255, 255, 0.8);
+    mix-blend-mode: normal;
+    backdrop-filter: blur(4px);
+    border-radius: 16px;
+    height: 55px;
+    border: none;
+    outline: none;
+    font-family: "SVN-Aptima";
+    font-size: 16px;
+    width: calc(100% - 50px);
+    display: block;
+    margin: auto;
+    margin-bottom: 12px;
+    padding: 0 15px
+}
 
+.form form .input-placeholder {
+    position: relative
+}
+
+.form form .input-placeholder input:valid+.place-hide {
+    display: none
+}
+
+.form form .input-placeholder .place-hide {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    bottom: 0;
+    font-size: 16px;
+    line-height: 55px;
+    height: 17px;
+    left: 40px;
+    color: #0D113B
+}
+
+.form form .input-placeholder .place-hide span {
+    color: red
+}
+
+.form form textarea {
+    background: rgba(255, 255, 255, 0.8);
+    mix-blend-mode: normal;
+    backdrop-filter: blur(4px);
+    border-radius: 16px;
+    border: none;
+    outline: none;
+    font-family: "SVN-Aptima";
+    font-size: 16px;
+    width: calc(100% - 50px);
+    display: block;
+    margin: auto;
+    padding: 15px;
+    margin-bottom: 28px;
+    resize: none
+}
+
+.form form textarea::placeholder {
+    color: #0D113B;
+    opacity: 1
+}
+
+.form form textarea:-ms-input-placeholder {
+    color: #0D113B
+}
+
+.form form textarea::-ms-input-placeholder {
+    color: #0D113B
+}
+
+.form form input[name="submit"] {
+    height: 42px;
+    width: 180px;
+    border-radius: 100px;
+    background: linear-gradient(180deg, #0D113B 0%, #454A82 0.01%, #0D113B 100%);
+    outline: none;
+    font-family: "SVN-Aptima";
+    font-size: 16px;
+    border: none;
+    color: #FFF;
+    display: block;
+    margin: auto;
+    cursor: pointer
+}

@@ -1,7 +1,7 @@
-
+<!DOCTYPE html>
+<head>
    @include('frontend.layouts.asset')
 </head>
-
 <body>
     <div id="all-wrapper-ui">
         <div class="all-wrapper-header">

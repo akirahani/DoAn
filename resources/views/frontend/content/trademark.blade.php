@@ -1,4 +1,4 @@
-{{-- <link rel="stylesheet" href="{{ asset('assets3/css/content/trademark.css') }}"> --}}
+
 <div class="all-wrapper-trademark p-5">
     <div class="in-detail-trade-mark container">
         <div class="detail-trademark row">

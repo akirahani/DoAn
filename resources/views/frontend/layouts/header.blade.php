@@ -13,7 +13,7 @@
                 <div class="wt-logo  text-left">
                     <div class="logo  text-left">
                         <a href="{{ url('/') }}">
-                            <img src="../../assets/image/config/logo/{{ $config->logo }}" title="CÔNG TY SƠN SÁU ĐÀ NẴNG"
+                            <img src="../../../assets/image/config/logo/{{ $config->logo }}" title="CÔNG TY SƠN SÁU ĐÀ NẴNG"
                                 alt="CÔNG TY SƠN SÁU ĐÀ NẴNG" style="width:100px">
                         </a>
                     </div>
@@ -44,13 +44,13 @@
                 <div class="cart-and-login" >
                     <ul class="list-inline-doing mt-4">
                       
-                        <li class="user-login ml-3 ">
+                        {{-- <li class="user-login ml-3 ">
                             <a href="">
                                 <i class="fas fa-user" style="font-size: 28px; color:orange"></i>
                             </a>
-                        </li>
+                        </li> --}}
                         <li class="cart-icon ml-3">
-                            <a href="">
+                            <a href="{{url('/detail/cart')}}">
                                 <i class="fas fa-cart-shopping" style="font-size: 28px; color:orange"></i>
                             </a>    
                         </li>

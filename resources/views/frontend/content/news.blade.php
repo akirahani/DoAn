@@ -13,12 +13,12 @@
 
                         <div class="entry-thumb-meta">
                             <div class="entry-thumb">
-                                <a href="#" title="Ideas For Kitchen Renovation"><img width="1170" height="800"
+                                <a href="{{url('/news/detail',$val->id)}}" title="Ideas For Kitchen Renovation"><img width="1170" height="800"
                                         src="assets/image/img_news/{{ $val['image'] }}"
                                         class="attachment-painting-1170x800 size-painting-1170x800 wp-post-image" alt=""
                                         loading="lazy" sizes="(max-width: 1170px) 100vw, 1170px"></a>
                                 <div class="blog-overlay"><a
-                                        href="https://dtpainting.wpengine.com/ideas-for-kitchen-renovation/"
+                                        href="{{url('/news/detail',$val->id)}}"
                                         title="Ideas For Kitchen Renovation" class="entry_format"></a></div>
                             </div>
                         </div>
