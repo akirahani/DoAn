@@ -41,20 +41,26 @@
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
+                        <i data-feather="box"></i>
+                        <span data-key="t-components">Kho hàng</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{url('/admin/ware')}}" data-key="t-alerts">Dữ liệu kho hàng</a></li>
+                        <li><a href="{{url('/admin/ware')}}" data-key="t-alerts">Dữ liệu nhập hàng</a></li>
+                        <li><a href="{{url('/admin/ware')}}" data-key="t-alerts">Dữ liệu xuất hàng</a></li>
+                        <li><a href="{{url('/admin/ware')}}" data-key="t-alerts">Thống kê nhập xuất tồn đầu</a></li>
+                        <li><a href="{{url('/admin/ware')}}" data-key="t-alerts">Thống kê doanh thu</a></li>
+                        <li><a href="{{url('/admin/ware')}}" data-key="t-alerts">Thống kê số lượng hàng bán ra</a></li>
+                    </ul>
+                </li>
+                
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="briefcase"></i>
                         <span data-key="t-components">Đơn đặt hàng</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="ui-alerts.html" data-key="t-alerts">Alerts</a></li>
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow">
-                                <span data-key="t-email">Email</span>
-                            </a>
-                            <ul class="sub-menu" aria-expanded="false">
-                                <li><a href="apps-email-inbox.html" data-key="t-inbox">Inbox</a></li>
-                                <li><a href="apps-email-read.html" data-key="t-read-email">Read Email</a></li>
-                            </ul>
-                        </li>
+                        <li><a href="{{url('/admin/order')}}" data-key="t-alerts">Danh sách</a></li>
                     </ul>
                 </li>
 

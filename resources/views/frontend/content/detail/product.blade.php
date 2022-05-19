@@ -81,6 +81,15 @@
         font-size: 15px;
         text-align: justify;
     }
+    .exit:before{
+        display: inline-block;
+        float: right;
+        padding-right: 15px; 
+        border-radius: 50%;
+        font-size: 30px;
+        cursor: pointer;
+        content: "\00d7";
+    }
 </style>
 <div class="tab-ins">
     <div class="inline">
@@ -196,7 +205,7 @@
         </div>
     </section>
     <div class="modal">
-        <div class="exit mb-5" style="float: right">x</div>
+        <div class="exit"></div>
         <br>
         <hr>
         <div class="title-page"><h1>{{$product->name}}</h1></div>
