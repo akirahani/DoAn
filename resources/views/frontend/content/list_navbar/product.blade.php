@@ -37,6 +37,11 @@
         border-radius: 10px;
         box-shadow: 5px 10px #888888;
     }
+    .caption h5{
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis; 
+    }
     .grid-product{
         padding: 30px;
         list-style:none;
@@ -45,6 +50,18 @@
     }
     .grid-product .product-click{
         padding-right: 15px;
+    }
+    /*  */
+    .main-product{
+        display: flex;
+        flex-flow: row nowrap;
+    }
+    .get-category{
+        margin-left: 5%;
+        width: 15%;
+    }
+    .get-all{
+        width: 80%;
     }
 </style>
 <div class="tab-in">
@@ -57,9 +74,8 @@
 <div class="title-page"><h1>PRODUCTS</h1></div>
 <div class="line-up"></div>
 <div class="all-full-product">
-    <div class="main-product row">
-        <div class="col-md-1"></div>
-        <div class="get-category col-md-2">
+    <div class="main-product">
+        <div class="get-category">
             <ul class="border p-5 mt-4" style="list-style:none; width:100%;">
                 <div>
                     <p>Thương hiệu</p>
@@ -80,7 +96,7 @@
                 @endforeach
             </ul>
         </div>
-        <div class="get-all col-md-8">
+        <div class="get-all">
             <div class="grid-product">
                 @foreach($product as $val)
                 <div class="product-click">
@@ -101,7 +117,6 @@
                 @endforeach
             </div>  
         </div>
-        <div class="col-md-1"></div>
     </div>
 </div>
 
@@ -111,7 +126,7 @@
             $.ajax({
                 type: "GET",
                 data : {'category_id':id},
-                url: "/product/ajax",
+                url: "{{route('product.ajax')}}",
                 success:function(data){
                     $('.get-all .grid-product').html(data);
                 }
@@ -122,9 +137,27 @@
        $.ajax({
             type: "GET",
             data : {'trademark_id':id},
-            url: "/product/ajax",
+            url: "{{route('product.ajax')}}",
             success:function(data){
-                $('.get-all .grid-product').html(data);
+                var html = "";
+                data.forEach(textdata => {
+                    html+= `<div class="product-click">
+                    <a href="url('/product/detail',${textdata.id})">
+                            <div class="product-thumb " style="">
+                                <div class="thumb-image">
+                                    <div class="image">
+                                        <img src="assets/image/upload/${textdata.image}"
+                                            alt="${textdata.name}" style="padding: 15%">
+                                    </div>
+                                </div>
+                                <div class="caption text-center">
+                                    <h5 class="name text-uppercase">${textdata.name}</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>`;
+                    $('.get-all .grid-product').html(html);
+                });
             }
        });
     });

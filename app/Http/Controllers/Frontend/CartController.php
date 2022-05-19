@@ -72,8 +72,6 @@ class CartController extends Controller
             $cart_new->updateCart($data['key'],$data['value']);
             $request->Session()->put('cart',$cart_new);
         }
- 
-      
-        return view('frontend.content.detail.cart',compact('cart_new','category','menu','config'))->with('alert', 'Sản phẩm đã được cập nhật');
+        return view('frontend.content.detail.cart',compact('cart_new','menu','config'))->with('alert', 'Sản phẩm đã được cập nhật');
     }
 }

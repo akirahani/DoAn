@@ -28,12 +28,12 @@
                             @foreach ($menu as $val)
                                 <li class="list-inline-item withsubs">
                                     <a href="{{ $val->link }}">{{ $val->title }}</a>
-                                    <div class="menu-drop-down">
+                                    {{-- <div class="menu-drop-down">
                                         <ul>
                                             <li class="text-uppercase">
                                             </li>
                                         </ul>
-                                    </div>
+                                    </div> --}}
                                 </li>
                             @endforeach
                         </ul>

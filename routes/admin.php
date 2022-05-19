@@ -70,6 +70,9 @@ Route::middleware('auth:admin')->group(function(){
         Route::get('/category/edit/{id}','Admin\CategoryController@edit')->name('admin.category.edit');
         Route::post('/category/update','Admin\CategoryController@update');
         Route::get('/category/delete/{id}','Admin\CategoryController@delete');
+        // order
+        Route::get('/order','Admin\OrderController@index')->name('admin.order');
+        Route::get('/order/detail/{id}','Admin\OrderController@detail')->name('admin.order.detail');
     // });
  
 });

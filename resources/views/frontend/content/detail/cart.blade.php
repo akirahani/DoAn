@@ -312,6 +312,7 @@
                             let obj = {key: $(this).data("id"), value: $(this).val() };
                             arr.push(obj);
                     });
+                    console.log(arr);
                  
                     $.ajax({
                         url: '/cart/update',
