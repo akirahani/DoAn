@@ -39,7 +39,7 @@
     }
     .modal{
         width: 600px;
-        height: 450px;
+        height: 550px;
         position: absolute;
         z-index: 8;
         left: 0;

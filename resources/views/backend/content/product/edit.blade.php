@@ -20,7 +20,14 @@
                             @endforeach
                         </select>
                         </div>
-                        
+                        <div class="mb-3 col-6">
+                            <label for ="input-9">Đơn vị tính</label>
+                            <select id= "inputState" class ="form-select" name="unit_id">
+                                @foreach($unit as $val)
+                                    <option selected ="" value="{{$val['id']}}">{{$val['name']}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <div class="mb-3 col-6">
                             <label for ="input-9"> Tên thương hiệu</label>
                             <select id= "inputState" class ="form-select" name="trademark_id">
@@ -135,48 +142,42 @@
         </div>
  
 </div>
-
-
-
-          
-
-
-    <script>
-        function readURL(input) {
-        if (input.files && input.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function(e) {
-            $('#blah').attr('src', e.target.result);
-          }
-          reader.readAsDataURL(input.files[0]); // convert to base64 string
+<script>
+    function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function(e) {
+        $('#blah').attr('src', e.target.result);
         }
-      }
-      $("#partner-img").change(function() {
-        readURL(this);
-      });
-      $(function() {
-        // Multiple images preview in browser
-        var imagesPreview = function(input, placeToInsertImagePreview) {
-
-            if (input.files) {
-                var filesAmount = input.files.length;
-
-                for (i = 0; i < filesAmount; i++) {
-                    var reader = new FileReader();
-
-                    reader.onload = function(event) {
-                        $($.parseHTML('<img  class="img-display" style=" width:10%; padding:10px">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
-                    }
-
-                    reader.readAsDataURL(input.files[i]);
-                }
-            }
-
-        };
-
-        $('#partner-img').change(function(){
-            imagesPreview(this,'div.img-main');
-        });
+        reader.readAsDataURL(input.files[0]); // convert to base64 string
+    }
+    }
+    $("#partner-img").change(function() {
+    readURL(this);
     });
-    </script>
+    $(function() {
+    // Multiple images preview in browser
+    var imagesPreview = function(input, placeToInsertImagePreview) {
+
+        if (input.files) {
+            var filesAmount = input.files.length;
+
+            for (i = 0; i < filesAmount; i++) {
+                var reader = new FileReader();
+
+                reader.onload = function(event) {
+                    $($.parseHTML('<img  class="img-display" style=" width:10%; padding:10px">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                }
+
+                reader.readAsDataURL(input.files[i]);
+            }
+        }
+
+    };
+
+    $('#partner-img').change(function(){
+        imagesPreview(this,'div.img-main');
+    });
+});
+</script>
 @endsection

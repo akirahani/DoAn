@@ -40,8 +40,7 @@ Route::middleware('auth:admin')->group(function(){
         Route::get('/config/add', 'Admin\ConfigController@add')->name('config.add');
         Route::post('/config/insert', 'Admin\ConfigController@insert')->name('news.insert');
         Route::get('/config/edit/{id}','Admin\ConfigController@edit')->name('config.edit');
-        Route::post('/config/update','Admin\ConfigController@update')->name('config.update');
-        
+        Route::post('/config/update','Admin\ConfigController@update')->name('config.update');     
         //navbar
         Route::get('/navbar', 'Admin\NavbarController@index')->name('navbar.index');
         Route::get('/navbar/add', 'Admin\NavbarController@add')->name('navbar.add');
@@ -56,6 +55,13 @@ Route::middleware('auth:admin')->group(function(){
         Route::get('/product/edit/{id}','Admin\ProductController@edit')->name('admin.product.edit');
         Route::post('/product/update','Admin\ProductController@update');
         Route::get('/product/delete/{id}','Admin\ProductController@delete');
+        // unit
+        Route::get('/unit','Admin\UnitController@index')->name('admin.unit');
+        Route::get('/unit/insert','Admin\UnitController@add')->name('admin.unit.insert');
+        Route::post('/unit/store','Admin\UnitController@insert')->name('admin.unit.store');
+        Route::get('/unit/edit/{id}','Admin\UnitController@edit')->name('admin.unit.edit');
+        Route::post('/unit/update','Admin\UnitController@update');
+        Route::get('/unit/delete/{id}','Admin\UnitController@delete');
         //trademark
         Route::get('/trademark','Admin\TrademarkController@index')->name('admin.trademark');
         Route::get('/trademark/add','Admin\TrademarkController@insert')->name('admin.trademark.insert');
@@ -73,6 +79,20 @@ Route::middleware('auth:admin')->group(function(){
         // order
         Route::get('/order','Admin\OrderController@index')->name('admin.order');
         Route::get('/order/detail/{id}','Admin\OrderController@detail')->name('admin.order.detail');
+        // storage
+        Route::get('/storage/import','Admin\StorageController@import')->name('admin.storage.import');
+        Route::get('/storage/export','Admin\StorageController@export')->name('admin.storage.export');
+        Route::get('/storage/import/add','Admin\StorageController@import_add');
+        Route::post('/storage/import/insert','Admin\StorageController@import_insert');
+        Route::get('/storage/import/edit','Admin\StorageController@import_edit');
+        Route::get('/storage/import/delete','Admin\StorageController@import_delete');
+
+        // Route::post('/storage/insert','Admin\CategoryController@insert')->name('admin.category.store');
+        // Route::get('/category/edit/{id}','Admin\CategoryController@edit')->name('admin.category.edit');
+        // Route::post('/category/update','Admin\CategoryController@update');
+
+
+
     // });
  
 });
