@@ -37,7 +37,15 @@
                                 </select>
                             </div>
 
-                       
+                            <div class="mb-3 col-6 col-6">
+                                <label for ="input-9"> Đơn vị tính</label>
+                                <select id= "inputState" class ="form-control" name="unit_id">
+                                    @foreach($unit as $val)
+                                        <option selected ="" value="{{$val['id']}}">{{$val['name']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
                             <div class="mb-3 col-6">
                                 <label for = "input-6"> Giá </label>
                                 <input name ="price" type="number" class ="form-control form-control-rounded" id="input-6" required>

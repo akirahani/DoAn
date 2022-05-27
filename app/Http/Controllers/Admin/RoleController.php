@@ -66,5 +66,4 @@ class RoleController extends Controller
         $permission->save();
         return redirect()->route('role.add');
     }
-
 }

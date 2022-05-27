@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Trademark;
+use App\Models\Unit;
 use DB;
 class ProductController extends Controller
 {
@@ -41,7 +42,8 @@ class ProductController extends Controller
         $product = Product::all();
         $category = Category::all();
         $trademark = Trademark::all();
-        return view('backend.content.product.insert',compact('category','product','trademark'));
+        $unit = Unit::all();
+        return view('backend.content.product.insert',compact('category','product','trademark','unit'));
     }
     public function store(Request $request)
     {
@@ -71,6 +73,7 @@ class ProductController extends Controller
         $product->tool = $input['tool'];
         $product->solvent = $input['solvent'];
         $product->tutorial = $input['tutorial'];
+        $product->unit_id = $input['unit_id'];
         if($request->hasfile('image')){
             $image = $request ->file('image');
             $product->image = time().'.'.$image->getClientOriginalExtension();
@@ -79,8 +82,6 @@ class ProductController extends Controller
         $product->save();
         return redirect()->route('admin.product');
     }
-
-    
     public function update(Request $request, Product $product)
     {
         $admin = Auth::guard('admin')->user();
@@ -110,6 +111,7 @@ class ProductController extends Controller
             'tool' => $input['tool'],
             'solvent' => $input['solvent'],
             'tutorial' => $input['tutorial'],
+            'unit_id' => $input['unit_id']
         );
         if($request->hasFile('image')){
             $image = $request->file('image');
@@ -131,9 +133,10 @@ class ProductController extends Controller
         ->select('*','trademarks.name as name')
         ->join('trademarks','trademarks.id','=','products.category_id')
         ->get();
+        $unit = Unit::all();
         $cate = Category::all();
         $trade = Trademark::all();
-        return view('backend.content.product.edit', compact('product','category','trademark','cate','trade'));
+        return view('backend.content.product.edit', compact('product','category','trademark','cate','trade','unit'));
     }
 
     public function delete($id,Product $product)

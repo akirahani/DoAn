@@ -45,12 +45,11 @@
                         <span data-key="t-components">Kho hàng</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{url('/admin/ware')}}" data-key="t-alerts">Dữ liệu kho hàng</a></li>
-                        <li><a href="{{url('/admin/ware')}}" data-key="t-alerts">Dữ liệu nhập hàng</a></li>
-                        <li><a href="{{url('/admin/ware')}}" data-key="t-alerts">Dữ liệu xuất hàng</a></li>
-                        <li><a href="{{url('/admin/ware')}}" data-key="t-alerts">Thống kê nhập xuất tồn đầu</a></li>
-                        <li><a href="{{url('/admin/ware')}}" data-key="t-alerts">Thống kê doanh thu</a></li>
-                        <li><a href="{{url('/admin/ware')}}" data-key="t-alerts">Thống kê số lượng hàng bán ra</a></li>
+                        <li><a href="{{url('/admin/storage/import')}}" data-key="t-alerts">Dữ liệu nhập hàng</a></li>
+                        <li><a href="{{url('/admin/storage/export')}}" data-key="t-alerts">Dữ liệu xuất hàng</a></li>
+                        {{-- <li><a href="{{url('/admin/storage')}}" data-key="t-alerts">Thống kê nhập xuất tồn đầu</a></li> --}}
+                        {{-- <li><a href="{{url('/admin/storage')}}" data-key="t-alerts">Thống kê doanh thu</a></li> --}}
+                        {{-- <li><a href="{{url('/admin/storage')}}" data-key="t-alerts">Thống kê số lượng hàng bán ra</a></li> --}}
                     </ul>
                 </li>
                 
