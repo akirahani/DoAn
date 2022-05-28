@@ -51,7 +51,7 @@
             <td  scope="row" style="display: flex; justify-content: space-between">
               <a  class="btn btn-warning" id="view-import" id_import="{{$val->id}}" nguoinhap="{{$val->nguoinhap}}" ma="{{$val->ma}}" noidung="{{$val->noidung}}" ghichu="{{$val->ghichu}}" thoigian="{{$val->created_at}}" sanpham="{{$val->sanpham}}"><i class="fas fa-eye"></i></a>
               <a href="{{url('',$val['id'])}}" class="btn btn-info"><i class="fas fa-edit"></i></a>
-              {{-- <a data-id ="{{$val->id}}" class="btn btn-danger del"> <i class="fas fa-trash"></i></a> --}}
+              <!-- <a data-id ="{{$val->id}}" class="btn btn-danger del"> <i class="fas fa-trash"></i></a>  -->
           </td>
           </tr>
         @endforeach
@@ -61,12 +61,10 @@
 <div class="modal" style="display: none;">
   <form action="">
     @csrf
-      <h1>Phiếu nhập sản phẩm </h1>
   </form>
 </div>
 <script>
 $('#view-import').click(function(){
-  $('.modal').show();
   var form_data= new FormData();
   var id = $(this).attr('id_import');
   var nguoinhap = $(this).attr('nguoinhap');
@@ -84,7 +82,7 @@ $('#view-import').click(function(){
   form_data.append('sanpham',sanpham);
   $.ajax({
       headers: {
-          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
       },
       method: "POST",
       data: form_data,
@@ -92,7 +90,52 @@ $('#view-import').click(function(){
       contentType: false,
       url: "{{route('admin.storage.import.view')}}",
       success:function(data){
-         console.log(data);
+        var info = jQuery.parseJSON(data.sanpham);
+        // var info = data.sanpham; 
+        info.forEach(item=>{
+          console.log(item);
+        })
+        
+        $('.modal').show();
+        $('.modal form').append(`
+            <h1>Phiếu nhập ${data.ma}</h1>
+            <div class="item">
+              <p>Người nhập</p>
+              <input value="${data.nguoinhap}" readonly />
+            </div>
+            <div class="item">
+              <p>Nội dung</p>
+              <input value="${data.noidung}" readonly />
+            </div>
+            <div class="item">
+              <p>Ghi chú</p>
+              <input value="${data.ghichu}" readonly />
+            </div>
+            <div class="item">
+              <p>Ngày nhập</p>
+              
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Sản phẩm</th>
+                  <th>Số lượng</th>
+                  <th>Đơn giá</th>
+                  <th>Đơn vị tính</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${data.sanpham}
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>  
+            </table>`);
       }
   })
 });

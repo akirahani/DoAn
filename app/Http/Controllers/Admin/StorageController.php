@@ -66,15 +66,16 @@ class StorageController extends Controller
                 }
             }   
         }
+        dd($arr);
         return response()->json([
-            "sanpham"=> $arr,
+            "sanpham"=> json_encode($arr),
             "ma"=> $input['ma'],
             "nguoinhap"=>$input['nguoinhap'],
             "id"=>$input['id'],
             "thoigian"=>$input['thoigian'],
             "ghichu"=>$input['ghichu'],
             "noidung"=>$input['noidung'],
-            "thoigian"=>$input['thoigian'],
+            // "thoigian"=>,
         ]);   
     }
 
