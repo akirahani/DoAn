@@ -86,7 +86,7 @@ Route::middleware('auth:admin')->group(function(){
         Route::post('/storage/import/insert','Admin\StorageController@import_insert');
         Route::get('/storage/import/edit','Admin\StorageController@import_edit');
         Route::get('/storage/import/delete','Admin\StorageController@import_delete');
-
+        Route::post('/storage/import/view','Admin\StorageController@import_view')->name('admin.storage.import.view');
         // Route::post('/storage/insert','Admin\CategoryController@insert')->name('admin.category.store');
         // Route::get('/category/edit/{id}','Admin\CategoryController@edit')->name('admin.category.edit');
         // Route::post('/category/update','Admin\CategoryController@update');
