@@ -63,10 +63,10 @@ class StorageController extends Controller
             foreach($product as $k=>$value){
                 if($id == $value->id){
                     $arr[$id] = $value; 
+                    $arr[$id]->soluongnhap = $val->soluong;
                 }
             }   
         }
-        dd($arr);
         return response()->json([
             "sanpham"=> json_encode($arr),
             "ma"=> $input['ma'],

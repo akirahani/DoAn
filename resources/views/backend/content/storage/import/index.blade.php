@@ -22,7 +22,10 @@
   .modal h1{
     text-align: center;
   }
-			
+	.rows{
+      display: flex;
+      justify-content: space-around;
+  }		
 </style>
 <div class="head-start-news mb-3">
   <h1>Danh sách đơn nhập</h1>
@@ -91,34 +94,41 @@ $('#view-import').click(function(){
       url: "{{route('admin.storage.import.view')}}",
       success:function(data){
         var info = jQuery.parseJSON(data.sanpham);
-        // var info = data.sanpham; 
-        info.forEach(item=>{
-          console.log(item);
+        var arr_get = Object.values(info);
+        var products = '';
+        arr_get.forEach((item)=>{
+          products += `
+                <tr>
+                  <td>${item.name}</td>
+                  <td>${item.soluongnhap}</td>
+                  <td>${item.price}</td>
+                  <td>${item.unit_id}</td>
+                </tr>`
         })
-        
         $('.modal').show();
         $('.modal form').append(`
             <h1>Phiếu nhập ${data.ma}</h1>
-            <div class="item">
-              <p>Người nhập</p>
-              <input value="${data.nguoinhap}" readonly />
-            </div>
-            <div class="item">
-              <p>Nội dung</p>
-              <input value="${data.noidung}" readonly />
-            </div>
-            <div class="item">
-              <p>Ghi chú</p>
-              <input value="${data.ghichu}" readonly />
-            </div>
-            <div class="item">
-              <p>Ngày nhập</p>
-              
+            <div class="rows">
+              <div class="item">
+                <p>Người nhập</p>
+                <input value="${data.nguoinhap}" readonly />
+              </div>
+              <div class="item">
+                <p>Nội dung</p>
+                <input value="${data.noidung}" readonly />
+              </div>
+              <div class="item">
+                <p>Ghi chú</p>
+                <input value="${data.ghichu}" readonly />
+              </div>
+              <div class="item">
+                <p>Ngày nhập</p>
+                
+              </div>
             </div>
             <table>
               <thead>
                 <tr>
-                  <th>STT</th>
                   <th>Sản phẩm</th>
                   <th>Số lượng</th>
                   <th>Đơn giá</th>
@@ -126,16 +136,10 @@ $('#view-import').click(function(){
                 </tr>
               </thead>
               <tbody>
-                ${data.sanpham}
-                <tr>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                </tr>
+              ${products}
               </tbody>  
-            </table>`);
+            </table>
+           `);
       }
   })
 });
