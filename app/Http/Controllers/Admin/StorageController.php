@@ -58,16 +58,16 @@ class StorageController extends Controller
         $sanpham = json_decode($input['sanpham']);
         $product = DB::table('products')
         ->get();
-        $arr = [];
         foreach($sanpham as $key=>$val){
+            $id = (int)$val->product_id;
             foreach($product as $k=>$value){
-                if($val['id'] == $value['id']){
-                    $arr[$key]['sanpham'] = $value; 
+                if($id == $value->id){
+                    $arr[$id] = $value; 
                 }
             }   
         }
-        dd($arr);
         return response()->json([
+            "sanpham"=> $arr,
             "ma"=> $input['ma'],
             "nguoinhap"=>$input['nguoinhap'],
             "id"=>$input['id'],
