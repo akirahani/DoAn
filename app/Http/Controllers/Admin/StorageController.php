@@ -51,14 +51,32 @@ class StorageController extends Controller
         $import->save();
         return redirect()->route('admin.storage.import');
     }
-    public function edit($id)
-    {
-    }
-    public function update(Request $request, $id)
-    {
 
-    }
-    public function destroy($id)
+    public function import_view(Request $request)
     {
+        $input = $request->all();
+        $sanpham = json_decode($input['sanpham']);
+        $product = DB::table('products')
+        ->get();
+        $arr = [];
+        foreach($sanpham as $key=>$val){
+            foreach($product as $k=>$value){
+                if($val['id'] == $value['id']){
+                    $arr[$key]['sanpham'] = $value; 
+                }
+            }   
+        }
+        dd($arr);
+        return response()->json([
+            "ma"=> $input['ma'],
+            "nguoinhap"=>$input['nguoinhap'],
+            "id"=>$input['id'],
+            "thoigian"=>$input['thoigian'],
+            "ghichu"=>$input['ghichu'],
+            "noidung"=>$input['noidung'],
+            "thoigian"=>$input['thoigian'],
+        ]);   
     }
+
+   
 }
