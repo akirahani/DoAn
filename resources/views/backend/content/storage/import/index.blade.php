@@ -92,7 +92,7 @@ $('#view-import').click(function(){
       contentType: false,
       url: "{{route('admin.storage.import.view')}}",
       success:function(data){
-
+         console.log(data);
       }
   })
 });
