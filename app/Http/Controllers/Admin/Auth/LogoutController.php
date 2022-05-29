@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 
 class LogoutController extends Controller
 {
-    public function logout(){
+    public function logout(Request $request){
+        $request->session()->forget('acc');
         return view('backend.auth.login');
     }
 }

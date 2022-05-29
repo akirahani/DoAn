@@ -9,8 +9,16 @@ use DB;
 class OrderController extends Controller
 {
     public function index(){
-        $order = Order::all();
-        return view('backend.content.order.index',compact('order'));
+        $order = DB::table('orders')
+        ->where('status',1)
+        ->get();
+        $order_goi = DB::table('orders')
+        ->where('status',2)
+        ->get();
+        if(count($order_goi) > 0 ){
+            return view('backend.content.order.index',compact('order'));
+        }
+        
     }
     public function insert(Request $request){
         $input = $request->all();
@@ -39,6 +47,29 @@ class OrderController extends Controller
         ->where('order_id','=',$id)
         ->select('*','order_products.quantity as soluong')
         ->get();
-        return view('backend.content.order.detail',compact('order'));
+        $order_id = $id;
+        return view('backend.content.order.detail',compact('order','order_id'));
+    }
+    public function get_call($id, Order $order){
+        $order_call = Order::find($id);
+        if($order_call->trangthai == 1)
+        {
+            // Đơn chưa có ai nhận
+        }
+        else
+        {
+            // Đơn đã có người nhận
+            return redirect()->route('admin.order');
+        }
+        $arr = [
+            'status'=>2,
+            'receive'=>session('acc')[0]->id
+        ];
+        $order->where('id',$id)->update($arr);
+        if($order_call->status ==2){
+            if(session('acc')[0]->id == $order_call->receive ){
+                return view('backend.content.order.edit',compact('order_call'));
+            }
+        }
     }
 }
