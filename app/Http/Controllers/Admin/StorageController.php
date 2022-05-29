@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\Product;
 use App\Models\Import;
+use App\Models\Export;
+use App\Models\Unit;
 use DB;
 class StorageController extends Controller
 {
@@ -36,15 +38,23 @@ class StorageController extends Controller
             $arr_sp[$key]['soluong'] = $input['soluong'][$key];
             $soluong =    (int) $arr_sp[$key]['soluong'];
             $id = (int) $arr_sp[$key]['product_id'];
-            foreach($product as $val){
-                if($val->id == $id){
-                    $val->quantity +=  $soluong;
-                    $products->where('id',$id)->update(['quantity'=>$val->quantity]);           
+            if($soluong >0){
+                foreach($product as $val){
+                    if($val->id == $id){
+                        $val->quantity +=  $soluong;
+                        $products->where('id',$id)->update(['quantity'=>$val->quantity]);           
+                    }
                 }
+            }
+            else{
+                $soluong = 0;
+                $mess=  'Số lượng phải lớn hơn 0';
+                echo "<script type='text/javascript'>alert('$mess');</script>";
+                return redirect()->route('admin.storage.import.add');
             }
         }
         $import->ma = $input['ma'];
-        // $import->noinhap = $input['noinhap'];
+        $import->nguoinhap = $input['nguoinhap'];
         $import->sanpham = json_encode($arr_sp);
         $import->noidung = $input['noidung'];
         $import->ghichu = $input['ghichu'];
@@ -55,17 +65,29 @@ class StorageController extends Controller
     public function import_view(Request $request)
     {
         $input = $request->all();
+        $account = Admin::all();
+        $unit = Unit::all();
         $sanpham = json_decode($input['sanpham']);
         $product = DB::table('products')
         ->get();
         foreach($sanpham as $key=>$val){
             $id = (int)$val->product_id;
             foreach($product as $k=>$value){
-                if($id == $value->id){
+                if($id == $value->id ){
                     $arr[$id] = $value; 
                     $arr[$id]->soluongnhap = $val->soluong;
                 }
+                foreach($unit as $val){
+                    if($value->unit_id == $val->id){
+                        $value->unit_id = $val->name;
+                    }
+                }
             }   
+        }
+        foreach($account as $val){
+            if($input['nguoinhap'] == $val->id){
+                $input['nguoinhap'] = $val->name;
+            }
         }
         return response()->json([
             "sanpham"=> json_encode($arr),
@@ -75,7 +97,96 @@ class StorageController extends Controller
             "thoigian"=>$input['thoigian'],
             "ghichu"=>$input['ghichu'],
             "noidung"=>$input['noidung'],
-            // "thoigian"=>,
+            "thoigian"=> $input['thoigian'],
+        ]);   
+    }
+    // export
+    public function export()
+    {
+        $export = Export::all();
+        return view('backend.content.storage.export.index',compact('export'));
+    }
+
+    public function export_add()
+    {
+        $account = Admin::all();
+        $product = Product::all();
+        $info = json_encode($product);
+        return view('backend.content.storage.export.insert',compact('account','product','info'));
+    }
+    public function export_insert(Request $request, Product $products)
+    {
+        $input = $request->all();
+        $arr_sp = [];
+        $export = new Export;
+        $product = DB::table('products')
+        ->select('quantity','id')
+        ->get();
+        foreach($input['product_id'] as $key =>$val){
+            $arr_sp[$key]['product_id'] =  $input['product_id'][$key];
+            $arr_sp[$key]['soluong'] = $input['soluong'][$key];
+            $soluong =    (int) $arr_sp[$key]['soluong'];
+            $id = (int) $arr_sp[$key]['product_id'];
+            if($soluong >0){
+                foreach($product as $val){
+                    if($val->id == $id){
+                        $val->quantity -=  $soluong;
+                        $products->where('id',$id)->update(['quantity'=>$val->quantity]);           
+                    }
+                }
+            }
+            else{
+                $soluong = 0;
+                $mess=  'Số lượng phải lớn hơn 0';
+                echo "<script type='text/javascript'>alert('$mess');</script>";
+                return redirect()->route('admin.storage.export.add');
+            }
+        }
+        $export->ma = $input['ma'];
+        $export->nguoixuat = $input['nguoixuat'];
+        $export->sanpham = json_encode($arr_sp);
+        $export->noidung = $input['noidung'];
+        $export->ghichu = $input['ghichu'];
+        $export->save();
+        return redirect()->route('admin.storage.export');
+    }
+
+    public function export_view(Request $request)
+    {
+        $input = $request->all();
+        $account = Admin::all();
+        $unit = Unit::all();
+        $sanpham = json_decode($input['sanpham']);
+        $product = DB::table('products')
+        ->get();
+        foreach($sanpham as $key=>$val){
+            $id = (int)$val->product_id;
+            foreach($product as $k=>$value){
+                if($id == $value->id ){
+                    $arr[$id] = $value; 
+                    $arr[$id]->soluongxuat = (int)$val->soluong;
+                }
+                foreach($unit as $val){
+                    if($value->unit_id == $val->id){
+                        $value->unit_id = $val->name;
+                    }
+                }
+            }   
+        }
+        foreach($account as $val){
+            if($input['nguoixuat'] == $val->id){
+                $input['nguoixuat'] = $val->name;
+            }
+        }
+        return response()->json([
+            "sanpham"=> json_encode($arr),
+            "ma"=> $input['ma'],
+            "nguoixuat"=>$input['nguoixuat'],
+            "id"=>$input['id'],
+            "thoigian"=>$input['thoigian'],
+            "ghichu"=>$input['ghichu'],
+            "noidung"=>$input['noidung'],
+            "thoigian"=> $input['thoigian'],
         ]);   
     }
 

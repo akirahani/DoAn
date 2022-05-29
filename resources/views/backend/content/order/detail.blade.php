@@ -25,7 +25,7 @@
                 </tr>
                 @endforeach
             </tbody>
-            <a  href="" class="btn btn-info"> <i class="fas fa-edit"></i></a>
+            <a  href="{{url('admin/order/call',$order_id)}}" class="btn btn-info"> <i class="fas fa-phone"></i></a>
         </table>
     </div>
   </body>

@@ -9,5 +9,5 @@ class Export extends Model
 {
     use HasFactory;
     protected $table = 'exports';
-    protected $fillable = ['id','ma','sanpham','noidung','ghichu'];
+    protected $fillable = ['id','ma','nguoixuat','sanpham','noidung','ghichu'];
 }

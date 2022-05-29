@@ -28,7 +28,7 @@
       justify-content: space-around;
       flex-wrap: wrap;
   }		
-  .item-import-paper{
+  .item-export-paper{
       width: 50%;
   }
   .exit:before{
@@ -43,31 +43,31 @@
   }
 </style>
 <div class="head-start-news mb-3">
-  <h1>Danh sách đơn nhập</h1>
+  <h1>Danh sách phiếu xuất</h1>
   <hr>
-  <a href="{{url('/admin/storage/import/add')}}" class="btn btn-success"><i class="fas fa-plus"></i></a>
+  <a href="{{url('/admin/storage/export/add')}}" class="btn btn-success"><i class="fas fa-plus"></i></a>
 </div>
 <div class="detail-main-storage">
   <table class="table ">
       <thead class="table-dark">
           <tr>
             <th  scope="row">Mã đơn</th>
-            <th scope="row">Nội dung nhập hàng</th>
+            <th scope="row">Nội dung xuất hàng</th>
             {{-- <th  scope="col">Người nhập</th> --}}
             <th  scope="row">Ghi chú</th>
-            <th  scope="row">Ngày nhập</th>
+            <th  scope="row">Ngày xuất</th>
             <th  scope="row">Tác vụ</th>
           </tr>
       </thead>
       <tbody>
-        @foreach($import as $key=> $val)
+        @foreach($export as $key=> $val)
           <tr>
             <td scope="row">{{$val->ma}}</td>
             <td scope="row">{{$val->noidung}}</td>
             <td scope="row"> {{$val->ghichu}}</td>
             <td scope="row">{{$val->created_at}}</td>
             <td  scope="row" style="display: flex; justify-content: space-between">
-              <button  class="btn btn-warning view_import" id="view-import" thoigian="{{$val->created_at}}" import="{{$val->id}}" nguoinhap="{{$val->nguoinhap}}" ma="{{$val->ma}}" noidung="{{$val->noidung}}" ghichu="{{$val->ghichu}}" thoigian="{{$val->created_at}}" sanpham="{{$val->sanpham}}"><i class="fas fa-eye"></i></button>
+              <button  class="btn btn-warning view_export" id="view-export" thoigian="{{$val->created_at}}" export="{{$val->id}}" nguoixuat="{{$val->nguoixuat}}" ma="{{$val->ma}}" noidung="{{$val->noidung}}" ghichu="{{$val->ghichu}}" thoigian="{{$val->created_at}}" sanpham="{{$val->sanpham}}"><i class="fas fa-eye"></i></button>
               <a href="{{url('',$val['id'])}}" class="btn btn-info"><i class="fas fa-edit"></i></a>
           </td>
           </tr>
@@ -80,17 +80,17 @@
 </div>
 <script>
 
-$('.view_import').click(function(){
+$('.view_export').click(function(){
   var form_data= new FormData();
-  var id = $(this).attr('import');
-  var nguoinhap = $(this).attr('nguoinhap');
+  var id = $(this).attr('export');
+  var nguoixuat = $(this).attr('nguoixuat');
   var ma = $(this).attr('ma');
   var noidung = $(this).attr('noidung');
   var ghichu = $(this).attr('ghichu');
   var thoigian = $(this).attr('thoigian');
   var sanpham = $(this).attr('sanpham');
   form_data.append('id',id);
-  form_data.append('nguoinhap',nguoinhap);
+  form_data.append('nguoixuat',nguoixuat);
   form_data.append('ma',ma);
   form_data.append('noidung',noidung);
   form_data.append('ghichu',ghichu);
@@ -105,42 +105,42 @@ $('.view_import').click(function(){
       data: form_data,
       processData: false,
       contentType: false,
-      url: "{{route('admin.storage.import.view')}}",
+      url: "{{route('admin.storage.export.view')}}",
       success:function(data){
         var info = jQuery.parseJSON(data.sanpham);
         var arr_get = Object.values(info);
-        var tong_nhap = 0;
+        var tong_xuat= 0;
         var products = '';
         arr_get.forEach((item)=>{
           products += `
                 <tr>
                   <td>${item.name}</td>
-                  <td>${item.soluongnhap}</td>
+                  <td>${item.soluongxuat}</td>
                   <td>${item.price}</td>
                   <td>${item.unit_id}</td>
                 </tr>`
-                tong_nhap += item.soluongnhap * item.price; 
+                tong_xuat += item.soluongxuat * item.price; 
         })
         $('.modal'+id).show();
         $('.modal'+id).append(`
-          <div class="content-import">
-            <h1 style="position:absolute; z-index:1; left:0; right: 0; padding-top: 15px; ">Phiếu nhập ${data.ma}</h1>
+          <div class="content-export">
+            <h1 style="position:absolute; z-index:1; left:0; right: 0; padding-top: 15px; ">Phiếu xuất ${data.ma}</h1>
             <form action="" style="margin-left:auto 249px; position:relative; padding: 80px ;">
               <div class="rows">
-                <div class="item-import-paper">
-                  <b>Người nhập</b>
-                  <p>${data.nguoinhap}</p>
+                <div class="item-export-paper">
+                  <b>Người xuất</b>
+                  <p>${data.nguoixuat}</p>
                 </div>
-                <div class="item-import-paper">
+                <div class="item-export-paper">
                   <b>Nội dung</b>
                   <p>${data.noidung}</p>
                 </div>
-                <div class="item-import-paper">
+                <div class="item-export-paper">
                   <b>Ghi chú</b>
                   <p>${data.ghichu}</p>
                 </div>
-                <div class="item-import-paper">
-                  <b>Ngày nhập</b>
+                <div class="item-export-paper">
+                  <b>Ngày xuất</b>
                   <p>${data.thoigian}</p>
                 </div>
               </div>
@@ -157,7 +157,7 @@ $('.view_import').click(function(){
                 ${products}
                 </tbody>  
               </table>
-              <b style="float: right">Tổng nhập: ${tong_nhap}</b>
+              <b style="float: right">Tổng nhập: ${tong_xuat}</b>
               <button onclick="window.print()"><i class="fa fa-print"></i></button> 
             </form>
           </div>`);

@@ -197,13 +197,12 @@
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img class="rounded-circle header-profile-user" src="{{asset('assets2/images/users/avatar-1.jpg')}}"
                         alt="Header Avatar">
-                    <span class="d-none d-xl-inline-block ms-1 fw-medium">Shawn L.</span>
+                    <span class="d-none d-xl-inline-block ms-1 fw-medium">{{session('acc')[0]->name}}</span>
+                    <input type="number" hidden value="{{session('acc')[0]->id}}">
                     <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
                 </button>
                 <div class="dropdown-menu dropdown-menu-end">
                     <!-- item-->
-                    <a class="dropdown-item" href="apps-contacts-profile.html"><i class="mdi mdi-face-profile font-size-16 align-middle me-1"></i> Profile</a>
-                    <a class="dropdown-item" href="auth-lock-screen.html"><i class="mdi mdi-lock font-size-16 align-middle me-1"></i> Lock Screen</a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{url('/admin/logout')}}"><i class="mdi mdi-logout font-size-16 align-middle me-1"></i> Logout</a>
                 </div>

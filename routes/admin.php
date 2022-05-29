@@ -79,14 +79,21 @@ Route::middleware('auth:admin')->group(function(){
         // order
         Route::get('/order','Admin\OrderController@index')->name('admin.order');
         Route::get('/order/detail/{id}','Admin\OrderController@detail')->name('admin.order.detail');
+        Route::get('/order/call/{id}','Admin\OrderController@get_call')->name('admin.order.call');
         // storage
         Route::get('/storage/import','Admin\StorageController@import')->name('admin.storage.import');
         Route::get('/storage/export','Admin\StorageController@export')->name('admin.storage.export');
-        Route::get('/storage/import/add','Admin\StorageController@import_add');
+        Route::get('/storage/import/add','Admin\StorageController@import_add')->name('admin.storage.import.add');
         Route::post('/storage/import/insert','Admin\StorageController@import_insert');
         Route::get('/storage/import/edit','Admin\StorageController@import_edit');
         Route::get('/storage/import/delete','Admin\StorageController@import_delete');
         Route::post('/storage/import/view','Admin\StorageController@import_view')->name('admin.storage.import.view');
+        
+        Route::get('/storage/export/add','Admin\StorageController@export_add')->name('admin.storage.export.add');
+        Route::post('/storage/export/insert','Admin\StorageController@export_insert');
+        Route::get('/storage/export/edit','Admin\StorageController@export_edit');
+        Route::get('/storage/export/delete','Admin\StorageController@export_delete');
+        Route::post('/storage/export/view','Admin\StorageController@export_view')->name('admin.storage.export.view');
         // Route::post('/storage/insert','Admin\CategoryController@insert')->name('admin.category.store');
         // Route::get('/category/edit/{id}','Admin\CategoryController@edit')->name('admin.category.edit');
         // Route::post('/category/update','Admin\CategoryController@update');

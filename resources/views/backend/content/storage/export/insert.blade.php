@@ -3,23 +3,23 @@
 <div class="row">
     <div class="col-12">
         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-            <h4 class="mb-sm-0 font-size-18">Thêm phiếu nhập</h4>
+            <h4 class="mb-sm-0 font-size-18">Thêm phiếu xuất</h4>
         </div>
     </div>
 </div>
 <div class="card">
     <div class="card-body">
-        <form action="{{url('/admin/storage/import/insert')}}" method="post" enctype="multipart/form-data">
+        <form action="{{url('/admin/storage/export/insert')}}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="row p-5">
                     <div class="mb-3 col-6 col-6">
-                        <label for = "input-6"> Mã phiếu nhập</label>
+                        <label for = "input-6"> Mã phiếu xuất</label>
                         <input name = "ma" type="text" class ="form-control form-control-rounded" id="input-6" required>
                     </div>
 
                     <div class="mb-3 col-6 col-6">
-                        <label for ="input-9"> Người nhập</label>
-                        <select id="inputState" class ="form-select" name="nguoinhap">
+                        <label for ="input-9"> Người xuất</label>
+                        <select id="inputState" class ="form-select" name="nguoixuat">
                             @foreach($account as $val)
                                 <option selected ="" value="{{$val['id']}}">{{$val['name']}}</option>
                             @endforeach
@@ -27,7 +27,7 @@
                     </div>
 
                     <div class="mb-3 col-6">
-                        <label for = "input-6"> Nội dung nhập</label>
+                        <label for = "input-6"> Nội dung xuất</label>
                         <input name ="noidung" type="text" class ="form-control form-control-rounded" id="input-6" required>
                     </div>
 
@@ -36,8 +36,8 @@
                         <input name = "ghichu" type="text" class ="form-control form-control-rounded" id="input-6" >
                     </div>
 
-                    <div class="import-product">
-                        <div class="item-import"  style="display:flex; justify-content: space-around">
+                    <div class="export-product">
+                        <div class="item-export"  style="display:flex; justify-content: space-around">
                             <div class="tensp">
                                 <p>Tên sản phẩm</p>
                                 <select id= "inputState"  class ="form-select" name="product_id[]">
@@ -62,7 +62,7 @@
 
                     </div>
                     <div class="tong-gia"></div>
-                    <div class="add-item-import" ><i style="float:right" class="fa fa-plus"></i></div>
+                    <div class="add-item-export" ><i style="float:right" class="fa fa-plus"></i></div>
                     
 
                 <div class ="form-group mt-3">
@@ -74,8 +74,8 @@
 </div>
 <script>
     $('.fa-plus').click(function(){
-        $('.import-product').append(`
-        <div class="item-import" style="display:flex; justify-content: space-around">
+        $('.export-product').append(`
+        <div class="item-export" style="display:flex; justify-content: space-around">
             <div class="tensp">
                 <p>Tên sản phẩm</p>
                 <select id= "inputState" class ="form-select" name="product_id[]">
