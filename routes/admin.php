@@ -79,7 +79,8 @@ Route::middleware('auth:admin')->group(function(){
         // order
         Route::get('/order','Admin\OrderController@index')->name('admin.order');
         Route::get('/order/detail/{id}','Admin\OrderController@detail')->name('admin.order.detail');
-        Route::get('/order/call/{id}','Admin\OrderController@get_call')->name('admin.order.call');
+        Route::post('/order/call','Admin\OrderController@get_call')->name('admin.order.call');
+        Route::get('/order/confirm/{id}','Admin\OrderController@order_confirm')->name('admin.order.confirm');
         // storage
         Route::get('/storage/import','Admin\StorageController@import')->name('admin.storage.import');
         Route::get('/storage/export','Admin\StorageController@export')->name('admin.storage.export');

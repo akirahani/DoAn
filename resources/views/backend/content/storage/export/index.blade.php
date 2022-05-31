@@ -68,7 +68,6 @@
             <td scope="row">{{$val->created_at}}</td>
             <td  scope="row" style="display: flex; justify-content: space-between">
               <button  class="btn btn-warning view_export" id="view-export" thoigian="{{$val->created_at}}" export="{{$val->id}}" nguoixuat="{{$val->nguoixuat}}" ma="{{$val->ma}}" noidung="{{$val->noidung}}" ghichu="{{$val->ghichu}}" thoigian="{{$val->created_at}}" sanpham="{{$val->sanpham}}"><i class="fas fa-eye"></i></button>
-              <a href="{{url('',$val['id'])}}" class="btn btn-info"><i class="fas fa-edit"></i></a>
           </td>
           </tr>
           <div class="modal{{$val->id}}" id="modal" style="display: none; ">
