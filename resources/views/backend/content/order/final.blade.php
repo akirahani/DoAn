@@ -1,9 +1,9 @@
 @extends('backend.layouts.index')
 @section('content')
     <div class="head-start-account mb-3">
-        <h1>Xác nhận đơn hàng</h1>
+        <h1>Chốt đơn hàng</h1>
     </div>
-    <form action="{{url('admin/order/response')}}" method="POST">
+    <form action="{{url('admin/order/finish')}}" method="POST">
         @csrf
         <input type="hidden" value="{{$order->id}}" name="id">
         <p>Tên khách</p>
@@ -26,7 +26,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($order_detail as $key=>$val)
+                @foreach ($order_final as $key=>$val)
                     <tr>
                         <td hidden><input type="hidden" name="sanpham[]" value="{{$val->sanpham}}"></td>
                         <td>{{$key+1}}</td>
@@ -38,7 +38,7 @@
                 @endforeach
             </tbody>
         </table>
-        <input type="submit" name="xuat" class="btn btn-info" value="Xuất hàng"> 
+        <input type="submit" name="hoanthanh" class="btn btn-info" value="Chốt đơn"> 
         <input type="submit" name="huy" class="btn btn-danger" value="Hủy đơn"> 
     </form>
   </body>
