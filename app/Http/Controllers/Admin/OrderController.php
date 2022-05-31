@@ -115,50 +115,55 @@ class OrderController extends Controller
     }
     public function order_response(Order $order,Request $request,Product $products){
         $input = $request->all();
-        if(isset($input['xuat'])){
-            // xu li xuat hang
-            $product = DB::table('products')
-            ->select('quantity','id')
-            ->get();
-            foreach($input['sanpham'] as $key =>$value){
-                $arr_sp[$key]['sanpham'] =  $input['sanpham'][$key];
-                $arr_sp[$key]['soluong'] = $input['soluong'][$key];
-                $soluong =    (int) $arr_sp[$key]['soluong'];
-                $id = (int) $arr_sp[$key]['sanpham'];
-                if($soluong >0){
-                    foreach($product as $val){
-                        if($val->id == $id){
-                            $val->quantity -=  $soluong;
-                            $products->where('id',$id)->update(['quantity'=>$val->quantity]);           
+        $id = $input['id'];
+    
+            if(isset($input['xuat'])){
+                // xu li xuat hang
+                $product = DB::table('products')
+                ->select('quantity','id')
+                ->get();
+                foreach($input['sanpham'] as $key =>$value){
+                    $arr_sp[$key]['sanpham'] =  $input['sanpham'][$key];
+                    $arr_sp[$key]['soluong'] = $input['soluong'][$key];
+                    $soluong =    (int) $arr_sp[$key]['soluong'];
+                    $id = (int) $arr_sp[$key]['sanpham'];
+                    if($soluong >0){
+                        foreach($product as $val){
+                            if($val->id == $id){
+                                $val->quantity -=  $soluong;
+                                $products->where('id',$id)->update(['quantity'=>$val->quantity]);           
+                            }
                         }
                     }
                 }
+                // Xu li trang thai
+                $arr = [
+                    'status'=>3,
+                    'receive'=>   $input['receive_id']
+                ];
+                $order->where('id',$id)->update($arr);
+                $order_delivery = DB::table('orders')
+                ->select('*')
+                ->where('receive',   $input['receive_id'])
+                ->where('status',3)
+                ->get();
+                return view('backend.content.order.delivery',compact('order_delivery'));
             }
-            // Xu li trang thai
-            $arr = [
-                'status'=>3,
-            ];
-            $order->where('id',$id)->update($arr);
-            $order_delivery = DB::table('orders')
-            ->select('*')
-            ->where('status',3)
-            ->get();
-            return view('backend.content.order.delivery',compact('order_delivery'));
-        }
-        if(isset($input['huy'])){
-            $arr = [
-                'status'=>5,
-                'updated_at'=> Carbon\Carbon::now()
-            ];
-            $order->where('id',$id)->update($arr);
-            $order_cancel = DB::table('orders')
-            ->select('*')
-            ->where('id',$id)
-            ->where('receive',session('acc')[0]->id)
-            ->where('status',5)
-            ->get();
-            return view('backend.content.order.huy',compact('order_cancel'));
-        }
+            if(isset($input['huy'])){
+                $arr = [
+                    'status'=>5,
+                    'updated_at'=> Carbon\Carbon::now()
+                ];
+                $order->where('id',$id)->update($arr);
+                $order_cancel = DB::table('orders')
+                ->select('*')
+                ->where('id',$id)
+                ->where('receive',   $input['receive_id'])
+                ->where('status',5)
+                ->get();
+                return view('backend.content.order.huy',compact('order_cancel'));
+            }
+
     }
 
     public function order_final($id){
@@ -182,6 +187,7 @@ class OrderController extends Controller
             // Xu li trang thai
             $arr = [
                 'status'=>4,
+                'receive'=>   $input['receive_id']
             ];
             $order->where('id',$id)->update($arr);
             $order_finish= DB::table('orders')

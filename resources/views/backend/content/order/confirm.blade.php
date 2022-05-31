@@ -5,6 +5,7 @@
     </div>
     <form action="{{url('admin/order/response')}}" method="POST">
         @csrf
+        <input type="hidden" value="{{$order->receive}}" name="receive_id">
         <input type="hidden" value="{{$order->id}}" name="id">
         <p>Tên khách</p>
         <input type="text" class="form-control" value="{{$order->name}}" readonly/><br>
