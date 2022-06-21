@@ -5,41 +5,73 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\Product;
+use App\Models\Cancel;
 use DB;
+use Carbon;
 class OrderController extends Controller
 {
     public function index(){
         $order = DB::table('orders')
         ->where('status',1)
         ->get();
-        $order_goi = DB::table('orders')
+        $order_call = DB::table('orders')
+        ->select('*')
         ->where('status',2)
         ->get();
-        if(count($order_goi) > 0 ){
-            return view('backend.content.order.index',compact('order'));
+        $order_delivery = DB::table('orders')
+        ->select('*')
+        ->where('status',3)
+        ->get();
+        if(count($order_call) != 0 ){
+            foreach($order_call as $val){
+                if($val->receive == session('acc')[0]->id){
+                    return view('backend.content.order.edit',compact('order_call'));
+                }
+            }  
         }
-        
+        if(count($order_delivery) != 0 ){
+            foreach($order_delivery as $value){
+                if($value->receive == session('acc')[0]->id){
+                    return view('backend.content.order.delivery',compact('order_delivery'));
+                }
+            }  
+        }
+        return view('backend.content.order.index',compact('order'));
     }
-    public function insert(Request $request){
+    public function insert(Request $request, Product $product_capnhat){
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
         $input = $request->all();
         $order = new Order;
-        $order->name = $input['name'];
-        $order->tel = $input['tel'];
-        $order->address = $input['address'];
-        $order->note = $input['note'];
-        $order->status = 1;
-        $order->total_price = $input['price-all'];
-        $order->save();
+        $product = DB::table('products')
+        ->select('*')
+        ->get();
         foreach($input['product_id'] as $key=>$val){
-          
-            $order->order_product()->attach($input['product_id'][$key],['quantity'=>$input['quantity'][$key]]);
+            foreach($product as $value){
+                if($value->quantity >= $input['quantity'][$key]){
+                    $order->name = $input['name'];
+                    $order->tel = $input['tel'];
+                    $order->address = $input['address'];
+                    $order->note = $input['note'];
+                    $order->status = 1;
+                    $order->total_price = $input['price-all'];
+                    $order->save();
+                    if($value->id == $input['product_id'][$key] ){
+                        $value->quantity -= $input['quantity'][$key];
+                        $order->order_product()->attach($input['product_id'][$key],['quantity'=>$input['quantity'][$key]]);
+                        $arr = [
+                            'quantity'=>$value->quantity
+                        ];
+                        $product_capnhat->where('id',$input['product_id'][$key])->update($arr);
+                    }
+                }
+                // else{
+                //     return redirect()->back();
+                // }
+            }
         }
-
         $request->Session()->forget('cart');  
-        
-
         return redirect()->route('cart')->with('success', 'Chúng tôi sẽ liên lạc sớm nhất');
-
     }  
     public function detail($id){
         $order= DB::table('order_products')
@@ -50,26 +82,254 @@ class OrderController extends Controller
         $order_id = $id;
         return view('backend.content.order.detail',compact('order','order_id'));
     }
-    public function get_call($id, Order $order){
+    public function get_call(Order $order,Request $request){
+        $input = $request->all();
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $id = $input['id'];
         $order_call = Order::find($id);
-        if($order_call->trangthai == 1)
-        {
-            // Đơn chưa có ai nhận
+        if(isset($input['goi'])){
+            $arr = [
+                'status'=>2,
+                'receive'=>session('acc')[0]->id
+            ];
+            $order->where('id',$id)->update($arr);
+            $order_call = DB::table('orders')
+            ->select('*')
+            ->where('status',2)
+            ->get();
+            return view('backend.content.order.edit',compact('order_call'));
         }
-        else
-        {
-            // Đơn đã có người nhận
-            return redirect()->route('admin.order');
+        if(isset($input['huy'])){
+            $arr = [
+                'status'=>5,
+                'updated_at'=> Carbon\Carbon::now()
+            ];
+            $order->where('id',$id)->update($arr);
+            $order_cancel = DB::table('orders')
+            ->select('*')
+            ->where('id',$id)
+            ->where('status',5)
+            ->get();
+            return view('backend.content.order.huy',compact('order_cancel'));
+        }    
+    }
+    // public function detail_call($id){
+    //     $order = Order::find($id);
+    //     // dd($order);
+    //     $order_detail= DB::table('order_products')
+    //     ->join('products','order_products.product_id','=','products.id')
+    //     ->where('order_id','=',$id)
+    //     ->where('status','=','2')
+    //     ->select('*','order_products.quantity as soluong','order_products.product_id as sanpham')
+    //     ->get();
+
+    //     // if($order->receive == session('acc')[0]->id){
+    //         return view('backend.content.order.edit',compact('order','order_detail'));
+    //     // }
+    // }
+    public function order_confirm($id){
+        $order = Order::find($id);
+        $cancel = Cancel::all();
+        $order_detail= DB::table('order_products')
+        ->join('products','order_products.product_id','=','products.id')
+        ->where('order_id','=',$id)
+        ->select('*','order_products.quantity as soluong','order_products.product_id as sanpham')
+        ->get();
+        if($order->receive == session('acc')[0]->id){
+            return view('backend.content.order.confirm',compact('order','order_detail','cancel'));
         }
-        $arr = [
-            'status'=>2,
-            'receive'=>session('acc')[0]->id
+        else{
+            echo 'Đã có người giao dịch với đơn này';
+        }
+    }
+// cancel
+    public function cancel(){
+        $cancel = Cancel::all();
+        return view('backend.content.cancel.index',compact('cancel'));
+    }
+    public function cancel_add(){
+        return view('backend.content.cancel.insert');
+    }
+    public function cancel_insert(Request $request){
+        $input= $request->all();
+        $cancel = new Cancel;
+        $cancel->name = $input['name'];
+        $cancel->save(); 
+        return redirect()->route('admin.cancel');
+    }
+    public function cancel_edit($id){
+        $cancel= Cancel::find($id);                                    
+        return view('backend.content.cancel.edit',compact('cancel'));
+    }
+    public function cancel_update(Cancel $cancel, Request $request){
+        $input = $request->all();
+        $id = $input['id'];
+        $data =[
+            'name'=>$input['name'],
         ];
-        $order->where('id',$id)->update($arr);
-        if($order_call->status ==2){
-            if(session('acc')[0]->id == $order_call->receive ){
-                return view('backend.content.order.edit',compact('order_call'));
+        $cancel= $cancel->find($id);
+        $cancel->update($data);
+        return redirect()->route('admin.cancel');
+    }
+    public function cancel_delete($id,Cancel $cancel){
+        $cancel->where('id',$id)->delete();
+        return response()->json([
+            "success"=>"Bạn đã xóa thành công"            
+        ]);
+    }
+// 
+    public function action_response(Request $request, Product $product_capnhat){
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $input= $request->all();
+        $id = $input['id'];
+        $order_confirm = Order::find($id);
+        $product = DB::table('products')
+        ->select('*')
+        ->get();
+        if($input['luachon'] == 1 && $input['lydo'] == 0){
+            foreach($input['sanpham'] as $key=>$val){
+                foreach($product as $value){
+                    if($value->quantity >= $input['soluong'][$key]){
+                        $order_confirm->status = 3;
+                        $order_confirm->giovanchuyen = Carbon\Carbon::now();;
+                        $order_confirm->save();
+                        $order_delivery = DB::table('orders')
+                        ->select('*')
+                        ->where('id',$id)
+                        ->where('status',3)
+                        ->get();
+                        return view('backend.content.order.delivery',compact('order_delivery'));
+                    }
+                }
+            }
+        }else{
+            foreach($input['sanpham'] as $key=>$val){
+                foreach($product as $value){
+                    if($value->quantity >= $input['soluong'][$key]){
+                        $order_confirm->status = 5;
+                        $order_confirm->updated_at = Carbon\Carbon::now();
+                        $order_confirm->lydohuy = $input['lydo'];
+                        $order_confirm->save();
+         
+                        if($value->id == $input['sanpham'][$key] ){
+                            $value->quantity += $input['soluong'][$key];
+                            $arr = [
+                                'quantity'=>$value->quantity,
+                            ];
+                            $product_capnhat->where('id',$input['sanpham'][$key])->update($arr);
+                            $order_cancel = DB::table('orders')
+                            ->select('*')
+                            ->where('status',5)
+                            ->get();
+                            return view('backend.content.order.huy',compact('order_cancel'));
+                        }
+                    }
+                }
             }
         }
     }
+
+    public function order_delivery(){
+        $order_delivery = DB::table('orders')
+        ->select('*')
+        ->where('status',3)
+        ->get();
+        foreach($order_delivery as $val){
+            if($val->receive == session('acc')[0]->id){
+                return view('backend.content.order.delivery',compact('order_delivery'));
+            }
+            else{
+                echo 'Đã có người giao dịch với đơn này';
+            }
+        }
+    }
+
+    public function order_final($id){
+        $order = Order::find($id);
+        $cancel = Cancel::all();
+        $order_detail= DB::table('order_products')
+        ->join('products','order_products.product_id','=','products.id')
+        ->where('order_id','=',$id)
+        ->select('*','order_products.quantity as soluong','order_products.product_id as sanpham')
+        ->get();
+        if($order->receive == session('acc')[0]->id){
+            return view('backend.content.order.final',compact('order','order_detail','cancel'));
+        }
+        else{
+            echo 'Đã có người giao dịch với đơn này';
+        }
+    }
+
+    public function order_closing(Request $request, Product $product_capnhat){
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        $input= $request->all();
+        $id = $input['id'];
+        $order_finish = Order::find($id);
+        $product = DB::table('products')
+        ->select('quantity','id')
+        ->get();
+        if($input['luachon'] == 1 && $input['lydo'] == 0){
+            foreach($input['sanpham'] as $key=>$val){
+                foreach($product as $value){
+                    if($value->quantity >= $input['soluong'][$key]){
+                        $order_finish->status = 4;
+                        $order_finish->giohoanthanh = Carbon\Carbon::now();
+                        $order_finish->save();
+                        $order_finish = DB::table('orders')
+                        ->select('*')
+                        ->where('status',4)
+                        ->get();
+                        return view('backend.content.order.finish',compact('order_finish'));
+                    }
+                }
+            }
+        }else{
+            foreach($input['sanpham'] as $key=>$val){
+                foreach($product as $value){
+                    if($value->quantity >= $input['soluong'][$key]){
+                        $order_finish->status = 5;
+                        $order_finish->updated_at = Carbon\Carbon::now();
+                        $order_finish->lydohuy = $input['lydo'];
+                        $order_finish->save();
+                        if($value->id == $input['sanpham'][$key] ){
+                            $value->quantity += $input['soluong'][$key];
+                            $arr = [
+                                'quantity'=>$value->quantity,
+                            ];
+                            $product_capnhat->where('id',$input['sanpham'][$key])->update($arr);
+                            $order_cancel = DB::table('orders')
+                            ->select('*')
+                            ->where('status',5)
+                            ->get();
+                            return view('backend.content.order.huy',compact('order_cancel'));
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    public function order_cancel(){
+        // $order_detail= DB::table('order_products')
+        // ->join('products','order_products.product_id','=','products.id')
+        // ->where('order_id','=',$id)
+        // ->select('*','order_products.quantity as soluong','order_products.product_id as sanpham')
+        // ->get();
+        $order_cancel= DB::table('orders')
+        ->where('status','=',5)
+        ->get();
+        return view('backend.content.order.huy',compact('order_cancel'));
+
+    }
+    public function order_finish(){
+        $order_finish= DB::table('orders')
+        ->where('status','=',4)
+        ->get();
+        return view('backend.content.order.finish',compact('order_finish'));
+
+    }
+    
 }

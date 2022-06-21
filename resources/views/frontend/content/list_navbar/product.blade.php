@@ -42,7 +42,7 @@
         white-space: nowrap;
         text-overflow: ellipsis; 
     }
-    .grid-product{
+    #grid-product{
         padding: 30px;
         list-style:none;
         display:grid;
@@ -96,27 +96,49 @@
                 @endforeach
             </ul>
         </div>
-        <div class="get-all">
-            <div class="grid-product">
-                @foreach($product as $val)
-                <div class="product-click">
-                    <a href="{{url('/product/detail',$val->id)}}">
-                        <div class="product-thumb " style="">
-                            <div class="thumb-image">
-                                <div class="image">
-                                    <img src="assets/image/upload/{{$val->image}}"
-                                        alt="{{$val->name}}" style="padding: 15%">
-                                </div>
-                            </div>
-                            <div class="caption text-center">
-                                <h5 class="name text-uppercase">{{$val->name}}</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                @endforeach
-            </div>  
-        </div>
+        @php 
+        echo'<div class="get-all">';
+            echo'<div id="grid-product">';
+         
+                    $so_pt_1_trang =8;
+                    $tong_sp = count($product);
+                    $sotrang = ceil($tong_sp/$so_pt_1_trang);
+                    if(isset($_GET['page'])){
+                        $start_page =  ($_GET['page']-1)*$so_pt_1_trang;
+                        $product = DB::table('products')
+                        ->select('*')
+                        ->offset($start_page)
+                        ->limit($so_pt_1_trang)
+                        ->get();
+                    }
+                    foreach($product as $key=>$val){
+                        if($key <  $so_pt_1_trang){
+                            echo '<div class="product-click">
+                                <a href="'.url("/product/detail",$val->id).'">
+                                    <div class="product-thumb " style="">
+                                        <div class="thumb-image">
+                                            <div class="image">
+                                                <img src="assets/image/upload/'.$val->image.'"
+                                                    alt="'.$val->name.'" style="padding: 15%">
+                                            </div>
+                                        </div>
+                                        <div class="caption text-center">
+                                            <h5 class="name text-uppercase">'.$val->name.'</h5>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>';
+                        }
+                    }
+            echo'</div>'; 
+            echo'<div class="number" style="padding: 5px; width: 50%; margin: auto">';
+            for($i= 1;$i<= $sotrang ;$i++){
+                echo' <a class="btn btn-success doing-phantrang ml-2 mr-5" name="number_trang" href="/product?page='.$i.'" style="width:40px;">'.$i.'</a>';
+            }
+            echo'</div>';
+        echo'</div>';
+
+        @endphp
     </div>
 </div>
 
@@ -128,7 +150,7 @@
                 data : {'category_id':id},
                 url: "{{route('product.ajax')}}",
                 success:function(data){
-                    $('.get-all .grid-product').html(data);
+                    $('#grid-product').html(data);
                 }
             });
     });
@@ -139,25 +161,7 @@
             data : {'trademark_id':id},
             url: "{{route('product.ajax')}}",
             success:function(data){
-                var html = "";
-                data.forEach(textdata => {
-                    html+= `<div class="product-click">
-                    <a href="url('/product/detail',${textdata.id})">
-                            <div class="product-thumb " style="">
-                                <div class="thumb-image">
-                                    <div class="image">
-                                        <img src="assets/image/upload/${textdata.image}"
-                                            alt="${textdata.name}" style="padding: 15%">
-                                    </div>
-                                </div>
-                                <div class="caption text-center">
-                                    <h5 class="name text-uppercase">${textdata.name}</h5>
-                                </div>
-                            </div>
-                        </a>
-                    </div>`;
-                    $('.get-all .grid-product').html(html);
-                });
+                $('#grid-product').html(data);
             }
        });
     });

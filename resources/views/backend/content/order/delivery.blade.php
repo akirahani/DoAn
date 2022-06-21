@@ -1,13 +1,12 @@
 @extends('backend.layouts.index')
 @section('content')
     <div class="head-start-account mb-3">
-        <h1>Đơn hàng mới</h1>
+        <h1>Đơn hàng vận chuyển</h1>
     </div>
     <div class="detail-main-product">
             <table class="table ">
                 <thead class="table-dark">
                     <tr >
-                        <th  scope="col">STT</th>
                         <th  scope="col">Tên khách</th>
                         <th  scope="col">Tổng giá</th>
                         <th  scope="col">Ghi chú</th>
@@ -15,18 +14,16 @@
                     </tr>
                 </thead>
             <tbody>
-                @foreach($order as $key=>$val)
-                <tr id="order{{$val->id}}">
-                    <td  scope="row">{{$key+1}}</td>
-                    <td  scope="row">{{$val->name}}</td>
-                    <td  scope="row">{{number_format($val->total_price)}}</td>
-                    <td  scope="row">{{$val->note}}</td>
-                    <td>
-                        <a href="{{url('/admin/order/detail',$val->id)}}" class="btn btn-warning"><i class="fas fa-eye"></i></a>
-                    </td>
-                </tr>
+                @foreach ($order_delivery as $item)
+                    <tr id="order{{$item->id}}">
+                        <td  scope="row">{{$item->name}}</td>
+                        <td  scope="row">{{number_format($item->total_price)}}</td>
+                        <td  scope="row">{{$item->note}}</td>
+                        <td  scope="row">
+                            <a href="{{url('/admin/order/final',$item->id)}}" class="btn btn-warning"><i class="fas fa-spell-check"></i></a>
+                        </td>
+                    </tr>
                 @endforeach
-
             </tbody>
         </table>
     </div>

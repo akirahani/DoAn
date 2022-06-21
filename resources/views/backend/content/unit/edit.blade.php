@@ -1,6 +1,6 @@
 @extends('backend.layouts.index')
 @section('content')
-    <h1>Sửa sản phẩm</h1>
+    <h1>Sửa đơn vị</h1>
     <div class="card">
         <div class="card-body">
             <form action="{{url('/admin/unit/update')}}" method="post" enctype="multipart/form-data">
