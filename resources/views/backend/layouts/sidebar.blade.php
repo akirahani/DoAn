@@ -36,6 +36,9 @@
                         <li>
                             <a href="{{url('/admin/trademark')}}">Thương hiệu</a>
                         </li>
+                        <li>
+                            <a href="{{url('/admin/unit')}}">Đơn vị tính</a>
+                        </li>
                     </ul>
                 </li>
 
@@ -59,7 +62,10 @@
                         <span data-key="t-components">Đơn đặt hàng</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{url('/admin/order')}}" data-key="t-alerts">Danh sách</a></li>
+                        <li><a href="{{url('/admin/order')}}" data-key="t-alerts">Đơn hàng mới</a></li>
+                        <li><a href="{{url('/admin/order/finish')}}" data-key="t-alerts">Đơn hàng hoàn thành</a></li>
+                        <li><a href="{{url('/admin/order/cancel')}}" data-key="t-alerts">Đơn hàng hủy</a></li>
+                        <li><a href="{{url('/admin/cancel')}}" data-key="t-alerts">Lý do hủy đơn</a></li>
                     </ul>
                 </li>
 

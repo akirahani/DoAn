@@ -5,7 +5,6 @@
     </div>
     <form action="{{url('admin/order/response')}}" method="POST">
         @csrf
-        <input type="hidden" value="{{$order->receive}}" name="receive_id">
         <input type="hidden" value="{{$order->id}}" name="id">
         <p>Tên khách</p>
         <input type="text" class="form-control" value="{{$order->name}}" readonly/><br>
@@ -39,9 +38,29 @@
                 @endforeach
             </tbody>
         </table>
-        <input type="submit" name="xuat" class="btn btn-info" value="Xuất hàng"> 
-        <input type="submit" name="huy" class="btn btn-danger" value="Hủy đơn"> 
+        <input type="radio" name="luachon" class="btn btn-info" value="1" checked="">Giao hàng 
+        <input type="radio" name="luachon" class="btn btn-danger" value="0" >Hủy 
+        <div class="select-reason" name="lydohuy" style="width: 400px; display:none">
+            <select name="lydo" id="" class="form-control mt-3 mb-3" >
+                <option  value="0">Lựa chọn</option>
+                @foreach($cancel as $val)
+                    <option  value="{{$val->id}}">{{$val->name}}</option>
+                @endforeach
+            </select>
+        </div>
+        <br>
+        <input type="submit" class="btn btn-warning mt-2" value="Cập nhật đơn" />
     </form>
+    <script>
+        $('input[type="radio"]').click(function(){
+            if($(this).val() == 0){
+                $('.select-reason').slideDown(); 
+            }else{
+                $('.select-reason').slideUp(); 
+            }
+
+        });
+    </script>
   </body>
 </html>
 

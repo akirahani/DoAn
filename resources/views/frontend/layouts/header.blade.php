@@ -51,7 +51,8 @@
                         </li> --}}
                         <li class="cart-icon ml-3">
                             <a href="{{url('/detail/cart')}}">
-                                <i class="fas fa-cart-shopping" style="font-size: 28px; color:orange"></i>
+                                <i class="fas fa-cart-shopping" style="font-size: 28px; color:orange; position: relative"><p style="position: absolute; top: 0  ; right:0; font-size: 15px; color: blue">
+                                    <?php if(session('cart')!==NULL) { echo count(session('cart')->products); }?></p></i>
                             </a>    
                         </li>
                     </ul>

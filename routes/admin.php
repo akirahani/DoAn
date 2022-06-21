@@ -79,11 +79,23 @@ Route::middleware('auth:admin')->group(function(){
         // order
         Route::get('/order','Admin\OrderController@index')->name('admin.order');
         Route::get('/order/detail/{id}','Admin\OrderController@detail')->name('admin.order.detail');
-        Route::post('/order/call','Admin\OrderController@get_call')->name('admin.order.call');
+        Route::post('/order/call/{id}','Admin\OrderController@get_call')->name('admin.order.call');
+        Route::get('/order/call/detail/{id}','Admin\OrderController@detail_call')->name('admin.order.call.detail');
         Route::get('/order/confirm/{id}','Admin\OrderController@order_confirm')->name('admin.order.confirm');
-        Route::post('order/response','Admin\OrderController@order_response')->name('admin.order.response');
-        Route::get('order/final/{id}','Admin\OrderController@order_final')->name('admin.order.final');
-        Route::post('order/finish','Admin\OrderController@order_finish')->name('admin.order.finish');
+        Route::post('/order/response','Admin\OrderController@action_response')->name('admin.order.response');
+
+        Route::get('/order/final/{id}','Admin\OrderController@order_final')->name('admin.order.final');
+        Route::post('/order/closing','Admin\OrderController@order_closing')->name('admin.order.closing');
+
+        Route::get('/order/cancel','Admin\OrderController@order_cancel')->name('admin.order.cancel');
+        Route::get('/order/finish','Admin\OrderController@order_finish')->name('admin.order.finish');
+        // cancel
+        Route::get('/cancel','Admin\OrderController@cancel')->name('admin.cancel');
+        Route::get('/cancel/insert','Admin\OrderController@cancel_add')->name('admin.cancel.insert');
+        Route::post('/cancel/store','Admin\OrderController@cancel_insert')->name('admin.cancel.store');
+        Route::get('/cancel/edit/{id}','Admin\OrderController@cancel_edit')->name('admin.cancel.edit');
+        Route::post('/cancel/update','Admin\OrderController@cancel_update');
+        Route::get('/cancel/delete/{id}','Admin\OrderController@cancel_delete');
         // storage
         Route::get('/storage/import','Admin\StorageController@import')->name('admin.storage.import');
         Route::get('/storage/export','Admin\StorageController@export')->name('admin.storage.export');
@@ -92,7 +104,6 @@ Route::middleware('auth:admin')->group(function(){
         Route::get('/storage/import/edit','Admin\StorageController@import_edit');
         Route::get('/storage/import/delete','Admin\StorageController@import_delete');
         Route::post('/storage/import/view','Admin\StorageController@import_view')->name('admin.storage.import.view');
-        
         Route::get('/storage/export/add','Admin\StorageController@export_add')->name('admin.storage.export.add');
         Route::post('/storage/export/insert','Admin\StorageController@export_insert');
         Route::get('/storage/export/edit','Admin\StorageController@export_edit');

@@ -74,8 +74,8 @@ class StorageController extends Controller
             $id = (int)$val->product_id;
             foreach($product as $k=>$value){
                 if($id == $value->id ){
-                    $arr[$id] = $value; 
-                    $arr[$id]->soluongnhap = $val->soluong;
+                    $arr[$key] = $value; 
+                    $arr[$key]->soluongnhap  = $sanpham[$key]->soluong;
                 }
                 foreach($unit as $val){
                     if($value->unit_id == $val->id){
@@ -126,20 +126,20 @@ class StorageController extends Controller
             $arr_sp[$key]['product_id'] =  $input['product_id'][$key];
             $arr_sp[$key]['soluong'] = $input['soluong'][$key];
             $soluong =    (int) $arr_sp[$key]['soluong'];
-            $id = (int) $arr_sp[$key]['product_id'];
-            if($soluong >0){
-                foreach($product as $val){
-                    if($val->id == $id){
-                        $val->quantity -=  $soluong;
-                        $products->where('id',$id)->update(['quantity'=>$val->quantity]);           
+            $id = (int) $arr_sp[$key]['product_id'];   
+            foreach($product as $keys=>$value){
+                if($soluong >0 && $soluong <= $value->quantity  ){
+                    if($value->id == $id ){
+                        $value->quantity -=  $soluong;
+                        $products->where('id',$id)->update(['quantity'=>$value->quantity]);
                     }
                 }
-            }
-            else{
-                $soluong = 0;
-                $mess=  'Số lượng phải lớn hơn 0';
-                echo "<script type='text/javascript'>alert('$mess');</script>";
-                return redirect()->route('admin.storage.export.add');
+                else{
+                    $soluong = 0;
+                    // $value->quantity = $value->quantity;
+                    // echo "<script type='text/javascript'>alert('$mess');</script>";
+                    return redirect()->route('admin.storage.export.add');
+                }
             }
         }
         $export->ma = $input['ma'];
@@ -163,8 +163,8 @@ class StorageController extends Controller
             $id = (int)$val->product_id;
             foreach($product as $k=>$value){
                 if($id == $value->id ){
-                    $arr[$id] = $value; 
-                    $arr[$id]->soluongxuat = (int)$val->soluong;
+                    $arr[$key] = $value; 
+                    $arr[$key]->soluongxuat = $sanpham[$key]->soluong;
                 }
                 foreach($unit as $val){
                     if($value->unit_id == $val->id){

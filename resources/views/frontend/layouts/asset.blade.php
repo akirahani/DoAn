@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets3/css/content/slick.css') }}">
     <link rel="stylesheet" href="{{ asset('assets3/css/content/product_hot.css') }}">
     <link rel="stylesheet" href="{{ asset('assets3/css/content/trademark.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets3/css/carousel.css') }}">
     <link rel="stylesheet" href="{{ asset('assets3/css/footer.css') }}">
     <script src="{{ asset('assets3/js/jquery-2.1.1.min.js') }}"></script>
     <script src="{{ asset('assets3/js/header.js') }}"></script>

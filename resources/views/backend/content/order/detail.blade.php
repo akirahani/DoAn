@@ -3,7 +3,7 @@
     <div class="head-start-account mb-3">
         <h1>Đơn hàng chi tiết</h1>
     </div>
-    <form action="{{url('admin/order/call')}}" method="POST">
+    <form action="{{url('admin/order/call',$order_id)}}" method="POST">
         @csrf
         <input type="hidden" value="{{$order_id}}" name="id">
         <div class="detail-main-product">

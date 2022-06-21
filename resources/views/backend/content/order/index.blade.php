@@ -1,7 +1,7 @@
 @extends('backend.layouts.index')
 @section('content')
     <div class="head-start-account mb-3">
-        <h1>Đơn hàng</h1>
+        <h1>Đơn hàng mới</h1>
     </div>
     <div class="detail-main-product">
             <table class="table ">

@@ -151,7 +151,7 @@
 
     </style>
 
-     <style>
+    <style>
     .tab-in {
         width: 100%;
         height: 35px;
@@ -192,6 +192,9 @@
     .thumb-images{
         width:350px;
     }
+    .quantity-table{
+        margin: 20px auto;
+    }
 </style>
 <div class="tab-in">
     <div class="inline">
@@ -213,7 +216,7 @@
                             <td></td>
                             <td style="width:270px; height: 140px;"><img style="width:100%" src="../../../assets/image/upload/{{$value['infoProduct']->image}}" alt="" ><p></p> </td>
                             <td><b>{{$value['infoProduct']->name}}</b></td>
-                            <td><input name="quantity[]" class="form-control" data-id="{{$value['infoProduct']->id}}" id="quantity-{{$value['infoProduct']->id}}" type="number" min="1" value="{{$value['quantity']}}" ></td>
+                            <td><input name="quantity[]" class="form-control" data-id="{{$value['infoProduct']->id}}" max="{{number_format($value['infoProduct']->quantity)}}" id="quantity-{{$value['infoProduct']->id}}" type="number" min="1" value="{{$value['quantity']}}" ></td>
                             <td style="color:red"><b>{{number_format($value['infoProduct']->price)}}</b></td>
                             <td ><a href="{{url('/cart/delete',$value['infoProduct']->id)}}"  class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
                          
@@ -305,27 +308,50 @@
             
             <script>
 
+                // $('input[type="submit"]').click(function(){
+                //     let quantity = parseInt($('.quantity-table tr td input').attr('max'));
+                //     let number = parseInt($('.quantity-table tr td input').val());
+                //     if(quantity < number){
+                //         alert('Số lượng không đủ');
+                //         window.location ="{{url('/detail/cart')}}";
+                //     }
+                // });
+                // $('input[name="submit"]').click(function(){
+                //     let 
+                // });
+
                 $('#saveCart').on("click",function(){
                     let id = $('#product-id').val();
                     let arr = [];
                     $(".quantity-table tr td input").each(function(){
-                            let obj = {key: $(this).data("id"), value: $(this).val() };
-                            arr.push(obj);
+                        let obj = {key: $(this).data("id"), value: $(this).val() };
+                        arr.push(obj);
+                       
                     });
-                    console.log(arr);
+                    let quantity = parseInt($('.quantity-table tr td input').attr('max'));
+                    let number = parseInt($('.quantity-table tr td input').val());
+                    if(number <= quantity ){
+                        $.ajax({
+                            url: '/cart/update',
+                            method: 'POST', 
+                            data :{
+                                "_token" :"{{csrf_token()}}",
+                                "data" : arr,
+                            },  
+                            success:function(response){
+                                Swal.fire(
+                                    'THÀNH CÔNG!',
+                                    'Cập nhật thành công !',
+                                    'success'
+                                );
+                            }
+                        });
+                    }
+                    else{
+                        alert('Số lượng không đủ');
+                    }
                  
-                    $.ajax({
-                        url: '/cart/update',
-                        method: 'POST', 
-                        data :{
-                            "_token" :"{{csrf_token()}}",
-                            "data" : arr,
-                        },  
-                        success:function(response){
-                            alert('Cập nhật thành công');
-                            window.location="{{url('/detail/cart')}}";
-                        }
-                    });
+                   
                     if($('#quantity-'+id).val() <=0){
                         $.ajax({
                         url: '/cart/delete/'+id,

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'Frontend\HomeController@index');
 Route::get('/introduce', 'Frontend\HomeController@introduce');
+Route::get('/color', 'Frontend\HomeController@color');
 Route::get('/news', 'Frontend\HomeController@news');
 Route::get('/product', 'Frontend\HomeController@product');
 Route::get('/product/ajax','Frontend\HomeController@filter_poduct')->name('product.ajax');
@@ -21,3 +22,7 @@ Route::post('/cart/update','Frontend\CartController@updateCart');
 Route::get('/cart/delete/{id}','Frontend\CartController@delCart');
 
 Route::post('/order/insert','Admin\OrderController@insert');
+Route::post('/contact/sent','Frontend\HomeController@sent');
+
+Route::post('/rating','Frontend\HomeController@rating');
+

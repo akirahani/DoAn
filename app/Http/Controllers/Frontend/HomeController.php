@@ -11,11 +11,15 @@ use App\Models\News;
 use App\Models\Trademark;
 use App\Models\Category;
 use App\Models\Order;
+use App\Models\User;
+use App\Models\Color;
+use App\Models\DanhGia;
 use DB;
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
+use session;
 class HomeController extends Controller
 {
     function index(){
@@ -79,22 +83,22 @@ class HomeController extends Controller
             ->where('category_id','=',$id)
             ->get();
             foreach($product as $val){
-            echo'
-                <div class="product-click">
-                    <a href="/product/detail/'.$val->id.'">
-                        <div class="product-thumb " style="">
-                            <div class="thumb-image">
-                                <div class="image">
-                                    <img src="assets/image/upload/'.$val->image.'"
-                                        alt="'.$val->name.'" style="padding: 15%">
+                echo'
+                    <div class="product-click">
+                        <a href="/product/detail/'.$val->id.'">
+                            <div class="product-thumb " style="">
+                                <div class="thumb-image">
+                                    <div class="image">
+                                        <img src="assets/image/upload/'.$val->image.'"
+                                            alt="'.$val->name.'" style="padding: 15%">
+                                    </div>
+                                </div>
+                                <div class="caption text-center">
+                                    <h5 class="name text-uppercase">'.$val->name.'</h5>
                                 </div>
                             </div>
-                            <div class="caption text-center">
-                                <h5 class="name text-uppercase">'.$val->name.'</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                        </a>
+                    </div>
             ';
             }
         }
@@ -106,21 +110,21 @@ class HomeController extends Controller
             ->get();
             foreach($product as $val){
                 echo'
-                <div class="product-click">
-                    <a href="/product/detail/'.$val->id.'">
-                        <div class="product-thumb " style="">
-                            <div class="thumb-image">
-                                <div class="image">
-                                    <img src="assets/image/upload/'.$val->image.'"
-                                        alt="'.$val->name.'" style="padding: 15%">
+                    <div class="product-click">
+                        <a href="/product/detail/'.$val->id.'">
+                            <div class="product-thumb " style="">
+                                <div class="thumb-image">
+                                    <div class="image">
+                                        <img src="assets/image/upload/'.$val->image.'"
+                                            alt="'.$val->name.'" style="padding: 15%">
+                                    </div>
+                                </div>
+                                <div class="caption text-center">
+                                    <h5 class="name text-uppercase">'.$val->name.'</h5>
                                 </div>
                             </div>
-                            <div class="caption text-center">
-                                <h5 class="name text-uppercase">'.$val->name.'</h5>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+                        </a>
+                    </div>
                 ';
             }
    
@@ -226,5 +230,104 @@ class HomeController extends Controller
             "success"=>"Đặt nhận tư vấn thành công"            
         ]);
     }
-    
-}
+    public function sent(Request $request){
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        require base_path("vendor/autoload.php");
+        $input = $request->all();
+        $user= new User;
+        $user->phone = $input['dienthoai'];
+        $user->name = $input['ten'];
+        $user->address = $input['diachi'];
+        $user->save();
+
+        $mail = new PHPMailer();    
+        $mail->SMTPDebug = 0;
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';             
+        $mail->SMTPAuth = true;
+        $mail->Username = 'minhvu21091@gmail.com';   
+        $mail->Password = 'jnndzzneqnjcklye';       
+        $mail->SMTPSecure = 'tls';                 
+        $mail->Port = 587;                      
+        // $mail->SMTPOptions=array(
+        //     'ssl'=>array(
+        //         'verify_peer'=>false,
+        //         'verify_peer_name'=>false,
+        //         'allow_self_signed'=>true
+        //     )
+        // );
+        $mail->setFrom('minhvu21091@gmail.com', 'Khách hàng #');
+        $mail->addAddress('minhvu21091@gmail.com');
+        $mail->addAddress('quang79513@st.vimaru.edu.vn');
+        $mail->isHTML(true);  
+        $mail->Subject = $input['ten'].' đăng ký liên hệ #'.date("d-m-Y H:i:s");
+        $mail->Body    = '
+            Tên: '.$input['ten'].'
+            <br> 
+            SĐT: '.$input['dienthoai'].'
+            <br>
+            Địa chỉ: '.$input['diachi'].'
+        ';
+        $mail -> CharSet = "UTF-8";
+
+        if( !$mail->send() ) {
+            return back()->with("failed", "Email not sent.")->withErrors($mail->ErrorInfo);
+        }
+        
+        else {
+            return back()->with("success", "Email has been sent.");
+        }
+
+   
+    }
+    public function color(){
+        $config = Config::first();
+        $menu = Navbar::all();
+        $color = Color::all();
+        return view('frontend.content.detail.color',compact('config','menu','color'));
+    }
+
+    public function rating(Request $request){
+        date_default_timezone_set('Asia/Ho_Chi_Minh');
+        if(isset($_POST['ten']) && isset($_POST['dienthoai']) && isset($_POST['sao']) && isset($_POST['noidung']) && isset($_POST['sanpham']) )
+        {	
+
+            $ten = $_POST['ten'];
+            $dienthoai = $_POST['dienthoai'];
+            $sao = $_POST['sao'];
+            $noidung = $_POST['noidung'];
+            $sanpham = $_POST['sanpham'];
+
+            $danhgia = new DanhGia;
+            $danhgia->sanpham = $sanpham;
+            $danhgia->ten = $ten;
+            $danhgia->dienthoai = $dienthoai;
+            $danhgia->sao = $sao;
+            $danhgia->noidung = $noidung;
+            $id_danhgia = $danhgia->save();
+
+            echo json_encode([
+                "id" =>$id_danhgia,
+                "ten" => $ten,
+                "dienthoai" => $dienthoai,
+                "sao" => $sao,
+                "noidung" => $noidung,
+                // "ngay" => date("d-m-Y"), 
+                "sanpham" => $sanpham,
+                "status" => 'success'
+            ]);
+        }
+        else
+        {
+            echo json_encode([
+                "id" =>'',
+                "ten" => '',
+                "dienthoai" => '',
+                "sao" => '',
+                "noidung" => '',
+                "sanpham" => 0,
+                "status" => 'fail'
+            ]);
+        }
+    }
+}   
