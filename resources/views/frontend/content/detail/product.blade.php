@@ -301,13 +301,32 @@
             <hr>
             <div class="title-page"><h1>{{$product->name}}</h1></div>
             <br>
-            <input class ="name form-control" type="text" autocomplete="false" spellcheck="false" placeholder="Tên của bạn" style="width: 500px; margin: 0 auto; display: block;">
+            <?php if(Session::get('khachten') != NULL) { ?>
+                <input class ="name form-control" type="text" value="<?=Session::get('khachten')?>" autocomplete="false" spellcheck="false" placeholder="Tên của bạn" style="width: 500px; margin: 0 auto; display: block;">
+            <?php }else{
+                echo'<input class ="name form-control" type="text" autocomplete="false" spellcheck="false" placeholder="Tên của bạn" style="width: 500px; margin: 0 auto; display: block;">';
+            } ?>
             <br><br>
-            <input class ="tel form-control" type="text" autocomplete="false" spellcheck="false" placeholder="Số điện thoại" style="width: 500px; margin: 0 auto; display: block;"> 
+            <?php if(Session::get('khachtaikhoan') != NULL) {
+                    $kiemtra = DB::table('users')
+                    ->where('username','=',Session::get('khachtaikhoan'))
+                    ->get();
+                ?>
+                <input class ="tel form-control" type="text" value="<?=$kiemtra[0]->phone?>" autocomplete="false" spellcheck="false" placeholder="Số điện thoại" style="width: 500px; margin: 0 auto; display: block;"> 
+            <?php }else{
+                echo'<input class ="tel form-control" type="text" autocomplete="false" spellcheck="false" placeholder="Số điện thoại" style="width: 500px; margin: 0 auto; display: block;"> ';
+            } ?>
+
             <br><br>
-            <input class ="address form-control" type="text" autocomplete="false" spellcheck="false" placeholder="Địa chỉ" style="width: 500px; margin: 0 auto; display: block;">
+            <?php if(Session::get('khachtaikhoan') != NULL) { ?>
+                <input class ="address form-control" value="<?=$kiemtra[0]->address?>" type="text" autocomplete="false" spellcheck="false" placeholder="Địa chỉ" style="width: 500px; margin: 0 auto; display: block;">
+                <?php }else{
+                echo'<input class ="address form-control" type="text" autocomplete="false" spellcheck="false" placeholder="Địa chỉ" style="width: 500px; margin: 0 auto; display: block;">';
+            } ?>
+            
             <br><br>
-            <input type="button" value="Gửi" class="btn btn-success btn-gui" style="width: 300px; margin: 0 auto; display: block;" product = "{{$product->name}}" >
+            <input type="button" value="Gửi" class="btn btn-success btn-gui" style="width: 300px; margin: 0 auto; display: block;" id_product="{{$product->id}}" product = "{{$product->name}}" >
+            <?php ?>
         </div>
     </section>
     <section class="danh-gia">
@@ -523,6 +542,7 @@
     });
     $('.btn-gui').click(function(){
         var product = $(this).attr('product');
+        var id_pro = $(this).attr('id_product');
         var address = $('.address').val();
         var tel = $('.tel').val();
         var name = $('.name').val();
@@ -537,6 +557,7 @@
                 data: {
                     "_token": "{{ csrf_token() }}",
                     product: product,
+                    id: id_pro, 
                     address: address,
                     tel: tel,
                     name: name,

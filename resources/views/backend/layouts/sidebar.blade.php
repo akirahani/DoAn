@@ -28,6 +28,9 @@
                     </a>  
                     <ul class="sub-menu" aria-expanded="false">
                         <li>
+                            <a href="{{url('/admin/tuvan')}}"  data-key="t-alerts">Tư vấn</a>
+                        </li>
+                        <li>
                             <a href="{{url('/admin/product')}}"  data-key="t-alerts">Danh sách sản phẩm</a>
                         </li>
                         <li>
@@ -111,6 +114,15 @@
                         <li><a href="{{url('/admin/role')}}" data-key="t-starter-page">Danh sách</a></li>
                         <li><a href="{{url('/admin/permission/add')}}" data-key="t-maintenance">Thêm quyền</a></li>
                     </ul>
+                </li>
+                {{-- customer --}}
+                <li class="menu-title" data-key="t-menu">Khách</li>
+                <li>
+                    <a href="{{url('/admin/customer')}}">
+                        <i data-feather="users"></i>
+                        <span data-key="t-dashboard">Khách <i class="fa fa-weibo" aria-hidden="true"></i></span>
+                    </a>
+        
                 </li>
                  {{-- list-detail-3 --}}
                 <li class="menu-title" data-key="t-menu">Khác</li>

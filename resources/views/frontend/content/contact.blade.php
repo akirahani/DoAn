@@ -8,17 +8,38 @@
         <form action="" method="">
             <div class="flex-in row">
                 <div class="input-form mb-3 p-3 col-12">
-                    <input type="text" class="form-control" placeholder="Your Name" name="firstname">
+                <?php if(Session::get('khachten') != NULL) {  ?>
+                    
+                    <input class ="name form-control" type="text" name="firstname" value="<?=Session::get('khachten')?>" name="firstname" autocomplete="false" spellcheck="false" placeholder="Tên của bạn" style="width: 500px; margin: 0 auto; display: block;">
+                <?php }else{
+                    echo'<input type="text" class="form-control" placeholder="Your Name" name="firstname">';
+                } ?>
                 </div>
-
+                <br><br>
                 <div class="input-form mb-3 p-3 col-12">
-                    <input type="text" class="form-control" placeholder="Phone" name="phone">
+                <?php if(Session::get('khachtaikhoan') != NULL) {
+                        $kiemtra = DB::table('users')
+                        ->where('username','=',Session::get('khachtaikhoan'))
+                        ->get();
+                    ?>
+                    <input class ="tel form-control" name="phone" type="text" value="<?=$kiemtra[0]->phone?>" autocomplete="false" spellcheck="false" placeholder="Số điện thoại" style="width: 500px; margin: 0 auto; display: block;"> 
+                <?php }else{
+                    echo'<input type="text" class="form-control" placeholder="Phone" name="phone">';
+                } ?>
                 </div>
-            </div>
-            <div class="input-form mb-3">
-                <textarea name=""  class="form-control" rows="8" placeholder="Address" name="address" style="width:100%;"></textarea>
-            </div>
-            <input class="form-control button-submit-contact"  type="button" value="Gửi">
+                <br><br>
+                <div class="input-form mb-3 p-3 col-9 " style="margin: auto">
+                <?php if(Session::get('khachtaikhoan') != NULL) { ?>
+                    <textarea  class="form-control" rows="8" placeholder="Address" name="address" value="<?=$kiemtra[0]->address?>" style="width:100%;"><?=$kiemtra[0]->address?></textarea>
+                    <?php }else{
+                    echo'<textarea name="class="form-control" rows="8" placeholder="Address" name="address" style="width:100%;"></textarea>';
+                } ?>
+                </div>
+                    
+            
+                
+            
+            <input class="form-control col-9 button-submit-contact" style="margin: auto"  type="button" value="Gửi">
         </form>
     </div>
 </div>  

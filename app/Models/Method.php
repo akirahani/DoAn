@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Navbar extends Model
+class Method extends Model
 {
     use HasFactory;
-    protected $table = 'navbars';
-    protected $fillable = ['id','title','ordering','link'];
+    protected $table = 'method';
+    protected $fillable = ['id','ten'];
 }

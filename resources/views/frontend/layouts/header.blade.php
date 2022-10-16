@@ -1,4 +1,11 @@
 @include('frontend.layouts.top_header')
+<style>
+    .khach_session{
+        background: red;
+        color: #fff;
+
+    }
+</style>
 <div class="header-main ">
     <div class="container">
         <div class="row align-items-center justify-content-center">
@@ -44,11 +51,17 @@
                 <div class="cart-and-login" >
                     <ul class="list-inline-doing mt-4">
                       
-                        {{-- <li class="user-login ml-3 ">
-                            <a href="">
-                                <i class="fas fa-user" style="font-size: 28px; color:orange"></i>
+                        <li class="user-login ml-3 ">
+                            <a href="{{url('/login')}}">
+                                <?php
+                                    if( Session::get('khachten') != NULL){
+                                        echo '<a href="'.url('logout').'"><i class="fa-solid fa-arrow-right-from-bracket" style="font-size: 28px; color:orange"></i></a>';
+                                    }else{
+                                        echo '<i class="fas fa-user" style="font-size: 28px; color:orange"></i>';
+                                    }
+                                ?>
                             </a>
-                        </li> --}}
+                        </li>
                         <li class="cart-icon ml-3">
                             <a href="{{url('/detail/cart')}}">
                                 <i class="fas fa-cart-shopping" style="font-size: 28px; color:orange; position: relative"><p style="position: absolute; top: 0  ; right:0; font-size: 15px; color: blue">

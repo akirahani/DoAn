@@ -14,13 +14,16 @@ class OrderController extends Controller
     public function index(){
         $order = DB::table('orders')
         ->where('status',1)
+        ->where('total_price','!=',NULL)
         ->get();
         $order_call = DB::table('orders')
         ->select('*')
+        ->where('total_price','!=',NULL)
         ->where('status',2)
         ->get();
         $order_delivery = DB::table('orders')
         ->select('*')
+        ->where('total_price','!=',NULL)
         ->where('status',3)
         ->get();
         if(count($order_call) != 0 ){

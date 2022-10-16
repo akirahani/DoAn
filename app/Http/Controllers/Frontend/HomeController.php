@@ -15,11 +15,11 @@ use App\Models\User;
 use App\Models\Color;
 use App\Models\DanhGia;
 use DB;
-
+use Hash;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
-use session;
+use Session;
 class HomeController extends Controller
 {
     function index(){
@@ -185,6 +185,7 @@ class HomeController extends Controller
         $order->tel = $input['tel'];
         $order->name = $input['name'];
         $order->address = $input['address'];
+        $order->sanphamtuvan = $input['id'];
         $order->save();
 
         $mail = new PHPMailer();    
@@ -330,4 +331,110 @@ class HomeController extends Controller
             ]);
         }
     }
+    public function login (){
+        $config = Config::first();
+        $menu = Navbar::all();
+        return view('frontend.content.auth.login',compact('config','menu'));
+    }
+    public function register(){
+        $config = Config::first();
+        $menu = Navbar::all();
+        return view('frontend.content.auth.register',compact('config','menu'));
+    }
+
+    public function insert_user(Request $request){
+        if (isset($_POST['dangky'])) {
+            $post_thanhvien = [
+                'username' => $_POST['username'],
+                'password' => bcrypt($_POST['password']),
+                'email' => $_POST['email'],
+                'name' => $_POST['fullname'],
+                'phone' => $_POST['dienthoai'],
+                'address' => $_POST['diachi'],
+            ];
+            $info = DB::table('users')
+            ->select('*')
+            ->where('phone','=',$_POST['dienthoai'])
+            ->get();
+            if(!$info->isEmpty()) {
+                echo '<p class="log-mes">Tài khoản đã tồn tại <span><a href="../login">đăng nhập</a></span></p><br><br>';
+            } else {
+                $user = new User;
+                $user->insert($post_thanhvien);
+                echo "<p class='log-access' style='font-size:20px'>Đăng ký tài khoản thành công <span><a href='../login'>click đăng nhập</a></span></p><br><br>";
+            }
+        }
+    }
+
+    public function post_login(Request $request){
+        if (isset($_POST['login'])) {
+            $post_thanhvien = [
+                'username' => $_POST['user'],
+                'password' => $_POST['pass'],
+            ];
+
+            $kiemtra = DB::table('users')
+            ->where('username','=',$post_thanhvien['username'])
+            ->get(); 
+            if (isset($kiemtra[0])) {
+                if (Hash::check( $post_thanhvien['password'], $kiemtra[0]->password)) {
+                    session()->put('khachid', $kiemtra[0]->id);
+                    session()->put('khachtaikhoan', $kiemtra[0]->username);
+                    session()->put('khachten', $kiemtra[0]->name);
+                    return redirect()->route('taikhoan');
+                }else{
+                    echo "
+                    <script> 
+                    alert('Mật khẩu không đúng')</script>";
+                    return redirect()->back();
+                }
+            } else {
+                echo "<p class='log-mes'>Tên hoặc mật khẩu không đúng <a href='./'>Quay lại</a> </p>";
+                return redirect()->back();
+            }
+        }
+    }
+
+    public function taikhoan(){
+        $config = Config::first();
+        $menu = Navbar::all();
+        return view('frontend.content.auth.taikhoan',compact('config','menu'));
+    }
+    public function logout(){
+        Session::forget('khachid');
+        Session::forget('khachtaikhoan');
+        Session::forget('khachten');
+        return redirect()->route('home');
+    }
+    public function reset_passd(User $user,Request $req){
+        if(isset($_POST['reset']))
+        {
+            $post_thanhvien=[
+                'password' => bcrypt($_POST['password']),
+            ];
+            $users = $user->find($_POST["id"]);
+            $users->update($post_thanhvien);
+            return redirect()->route('taikhoan');
+        }
+    }
+    public function reset_info(User $user,Request $req){
+        if(isset($_POST['update']))
+        {
+            if( $_POST['email']!='' && $_POST['fullname']!='' && $_POST['dienthoai']!='' && $_POST['diachi']!='' )
+            {
+                $post_thanhvien=[
+                    'email' => $_POST['email'],
+                    'name' => $_POST['fullname'],
+                    'phone' => $_POST['dienthoai'],
+                    'address' => $_POST['diachi'],
+                ];
+                $users = $user->find($_POST["id"]);
+                $users->update($post_thanhvien);
+                session()->put('khachten',$_POST['fullname']);
+                return redirect()->route('taikhoan');
+            }
+        }
+    }
+
+    
 }   

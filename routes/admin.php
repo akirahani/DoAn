@@ -112,9 +112,15 @@ Route::middleware('auth:admin')->group(function(){
         // Route::post('/storage/insert','Admin\CategoryController@insert')->name('admin.category.store');
         // Route::get('/category/edit/{id}','Admin\CategoryController@edit')->name('admin.category.edit');
         // Route::post('/category/update','Admin\CategoryController@update');
-
-
-
+        Route::get('customer','Admin\CustomerController@index')->name('khach.index');
+        Route::get('customer/add','Admin\CustomerController@add');
+        Route::post('customer/insert','Admin\CustomerController@insert');
+        Route::get('customer/edit/{id}','Admin\CustomerController@edit');
+        Route::post('customer/update','Admin\CustomerController@update');
+        Route::get('customer/delete/{id}','Admin\CustomerController@delete');
+        // 
+        Route::get('tuvan','Admin\CustomerController@tuvan')->name('khach.tuvan');
+        Route::post('tuvan/add','Admin\CustomerController@tuvan_add')->name('khach.tuvan.add');
     // });
  
 });
