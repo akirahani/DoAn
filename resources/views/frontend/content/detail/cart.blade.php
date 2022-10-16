@@ -248,15 +248,60 @@
                         <hr style="margin-top:25px;">
                         <div class="form-text col-lg-6">
                             <label for="name">Tên</label>
-                            <input id="name" type="text"  class="form-control" name="name" required>
+                            <?php if(Session::get('khachtaikhoan') != NULL) {
+                                $kiemtra = DB::table('users')
+                                ->where('username','=',Session::get('khachtaikhoan'))
+                                ->get();
+                            ?>
+                            <input id="name" type="text"  class="form-control" name="name" value="{{$kiemtra[0]->name}}" required>
+                            <?php }else{
+                                echo'<input id="name" type="text"  class="form-control" name="name" required>';
+                            } ?>
+                            
                         </div>
                         <div class="form-text col-lg-6">
                             <label for="phone">Số điện thoại</label>
-                            <input id="phone" type="text" class="form-control" name="tel" required>
+                            <?php if(Session::get('khachtaikhoan') != NULL) {
+                                $kiemtra = DB::table('users')
+                                ->where('username','=',Session::get('khachtaikhoan'))
+                                ->get();
+                            ?>
+                            <input id="phone" type="text" class="form-control" name="tel" value="{{$kiemtra[0]->phone}}" required>
+                            <?php }else{
+                                echo'<input id="phone" type="text" class="form-control" name="tel" required>';
+                            } ?>
+                            
                         </div>
                         <div class="form-text col-lg-6">
                             <label for="phone">Địa chỉ</label>
-                            <input id="phone" type="text" class="form-control" name="address" required>
+                            <?php if(Session::get('khachtaikhoan') != NULL) {
+                                $kiemtra = DB::table('users')
+                                ->where('username','=',Session::get('khachtaikhoan'))
+                                ->get();
+                            ?>
+                            <input id="phone" type="text" class="form-control" name="address" value="{{$kiemtra[0]->address}}" required>
+                            <?php }else{
+                                echo'<input id="phone" type="text" class="form-control" name="address" required>';
+                            } ?>
+                            
+                        </div>
+                        <div class="form-text col-lg-6">
+                            <label for="phone">Phương thức thanh toán</label>
+                            <div class="pttt" style="display: flex; justify-content: space-around">
+                                <?php $phuongthuc = DB::table('method')->get(); ?>
+                                <?php foreach($phuongthuc as $val) {
+                                ?>
+                                    <div>
+                                        <input id="phuongthuc" type="radio" class="" value="<?=$val->id?>" name="phuongthucthanhtoan" required><?=$val->ten?>
+                                    </div>
+                                <?php }
+                                    ?>
+                               
+                            </div>
+                            <div class="chitiet-chuyenkhoan" style="display:none">
+                                <input type="text" class="form-control" placeholder="Ngân hàng" name="nganhang" />
+                                <input type="text" class="form-control" placeholder="Số tài khoản" name="sotaikhoan" />
+                            </div>
                         </div>
                         <div class="form-text col-lg-12">
                             <label for="phone">Ghi chú đơn hàng</label>
@@ -319,7 +364,14 @@
                 // $('input[name="submit"]').click(function(){
                 //     let 
                 // });
-
+                $('input[name="phuongthucthanhtoan"]').click(function(){
+                    let val = $(this).val();
+                    if(val == 2){
+                        $('.chitiet-chuyenkhoan').slideToggle();
+                    }else{
+                        $('.chitiet-chuyenkhoan').hide();
+                    }
+                });
                 $('#saveCart').on("click",function(){
                     let id = $('#product-id').val();
                     let arr = [];

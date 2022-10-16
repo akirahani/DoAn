@@ -58,6 +58,14 @@ class OrderController extends Controller
                     $order->note = $input['note'];
                     $order->status = 1;
                     $order->total_price = $input['price-all'];
+                    $order->hinhthucthanhtoan = $input['phuongthucthanhtoan'];
+                    if($input['phuongthucthanhtoan'] == 2){
+                        $order->nganhang = $input['nganhang'];
+                        $order->sotaikhoan = $input['sotaikhoan'];
+                    }else{
+                        $order->nganhang = NULL;
+                        $order->sotaikhoan = NULL;
+                    }
                     $order->save();
                     if($value->id == $input['product_id'][$key] ){
                         $value->quantity -= $input['quantity'][$key];

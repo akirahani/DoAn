@@ -63,8 +63,42 @@
         else{
             echo '';
         }
-        echo '<div>Phương thức thanh toán: </div>';
-        echo '</li>';
+        $hinhthuc = DB::table('method')
+        ->where('id','=',$value->hinhthucthanhtoan)
+        ->select('ten')
+        ->get();
+
+        foreach($hinhthuc as $val){
+            echo '<div>Phương thức thanh toán: '.$val->ten.'</div>';
+            if ($value->hinhthucthanhtoan == 2){
+                echo '<div>Ngân hàng: '.$value->nganhang.'- STK '.$value->sotaikhoan.' </div>';   
+            }
+        }
+
+            
+
+       
+        $tuvan = DB::table('tuvan')
+        ->where('donhang','=',$value->id)
+        ->where('khach','=',$kiemtra[0]->id)
+        ->select('noidung','nguoituvan')
+        ->get();
+        foreach($tuvan as $val_tv){
+            $nguoituvan = DB::table('admins')
+            ->where('id','=',$val_tv->nguoituvan)
+            ->select('name')
+            ->get();
+            echo '</li>';
+            foreach($nguoituvan as $val_ntv){
+                echo '<b>Tư vấn từ</b> <span>'.$val_ntv->name.'</span> :'.$val_tv->noidung ;
+                echo 'Nếu muốn bạn có thể chuyển qua <a href="https://www.facebook.com/messages/t/5337407649651171/"><i class="fa-brands fa-facebook-messenger"></i></a> để tiện trao đổi ';
+            }
+        }
+   
+      
+ 
+        
+        
     }
 ?>
 </section>
