@@ -121,6 +121,15 @@ Route::middleware('auth:admin')->group(function(){
         // 
         Route::get('tuvan','Admin\CustomerController@tuvan')->name('khach.tuvan');
         Route::post('tuvan/add','Admin\CustomerController@tuvan_add')->name('khach.tuvan.add');
+        // supplier
+        Route::get('supplier','Admin\SupplierController@index')->name('admin.supplier');
+        Route::get('supplier/add','Admin\SupplierController@add')->name('admin.supplier.add');
+        Route::post('supplier/insert','Admin\SupplierController@insert')->name('admin.supplier.insert');
+        Route::get('supplier/edit/{id}','Admin\SupplierController@edit')->name('admin.supplier.edit');
+        Route::post('supplier/update','Admin\SupplierController@update');
+        Route::get('supplier/delete/{id}','Admin\SupplierController@delete');
+        Route::post('/storage/import/chi','Admin\StorageController@import_chi')->name('admin.storage.import.chi');
+        Route::post('/storage/import/save_chi','Admin\StorageController@save_chi')->name('admin.save_chi');
     // });
  
 });

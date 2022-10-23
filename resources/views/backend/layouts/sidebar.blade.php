@@ -40,6 +40,9 @@
                             <a href="{{url('/admin/trademark')}}">Thương hiệu</a>
                         </li>
                         <li>
+                            <a href="{{url('/admin/supplier')}}">Nhà cung cấp</a>
+                        </li>
+                        <li>
                             <a href="{{url('/admin/unit')}}">Đơn vị tính</a>
                         </li>
                     </ul>

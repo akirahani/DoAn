@@ -9,6 +9,8 @@ use App\Models\Product;
 use App\Models\Import;
 use App\Models\Export;
 use App\Models\Unit;
+use App\Models\Supplier;
+use App\Models\ThongKeChi;
 use DB;
 class StorageController extends Controller
 {
@@ -23,7 +25,15 @@ class StorageController extends Controller
         $account = Admin::all();
         $product = Product::all();
         $info = json_encode($product);
-        return view('backend.content.storage.import.insert',compact('account','product','info'));
+        $suppliers = Supplier::all();
+        $trademark = DB::table('trademarks')
+        ->select('trademarks.*')
+        ->get();
+        $arr_ten_thuong_hieu = [];
+        foreach($trademark as $val){
+            $arr_ten_thuong_hieu[$val->id] = $val->name;
+        }
+        return view('backend.content.storage.import.insert',compact('account','product','info','suppliers','arr_ten_thuong_hieu'));
     }
     public function import_insert(Request $request, Product $products)
     {
@@ -31,11 +41,14 @@ class StorageController extends Controller
         $arr_sp = [];
         $import = new Import;
         $product = DB::table('products')
-        ->select('quantity','id')
+        ->select('quantity','id','price')
         ->get();
+        $tongnhap = 0;
+        $arr_gia_sp = [];
         foreach($input['product_id'] as $key =>$val){
             $arr_sp[$key]['product_id'] =  $input['product_id'][$key];
             $arr_sp[$key]['soluong'] = $input['soluong'][$key];
+            $arr_sp[$key]['supplier'] = $input['supplier'][$key];
             $soluong =    (int) $arr_sp[$key]['soluong'];
             $id = (int) $arr_sp[$key]['product_id'];
             if($soluong >0){
@@ -44,7 +57,10 @@ class StorageController extends Controller
                         $val->quantity +=  $soluong;
                         $products->where('id',$id)->update(['quantity'=>$val->quantity]);           
                     }
+                    $arr_gia_sp[$val->id] = $val->price;
+                    
                 }
+                $tongnhap += (int) $arr_sp[$key]['soluong'] * (int) $arr_gia_sp[$input['product_id'][$key]];
             }
             else{
                 $soluong = 0;
@@ -53,11 +69,13 @@ class StorageController extends Controller
                 return redirect()->route('admin.storage.import.add');
             }
         }
+        $import->nhacungcap = $input['supplier'][0];
         $import->ma = $input['ma'];
         $import->nguoinhap = $input['nguoinhap'];
         $import->sanpham = json_encode($arr_sp);
         $import->noidung = $input['noidung'];
         $import->ghichu = $input['ghichu'];
+        $import->tongthu = $tongnhap;
         $import->save();
         return redirect()->route('admin.storage.import');
     }
@@ -98,6 +116,58 @@ class StorageController extends Controller
             "ghichu"=>$input['ghichu'],
             "noidung"=>$input['noidung'],
             "thoigian"=> $input['thoigian'],
+        ]);   
+    }
+
+    public function import_chi(Request $request)
+    {
+        $input = $request->all();
+        $account = Admin::all();
+        $unit = Unit::all();
+        
+        $sanpham_xuli = DB::table('imports')->select('sanpham')->where('id','=',$input['id'])->first(); 
+        $sanpham = json_decode($sanpham_xuli->sanpham);
+        $product = DB::table('products')
+        ->get();
+        foreach($sanpham as $key=>$val){
+            $id = (int)$val->product_id;
+            foreach($product as $k=>$value){
+                if($id == $value->id ){
+                    $arr[$key] = $value; 
+                    $arr[$key]->soluongnhap  = $sanpham[$key]->soluong;
+                }
+                foreach($unit as $val){
+                    if($value->unit_id == $val->id){
+                        $value->unit_id = $val->name;
+                    }
+                }
+            }   
+        }
+        return response()->json([
+            "sanpham"=> json_encode($arr),
+            "ma"=> $input['ma'],
+            "id"=>$input['id'],
+            "nhacungcap"=>$input['nhacungcap'],
+        ]);   
+    }
+    public function save_chi(Request $request){
+        $input = $request->all();
+        $thongkechi = new ThongKeChi();
+        $thongkechi->nhacungcap = $input['ncc'];
+        $thongkechi->tienchi = $input['sotienchi'];
+        $thongkechi->ngaychi = date('Y-m-d');
+        $thongkechi->phieunhap = $input['phieunhap'];
+        $tenphieunhap = DB::table('imports')->select('ma')->where('id','=',$input['phieunhap'])->first();
+        if( $input['tongnhap'] > $input['sotienchi']){
+            $thongkechi->thieu = (int)$input['tongnhap'] - (int)$input['sotienchi'];
+        }else{
+            $thongkechi->thua = (int)$input['sotienchi'] - (int)$input['tongnhap'] ;
+        }
+        $thongkechi->save();
+        return response()->json([
+            "conlai"=>  (int)$input['tongnhap'] - (int)$input['sotienchi'],
+            "ma"=> $tenphieunhap->ma,
+            "id"=>$input['phieunhap'],
         ]);   
     }
     // export

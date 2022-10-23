@@ -40,9 +40,17 @@
                         <div class="item-import"  style="display:flex; justify-content: space-around">
                             <div class="tensp">
                                 <p>Tên sản phẩm</p>
-                                <select id= "inputState"  class ="form-select" name="product_id[]">
+                                <select id= "inputState1"  class ="form-select" name="supplier[]">
                                     @foreach($product as $val)
                                         <option value="{{$val['id']}}" price="{{$val['price']}}" donvitinh = "{{$val['unit_id']}}">{{$val['name']}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="suppliers">
+                                <p>Nhà cung cấp</p>
+                                <select id= "inputState"  class ="form-select" name="product_id[]">
+                                    @foreach($suppliers as $vsup)
+                                        <option value="{{$vsup['id']}}"  >{{$vsup['ten']}} <span>({{$arr_ten_thuong_hieu[$vsup['thuonghieu']]}})</span></option>
                                     @endforeach
                                 </select>
                             </div>
@@ -58,13 +66,11 @@
                                 <p>Đơn giá</p>
                                 <input type="text"  class="form-control" value="" class="dongia"  name="dongia"  value="{{$val['price']}}" >
                             </div>    --}}
-                        </div>
-
+                        </div>  
                     </div>
                     <div class="tong-gia"></div>
                     <div class="add-item-import" ><i style="float:right" class="fa fa-plus"></i></div>
-                    
-
+   
                 <div class ="form-group mt-3">
                     <button type="submit" class="btn btn-success btn-round px-5">Thêm</button>
                 </div>
@@ -78,9 +84,17 @@
         <div class="item-import" style="display:flex; justify-content: space-around">
             <div class="tensp">
                 <p>Tên sản phẩm</p>
-                <select id= "inputState" class ="form-select" name="product_id[]">
+                <select id= "inputState1" class ="form-select" name="product_id[]">
                     @foreach($product as $val)
                         <option  value="{{$val['id']}}" price="{{$val['price']}}" donvitinh = "{{$val['unit_id']}}">{{$val['name']}}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="suppliers">
+                <p>Nhà cung cấp</p>
+                <select id= "inputState"  class ="form-select" name="supplier[]">
+                    @foreach($suppliers as $vsup)
+                        <option value="{{$vsup['id']}}"  >{{$vsup['ten']}} <span>({{$arr_ten_thuong_hieu[$vsup['thuonghieu']]}})</span></option>
                     @endforeach
                 </select>
             </div>
