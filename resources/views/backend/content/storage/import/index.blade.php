@@ -41,6 +41,16 @@
     content: "\00d7";
     color: red;
   }
+  .exit1:before{
+    display: inline-block;
+    float: right;
+    padding-right: 15px;
+    border-radius: 50%;
+    font-size: 50px;
+    cursor: pointer;
+    content: "\00d7";
+    color: red;
+  }
 </style>
 <div class="head-start-news mb-3">
   <h1>Danh sách đơn nhập</h1>
@@ -68,30 +78,23 @@
             <td scope="row">{{$val->created_at}}</td>
             <?php
                 $tongchi = 0;
-                $thongkechi =  DB::table('thongkechi')->where('phieunhap','=',$val->id)->get();
-                           
-                // $arr_chi_theo_pn = [];
-                // foreach($thongkechi as $valtkc){
-                //   $arr_chi_theo_pn[$valtkc->phieunhap] += $valtkc->tienchi;
-                //   $tongchi = $arr_chi_theo_pn[$valtkc->phieunhap]; 
-                // } 
+                $thongkechi =  DB::table('thongkechi')->where('phieunhap','=',$val->id)->orderBy('id', 'DESC')->get();
               echo '<td  scope="row" style="display: flex; justify-content: space-between">'; ?>
               <button  class="btn btn-warning view_import" id="view-import" thoigian="{{$val->created_at}}" import="{{$val->id}}" nguoinhap="{{$val->nguoinhap}}" ma="{{$val->ma}}" noidung="{{$val->noidung}}" ghichu="{{$val->ghichu}}" thoigian="{{$val->created_at}}" sanpham="{{$val->sanpham}}"><i class="fas fa-eye"></i></button>
-              
-     
-                <?php
-                
-    
+              <?php
+                if($val->conlai ==0 ){
+                  echo '';
+                }else{
                   echo '<button  class="btn btn-info tien_chi" id="view-import" nhacungcap="'.$val->nhacungcap.'" thoigian="'.$val->created_at.'" import="'.$val->id.'" ma="'.$val->ma.'"><i class="fas fa-edit"></i></button>';
-           
-                ?>
+                }
+              ?>
           </td>
           </tr>
           <div class="modal{{$val->id}}" id="modal" style="display: none; ">
             <div class="exit" id=""></div>
           </div>
           <div class="tienchi{{$val->id}}" id="modal" style="display: none; ">
-            <div class="exit" id=""></div>
+            
           </div>
         @endforeach
       </tbody>
@@ -141,7 +144,8 @@ $('.view_import').click(function(){
                 tong_nhap += item.soluongnhap * item.price; 
         })
         $('.modal'+id).show();
-        $('.modal'+id).append(`
+        $('.modal'+id).html(`
+          <div class="exit" id=""></div>
           <div class="content-import">
             <h1 style="position:absolute; z-index:1; left:0; right: 0; padding-top: 15px; ">Phiếu nhập ${data.ma}</h1>
             <form action="" style="margin-left:auto 249px; position:relative; padding: 80px ;">
@@ -211,18 +215,20 @@ $('.tien_chi').click(function(){
         var arr_get = Object.values(info);
         var tong_nhap = 0;
         var products = '';
+        var conlai = data.conlai;
         arr_get.forEach((item)=>{
           tong_nhap += item.soluongnhap * item.price; 
         })
         $('.tienchi'+id).show();
-        $('.tienchi'+id).append(`
+        $('.tienchi'+id).html(`
+        <div class="exit1" id=""></div>
           <div class="content-import">
             <h1 style="position:absolute; z-index:1; left:0; right: 0; padding-top: 15px; ">Chi tiền phiếu nhập ${data.ma}</h1>
             <form action="" style="margin-left:auto 249px; position:relative; padding: 80px ;"> 
                 <b style="float: right">Tổng nhập: ${tong_nhap}</b>
                 <div class="soluong">
-                  <p>Tiền chi</p>
-                  <input type="number" class="form-control sotienchi`+id+`" value="${tong_nhap}" max="${tong_nhap}" name="tienchi[]" required>
+                  <p>Tiền chi(Còn thiếu)</p>
+                  <input type="number" class="form-control sotienchi`+id+`" value="${conlai}"  max="${tong_nhap}" name="tienchi[]" required>
               </div>
               <br>
               <input type="button" class="btn btn-success luuchitien`+id+`" phieunhap="`+id+`" nhacungcap="${nhacungcap}" tongnhap="${tong_nhap}" value="Lưu tiền chi" > 
@@ -234,38 +240,25 @@ $('.tien_chi').click(function(){
             let phieunhap = $(this).attr('phieunhap');
             let ncc = $(this).attr('nhacungcap');
             let tongnhap = $(this).attr('tongnhap');
-            $.ajax({
-              headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              },
-              method: "POST",
-              data: {sotienchi: sotienchi, phieunhap: phieunhap, ncc: ncc,tongnhap: tongnhap},
-              url: "{{route('admin.save_chi')}}",
-              success:function(datachi){
-                console.log(datachi);
-                var manhap = datachi.ma;
-                var conlai = datachi.conlai;
-                var id_nhap = datachi.id;
-                
-                $('.tienchi'+id).hide();
-                $('.tienchi'+id).html(`
-                  <div class="content-import">
-                    <h1 style="position:absolute; z-index:1; left:0; right: 0; padding-top: 15px; ">Chi tiền phiếu nhập ${manhap}</h1>
-                    <form action="" style="margin-left:auto 249px; position:relative; padding: 80px ;"> 
-                        <b style="float: right">Còn thiếu: ${conlai}</b>
-                        <div class="soluong">
-                          <p>Tiền chi</p>
-                          <input type="number" class="form-control sotienchi`+id_nhap+`" value="${conlai}" max="${conlai}" name="tienchi[]" required>
-                      </div>
-                      <br>
-                      <input type="button" class="btn btn-success luuchitien`+id_nhap+`" phieunhap="`+id_nhap+`"  tongnhap="${conlai}" value="Lưu tiền chi" > 
-                    </form>
-                  </div>
-                `);
-              }
-            })
+            if(parseInt(sotienchi) <= parseInt(tongnhap) ){
+              $.ajax({
+                headers: {
+                  'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                method: "POST",
+                data: {sotienchi: sotienchi, phieunhap: phieunhap, ncc: ncc,tongnhap: tongnhap},
+                url: "{{route('admin.save_chi')}}",
+                success:function(datachi){
+                  var manhap = datachi.ma;
+                  var conlai = datachi.conlai;
+                  var id_nhap = datachi.id;
+                  $('.tienchi'+id).hide();
+                  $('.sotienchi'+id).html(conlai);
+                }
+              })
+            }
         });
-        $('.exit').click(function(){
+        $('.exit1').click(function(){
           $('.tienchi'+id).hide();
         })
       }

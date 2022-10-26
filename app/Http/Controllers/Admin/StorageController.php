@@ -76,6 +76,7 @@ class StorageController extends Controller
         $import->noidung = $input['noidung'];
         $import->ghichu = $input['ghichu'];
         $import->tongthu = $tongnhap;
+        $import->conlai = $tongnhap;
         $import->save();
         return redirect()->route('admin.storage.import');
     }
@@ -125,7 +126,7 @@ class StorageController extends Controller
         $account = Admin::all();
         $unit = Unit::all();
         
-        $sanpham_xuli = DB::table('imports')->select('sanpham')->where('id','=',$input['id'])->first(); 
+        $sanpham_xuli = DB::table('imports')->select('sanpham','conlai')->where('id','=',$input['id'])->first(); 
         $sanpham = json_decode($sanpham_xuli->sanpham);
         $product = DB::table('products')
         ->get();
@@ -144,25 +145,30 @@ class StorageController extends Controller
             }   
         }
         return response()->json([
+            "conlai"=> $sanpham_xuli->conlai,
             "sanpham"=> json_encode($arr),
             "ma"=> $input['ma'],
             "id"=>$input['id'],
             "nhacungcap"=>$input['nhacungcap'],
         ]);   
     }
-    public function save_chi(Request $request){
+    public function save_chi(Import $import, Request $request){
         $input = $request->all();
         $thongkechi = new ThongKeChi();
         $thongkechi->nhacungcap = $input['ncc'];
         $thongkechi->tienchi = $input['sotienchi'];
         $thongkechi->ngaychi = date('Y-m-d');
         $thongkechi->phieunhap = $input['phieunhap'];
-        $tenphieunhap = DB::table('imports')->select('ma')->where('id','=',$input['phieunhap'])->first();
-        if( $input['tongnhap'] > $input['sotienchi']){
-            $thongkechi->thieu = (int)$input['tongnhap'] - (int)$input['sotienchi'];
-        }else{
+        $tenphieunhap = DB::table('imports')->select('ma','conlai')->where('id','=',$input['phieunhap'])->first();
+        if( $input['tongnhap'] >= $input['sotienchi']){
+            $thongkechi->thieu = (int)$tenphieunhap->conlai - (int)$input['sotienchi'];
+            $arr['conlai'] = (int)$tenphieunhap->conlai - (int)$input['sotienchi'];
+            $capnhat = $import->where('id',$input['phieunhap'])->update($arr);
+        }
+        else{
             $thongkechi->thua = (int)$input['sotienchi'] - (int)$input['tongnhap'] ;
         }
+
         $thongkechi->save();
         return response()->json([
             "conlai"=>  (int)$input['tongnhap'] - (int)$input['sotienchi'],

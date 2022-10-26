@@ -391,11 +391,7 @@
                                 "data" : arr,
                             },  
                             success:function(response){
-                                Swal.fire(
-                                    'THÀNH CÔNG!',
-                                    'Cập nhật thành công !',
-                                    'success'
-                                );
+                                window.location.href= '{{route('cart')}}'
                             }
                         });
                     }

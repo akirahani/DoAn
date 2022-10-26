@@ -17,7 +17,7 @@ Route::get('/news/detail/{id}', 'Frontend\HomeController@news_detail');
 Route::get('/product/detail/{id}', 'Frontend\HomeController@product_detail');
 // cart
 Route::get('/detail/cart','Frontend\CartController@index')->name('cart');
-Route::get('/detail/cart/add/{id}', 'Frontend\CartController@addCart');
+Route::get('/detail/cart/add/{id}', 'Frontend\CartController@addCart')->name('cart.add');
 Route::post('/cart/update','Frontend\CartController@updateCart');
 Route::get('/cart/delete/{id}','Frontend\CartController@delCart');
 

@@ -9,5 +9,5 @@ class Import extends Model
 {
     use HasFactory;
     protected $table = 'imports';
-    protected $fillable = ['id','ma','noinhap','sanpham','noidung','ghichu'];
+    protected $fillable = ['id','ma','nguoinhap','sanpham','noidung','nhacungcap','tongthu','conlai','ghichu'];
 }
