@@ -21,7 +21,7 @@
                         <label for ="input-9"> Người nhập</label>
                         <select id="inputState" class ="form-select" name="nguoinhap">
                             @foreach($account as $val)
-                                <option selected ="" value="{{$val['id']}}">{{$val['name']}}</option>
+                                <option selected ="" value="{{$val['id']}}"  >{{$val['name']}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -37,35 +37,28 @@
                     </div>
 
                     <div class="import-product">
-                        <div class="item-import"  style="display:flex; justify-content: space-around">
-                            <div class="tensp">
+                        <div class="item-import"  style="display:flex;">
+                            {{-- <div class="tensp">
                                 <p>Tên sản phẩm</p>
                                 <select id= "inputState1"  class ="form-select" name="supplier[]">
                                     @foreach($product as $val)
                                         <option value="{{$val['id']}}" price="{{$val['price']}}" donvitinh = "{{$val['unit_id']}}">{{$val['name']}}</option>
                                     @endforeach
                                 </select>
-                            </div>
-                            <div class="suppliers">
+                            </div> --}}
+                            <div class="suppliers" >
                                 <p>Nhà cung cấp</p>
-                                <select id= "inputState"  class ="form-select" name="product_id[]">
-                                    @foreach($suppliers as $vsup)
-                                        <option value="{{$vsup['id']}}"  >{{$vsup['ten']}} <span>({{$arr_ten_thuong_hieu[$vsup['thuonghieu']]}})</span></option>
-                                    @endforeach
-                                </select>
+                                <div style="display: flex;">
+                                    <select id= "inputSupplier" name="nhacungcap" >
+                                        @foreach($suppliers as $vsup)
+                                            <option value="{{$vsup['id']}}" thuonghieu="{{$vsup['thuonghieu']}}" ten="{{$vsup['ten']}} ({{$arr_ten_thuong_hieu[$vsup['thuonghieu']]}})" >{{$vsup['ten']}} <span>({{$arr_ten_thuong_hieu[$vsup['thuonghieu']]}})</span></option>
+                                        @endforeach
+                                        
+                                    </select>
+                                    <input type="button" name="loadsp" class="btn btn-success " style="margin-left: 5px;" value="Load">
+                                </div>
                             </div>
-                           <div class="soluong">
-                                <p>Số lượng</p>
-                                <input type="number" class="form-control" spellcheck="false" autocomplete="off" name="soluong[]" required>
-                           </div>
-                            {{-- <div class="donvi">
-                                    <p>Đơn vị tính</p>
-                                    <input type="text" class="form-control" name="donvitinh" class="donvitinh" value="" required>
-                            </div>
-                            <div class="dongia">
-                                <p>Đơn giá</p>
-                                <input type="text"  class="form-control" value="" class="dongia"  name="dongia"  value="{{$val['price']}}" >
-                            </div>    --}}
+
                         </div>  
                     </div>
                     <div class="tong-gia"></div>
@@ -79,31 +72,58 @@
     </div>
 </div>
 <script>
-    $('.fa-plus').click(function(){
-        $('.import-product').append(`
-        <div class="item-import" style="display:flex; justify-content: space-around">
-            <div class="tensp">
-                <p>Tên sản phẩm</p>
-                <select id= "inputState1" class ="form-select" name="product_id[]">
-                    @foreach($product as $val)
-                        <option  value="{{$val['id']}}" price="{{$val['price']}}" donvitinh = "{{$val['unit_id']}}">{{$val['name']}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="suppliers">
-                <p>Nhà cung cấp</p>
-                <select id= "inputState"  class ="form-select" name="supplier[]">
-                    @foreach($suppliers as $vsup)
-                        <option value="{{$vsup['id']}}"  >{{$vsup['ten']}} <span>({{$arr_ten_thuong_hieu[$vsup['thuonghieu']]}})</span></option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="soluong">
-                <p>Số lượng</p>
-                <input type="number" class="form-control" name="soluong[]" required>
-            </div>
-        </div>`);   
+    $('input[name="loadsp"]').click(function(){
+        let supplier = $('#inputSupplier option:selected').val();
+        let hang = $('#inputSupplier option:selected').attr('thuonghieu');
+        let ten_ncc = $('#inputSupplier option:selected').attr('ten');
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            url: '../../load/product',
+            data: {hang: hang},
+            method: 'POST',
+            success:function(data){
+                let thong_tin = JSON.parse(data);
+                if(thong_tin.status == 'success'){
+                    $('#inputSupplier').html('<option selected ="" value="'+supplier+'" thuonghieu="'+hang+'" ten="'+ten_ncc+'">'+ten_ncc+'</option>');
+                    $('.import-product').append(thong_tin.thongtin);
+                }else{
+                    // Swal.fire(
+                    //     "",
+                    //     "Chưa có sản phẩm được nhập từ nhà cung cấp trên !",
+                    //     "error"
+                    // );
+                    alert('Chưa có sản phẩm được nhập từ nhà cung cấp trên !');
+                }
+            }
+        });
     });
+    // $('.fa-plus').click(function(){
+    //     $('.import-product').append(`
+    //     <div class="item-import" style="display:flex; justify-content: space-around">
+    //         <div class="tensp">
+    //             <p>Tên sản phẩm</p>
+    //             <select id= "inputState1" class ="form-select" name="product_id[]">
+    //                 @foreach($product as $val)
+    //                     <option  value="{{$val['id']}}" price="{{$val['price']}}" donvitinh = "{{$val['unit_id']}}">{{$val['name']}}</option>
+    //                 @endforeach
+    //             </select>
+    //         </div>
+    //         <div class="soluong">
+    //             <p>Số lượng</p>
+    //             <input type="number" class="form-control" name="soluong[]" required>
+    //         </div>
+    //         <div class="donvi">
+    //             <p>Đơn vị tính</p>
+    //             <input type="text" class="form-control" name="donvitinh" class="donvitinh" value="" required>
+    //         </div>
+    //         <div class="dongia">
+    //             <p>Giá nhập</p>
+    //             <input type="text"  class="form-control" value="" class="dongia"  name="dongia"  value="{{$val['price']}}" >
+    //         </div>   
+    //     </div>`);   
+    // });
 
 </script>
 @endsection

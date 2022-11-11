@@ -101,7 +101,10 @@
   </table>
 </div>
 <script>
-
+const formatter = new Intl.NumberFormat('vi-VN', {
+  style: 'currency',
+  currency: 'VND',
+});
 $('.view_import').click(function(){
   var form_data= new FormData();
   var id = $(this).attr('import');
@@ -133,15 +136,17 @@ $('.view_import').click(function(){
         var arr_get = Object.values(info);
         var tong_nhap = 0;
         var products = '';
+    
         arr_get.forEach((item)=>{
           products += `
                 <tr>
                   <td>${item.name}</td>
                   <td>${item.soluongnhap}</td>
-                  <td>${item.price}</td>
-                  <td>${item.unit_id}</td>
+                  <td>${formatter.format(item.gianhap)}</td>
+                  <td>${item.unit}</td>
                 </tr>`
-                tong_nhap += item.soluongnhap * item.price; 
+                tong_nhap += item.soluongnhap * item.gianhap; 
+              
         })
         $('.modal'+id).show();
         $('.modal'+id).html(`
@@ -180,7 +185,7 @@ $('.view_import').click(function(){
                 ${products}
                 </tbody>  
               </table>
-              <b style="float: right">Tổng nhập: ${tong_nhap}</b>
+              <b style="float: right">Tổng nhập: ${formatter.format(tong_nhap)}</b>
               <button onclick="window.print()"><i class="fa fa-print"></i></button> 
             </form>
           </div>`);
@@ -217,7 +222,7 @@ $('.tien_chi').click(function(){
         var products = '';
         var conlai = data.conlai;
         arr_get.forEach((item)=>{
-          tong_nhap += item.soluongnhap * item.price; 
+          tong_nhap += item.soluongnhap * item.gianhap; 
         })
         $('.tienchi'+id).show();
         $('.tienchi'+id).html(`
@@ -225,7 +230,7 @@ $('.tien_chi').click(function(){
           <div class="content-import">
             <h1 style="position:absolute; z-index:1; left:0; right: 0; padding-top: 15px; ">Chi tiền phiếu nhập ${data.ma}</h1>
             <form action="" style="margin-left:auto 249px; position:relative; padding: 80px ;"> 
-                <b style="float: right">Tổng nhập: ${tong_nhap}</b>
+                <b style="float: right">Tổng nhập: ${formatter.format(tong_nhap)}</b>
                 <div class="soluong">
                   <p>Tiền chi(Còn thiếu)</p>
                   <input type="number" class="form-control sotienchi`+id+`" value="${conlai}"  max="${tong_nhap}" name="tienchi[]" required>

@@ -97,6 +97,7 @@ Route::middleware('auth:admin')->group(function(){
         Route::post('/cancel/update','Admin\OrderController@cancel_update');
         Route::get('/cancel/delete/{id}','Admin\OrderController@cancel_delete');
         // storage
+        Route::get('/storage','Admin\StorageController@index')->name('admin.storage');
         Route::get('/storage/import','Admin\StorageController@import')->name('admin.storage.import');
         Route::get('/storage/export','Admin\StorageController@export')->name('admin.storage.export');
         Route::get('/storage/import/add','Admin\StorageController@import_add')->name('admin.storage.import.add');
@@ -109,6 +110,7 @@ Route::middleware('auth:admin')->group(function(){
         Route::get('/storage/export/edit','Admin\StorageController@export_edit');
         Route::get('/storage/export/delete','Admin\StorageController@export_delete');
         Route::post('/storage/export/view','Admin\StorageController@export_view')->name('admin.storage.export.view');
+        Route::get('/storage/phieuchi','Admin\StorageController@phieu_chi')->name('admin.storage.import.phieuchi');
         // Route::post('/storage/insert','Admin\CategoryController@insert')->name('admin.category.store');
         // Route::get('/category/edit/{id}','Admin\CategoryController@edit')->name('admin.category.edit');
         // Route::post('/category/update','Admin\CategoryController@update');
@@ -130,6 +132,12 @@ Route::middleware('auth:admin')->group(function(){
         Route::get('supplier/delete/{id}','Admin\SupplierController@delete');
         Route::post('/storage/import/chi','Admin\StorageController@import_chi')->name('admin.storage.import.chi');
         Route::post('/storage/import/save_chi','Admin\StorageController@save_chi')->name('admin.save_chi');
+
+        // load data san pham tu nha cung cap
+        Route::post('load/product','Admin\StorageController@load_product');
+        Route::post('/storage/chi/view','Admin\StorageController@pchi_view')->name('admin.storage.chi.view');
+        // Ban hang truc tiep
+        Route::get('sell','Admin\SellController@index');
     // });
  
 });

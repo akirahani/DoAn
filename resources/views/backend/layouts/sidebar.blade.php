@@ -42,6 +42,7 @@
                         <li>
                             <a href="{{url('/admin/supplier')}}">Nhà cung cấp</a>
                         </li>
+
                         <li>
                             <a href="{{url('/admin/unit')}}">Đơn vị tính</a>
                         </li>
@@ -55,13 +56,17 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{url('/admin/storage/import')}}" data-key="t-alerts">Dữ liệu nhập hàng</a></li>
+                        <li><a href="{{url('/admin/storage/phieuchi')}}" data-key="t-alerts">Dữ liệu Phiếu chi</a></li>
                         <li><a href="{{url('/admin/storage/export')}}" data-key="t-alerts">Dữ liệu xuất hàng</a></li>
+                        <li><a href="{{url('/admin/storage')}}" data-key="t-alerts">Dữ liệu hàng tồn</a></li>
                         {{-- <li><a href="{{url('/admin/storage')}}" data-key="t-alerts">Thống kê nhập xuất tồn đầu</a></li> --}}
                         {{-- <li><a href="{{url('/admin/storage')}}" data-key="t-alerts">Thống kê doanh thu</a></li> --}}
                         {{-- <li><a href="{{url('/admin/storage')}}" data-key="t-alerts">Thống kê số lượng hàng bán ra</a></li> --}}
                     </ul>
                 </li>
-                
+                <li>
+                    <a href="{{url('/admin/sell')}}">Bán hàng trực tiếp</a>
+                </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow">
                         <i data-feather="briefcase"></i>

@@ -53,7 +53,7 @@
                             <div class="col-6">
                                 <span class="text-muted mb-3 lh-1 d-block text-truncate">Vốn đầu tư</span>
                                 <h4 class="mb-3">
-                                    <span ><?=number_format($total_budget,0,'.','.')?></span>
+                                    <span ><p><?=number_format($total_budget,0,'.','.')?>đ</p></span>
                                 </h4>
                             </div>
                             <div class="col-6">
@@ -73,7 +73,7 @@
                             <div class="col-6">
                                 <span class="text-muted mb-3 lh-1 d-block " style="white-space: nowrap">Doanh số bán hàng</span>
                                 <h4 class="mb-3">
-                                    <span ><?=number_format($gia_tong,0,'.','.')?></span> VNĐ
+                                    <span ><?=number_format($gia_tong,0,'.','.')?></span>đ
                                 </h4>
                             </div>
                             <div class="col-6">

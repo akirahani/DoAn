@@ -25,11 +25,22 @@
 
                 ?>
                 @foreach($order as $key=>$val)
-                <?php $khach_tv = DB::table('users')->select('id')->where('phone','=',$val->tel)->get();
+                
+                <?php 
+                $khach_tv = DB::table('users')->select('id')->where('phone','=',$val->tel)->first();
+                // dd($khach_tv);
                 ?>
                 <tr id="order{{$val->id}}">
                     <td  scope="row">{{$key+1}}</td>
-                    <td  scope="row"><a href="customer/edit/{{$khach_tv[$key]->id}}">{{$val->name}}</a></td>
+                    @php
+                        if($khach_tv != null){
+                            echo'<td  scope="row"><a href="customer/edit/'.$khach_tv.'">'.$val->name.'</a></td>';
+                        }
+                        else{
+                            echo '<td  scope="row"></td>';
+                        }
+                    @endphp
+                    
                     <td  scope="row">{{$arr_sp[$val->sanphamtuvan]}}</td>
                     <td  scope="row">{{$val->tel}}</td>
                     <td  scope="row">
@@ -40,7 +51,7 @@
                         } ?>
                     </td>
                     <?php $nguoituvan = Session::get('acc');?>
-                    <td  scope="row"><button donhang="{{$val->id}}" khach="{{$khach_tv[$key]->id}}"  sanpham="{{$val->sanphamtuvan}}" nguoituvan="{{$nguoituvan[0]->id}}" class="btn btn-warning tuvan-khach"><i class="fa fa-edit"></i></button></td>
+                    <td  scope="row"><button donhang="{{$val->id}}" khach="{{$khach_tv}}"  sanpham="{{$val->sanphamtuvan}}" nguoituvan="{{$nguoituvan[0]->id}}" class="btn btn-warning tuvan-khach"><i class="fa fa-edit"></i></button></td>
                 </tr>
                 @endforeach
 
