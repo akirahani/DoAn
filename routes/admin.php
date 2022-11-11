@@ -137,7 +137,11 @@ Route::middleware('auth:admin')->group(function(){
         Route::post('load/product','Admin\StorageController@load_product');
         Route::post('/storage/chi/view','Admin\StorageController@pchi_view')->name('admin.storage.chi.view');
         // Ban hang truc tiep
-        Route::get('sell','Admin\SellController@index');
+        Route::get('sell','Admin\SellController@index')->name('sell.index');
+        Route::get('sell/add','Admin\SellController@add');
+        Route::post('sell/insert','Admin\SellController@insert_order_offline');
+        Route::get('sell/edit/{id}','Admin\SellController@edit');
+        Route::get('sell/update','Admin\SellController@update');
     // });
  
 });

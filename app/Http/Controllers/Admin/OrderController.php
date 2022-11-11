@@ -42,6 +42,7 @@ class OrderController extends Controller
         }
         return view('backend.content.order.index',compact('order'));
     }
+
     public function insert(Request $request, Product $product_capnhat){
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $input = $request->all();
@@ -58,6 +59,8 @@ class OrderController extends Controller
                     $order->note = $input['note'];
                     $order->status = 1;
                     $order->total_price = $input['price-all'];
+                    // Don hang online
+                    $order->loai = 1;
                     $order->hinhthucthanhtoan = $input['phuongthucthanhtoan'];
                     if($input['phuongthucthanhtoan'] == 2){
                         $order->nganhang = $input['nganhang'];

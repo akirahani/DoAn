@@ -134,7 +134,7 @@ $('.tien_chi_detail').click(function(){
                   <p>${data.nhacungcap}</p>
                 </div>
                 <div class="item-chi-paper">
-                  <b>Ngày nhập</b>
+                  <b>Ngày chi</b>
                   <p>${data.thoigian}</p>
                 </div>
                 <div class="item-chi-paper">

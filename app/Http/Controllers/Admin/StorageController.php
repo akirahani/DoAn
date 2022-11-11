@@ -49,7 +49,7 @@ class StorageController extends Controller
         $arr_sp = [];
         $import = new Import;
         $storage = new Storage;
-
+        $product_price_sell = DB::table('products')->select('price','id')->get(); 
         $tongnhap = 0;
         $arr_gia_sp = [];
         // dd($input['product_id']);
@@ -81,6 +81,16 @@ class StorageController extends Controller
         // tong nhap cuar phieu nhap
         foreach($arr_sp as $val_tien)
         {
+            foreach($product_price_sell as $val_gia_ban){
+                if($val_gia_ban->id == $val_tien['product'] ){
+                    $val_gia_ban->price = $val_tien['price'] * 1.5;
+                    $arr_update_giaban =[
+                        'price' => $val_gia_ban->price
+                    ];
+                    $products->where('id',$val_tien['product'])->update($arr_update_giaban);
+                }
+                
+            }
             $tongnhap += $val_tien['quantity'] * $val_tien['price'];
         }
       

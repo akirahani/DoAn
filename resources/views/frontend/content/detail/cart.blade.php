@@ -299,8 +299,10 @@
                                
                             </div>
                             <div class="chitiet-chuyenkhoan" style="display:none">
-                                <input type="text" class="form-control" placeholder="Ngân hàng" name="nganhang" />
-                                <input type="text" class="form-control" placeholder="Số tài khoản" name="sotaikhoan" />
+                                {{-- <input type="text" class="form-control" placeholder="Ngân hàng" name="nganhang" /> --}}
+                                {{-- <input type="text" class="form-control" placeholder="Số tài khoản" name="sotaikhoan" /> --}}
+                                <input type="file" name="anh" />
+                                <div class="loadanh"></div>
                             </div>
                         </div>
                         <div class="form-text col-lg-12">
@@ -438,3 +440,8 @@
         </div>
         @endif
         @endsection
+<script>
+    $('input[name="anh"]').change(function() {
+        $(".loadanh").html('<img src="'+window.URL.createObjectURL(this.files[0])+'" width="50px" />');
+    });
+</script>
