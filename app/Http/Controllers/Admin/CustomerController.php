@@ -60,7 +60,6 @@ class CustomerController extends Controller
         ->where('status',1)
         ->where('total_price','=',NULL)
         ->get();
-        // dd($order);
         return view('backend.content.khach.tuvan',compact('order'));
     }   
     public function tuvan_add(Request $request, Order $orders){

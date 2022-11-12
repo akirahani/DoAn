@@ -24,23 +24,14 @@
                     }
 
                 ?>
-                @foreach($order as $key=>$val)
-                
                 <?php 
+                foreach($order as $key=>$val){
                 $khach_tv = DB::table('users')->select('id')->where('phone','=',$val->tel)->first();
-                // dd($khach_tv);
+                
                 ?>
-                <tr id="order{{$val->id}}">
+                <tr id="order">
                     <td  scope="row">{{$key+1}}</td>
-                    @php
-                        if($khach_tv != null){
-                            echo'<td  scope="row"><a href="customer/edit/'.$khach_tv.'">'.$val->name.'</a></td>';
-                        }
-                        else{
-                            echo '<td  scope="row"></td>';
-                        }
-                    @endphp
-                    
+                    <td scope="row"><a href="{{url('/admin/customer/edit',$khach_tv->id)}}"><?=$val->name?></a></td>
                     <td  scope="row">{{$arr_sp[$val->sanphamtuvan]}}</td>
                     <td  scope="row">{{$val->tel}}</td>
                     <td  scope="row">
@@ -50,10 +41,10 @@
                             echo '<div style="color: green">Đã tư vấn</div>';
                         } ?>
                     </td>
-                    <?php $nguoituvan = Session::get('acc');?>
-                    <td  scope="row"><button donhang="{{$val->id}}" khach="{{$khach_tv}}"  sanpham="{{$val->sanphamtuvan}}" nguoituvan="{{$nguoituvan[0]->id}}" class="btn btn-warning tuvan-khach"><i class="fa fa-edit"></i></button></td>
+                   <?php $nguoituvan = Session::get('acc');?>
+                    <td  scope="row"><button donhang="{{$val->id}}" khach="{{$khach_tv->id}}"  sanpham="{{$val->sanphamtuvan}}" nguoituvan="{{$nguoituvan[0]->id}}" class="btn btn-warning tuvan-khach"><i class="fa fa-edit"></i></button></td>
                 </tr>
-                @endforeach
+              <?php } ?>
 
             </tbody>
         </table>
