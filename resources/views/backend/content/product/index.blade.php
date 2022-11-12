@@ -26,7 +26,7 @@
               <td  scope="row">{{$val->category_id}}</td>
 
               <td class="image-son" scope="row">
-                  <img src="/assets/image/upload/{{$val->image}}" alt="" style="">
+                  <img src="../../../assets/image/upload/{{$val->image}}" alt="" style="">
               </td>
               <td  scope="row">
                   <a href="{{url('/admin/product/edit',$val['id'])}}" class="btn btn-info"><i class="fas fa-edit"></i></a>

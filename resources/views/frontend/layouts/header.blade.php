@@ -52,10 +52,14 @@
                     <ul class="list-inline-doing mt-4">
                       
                         <li class="user-login ml-3 ">
-                            <a href="{{url('/login')}}">
+                            <a href="{{url('/login')}}" >
                                 <?php
                                     if( Session::get('khachten') != NULL){
-                                        echo '<a href="'.url('logout').'"><i class="fa-solid fa-arrow-right-from-bracket" style="font-size: 28px; color:orange"></i></a>';
+                                        // dd(session()->all());
+                                        echo '<div style="display: flex;">';
+                                            echo '<a href="'.url('taikhoan').'"><i class="fa-solid fa-user" style="font-size: 28px; color:orange"></i></a>';
+                                            echo '<a  href="'.url('logout').'" style="padding-left: 15px;"><i class="fa-solid fa-arrow-right-from-bracket" style="font-size: 28px; color:orange"></i></a>';
+                                        echo'</div>';
                                     }else{
                                         echo '<i class="fas fa-user" style="font-size: 28px; color:orange"></i>';
                                     }

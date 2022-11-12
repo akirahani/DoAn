@@ -23,6 +23,7 @@
                     <th  scope="col">Hình ảnh</th>
                     <th  scope="col">Giá</th>
                     <th  scope="col">Số lượng</th>
+
                 </tr>
             </thead>
             <tbody>
@@ -34,10 +35,20 @@
                         <td><img src="/assets/image/upload/{{$val->image}}" alt="ảnh sơn" style="width:20%;"></td>
                         <td>{{number_format($val->price)}}</td>                   
                         <td><input type="number" name="soluong[]"  readonly value="{{$val->soluong}}" ></td>
+                        
+       
                     </tr>
                 @endforeach
             </tbody>
         </table>
+        @php
+        if($order->loai == 1){
+            if($order->hinhthucthanhtoan == 2){
+                echo '<td><img src="/assets/image/chuyenkhoan/'.$order->anhchuyenkhoan.'" alt="Ảnh chuyển khoản" style="width:20%" /></td>';
+            }
+        }
+         @endphp
+         <br>
         <input type="radio" name="luachon" class="btn btn-info" value="1" checked="">Giao hàng 
         <input type="radio" name="luachon" class="btn btn-danger" value="0" >Hủy 
         <div class="select-reason" name="lydohuy" style="width: 400px; display:none">

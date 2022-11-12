@@ -47,6 +47,7 @@ class ProductController extends Controller
     }
     public function store(Request $request)
     {
+        $input = $request->all();
         $admin = Auth::guard('admin')->user();
         $product = new Product();
         $input = $request->all();
@@ -78,7 +79,7 @@ class ProductController extends Controller
             $image = $request ->file('image');
             $product->image = time().'.'.$image->getClientOriginalExtension();
             $image->move(public_path('/assets/image/upload'),$product->image);
-        }
+        };
         $product->save();
         return redirect()->route('admin.product');
     }

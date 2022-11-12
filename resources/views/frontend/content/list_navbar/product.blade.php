@@ -149,8 +149,10 @@
                 type: "GET",
                 data : {'category_id':id},
                 url: "{{route('product.ajax')}}",
-                success:function(data){
-                    $('#grid-product').html(data);
+                success:function(data1){
+                    let info1 = JSON.parse(data1) 
+                    $('#grid-product').html(info1.cate);
+                    $('.number').hide();
                 }
             });
     });
@@ -160,8 +162,10 @@
             type: "GET",
             data : {'trademark_id':id},
             url: "{{route('product.ajax')}}",
-            success:function(data){
-                $('#grid-product').html(data);
+            success:function(data2){
+                let info2 = JSON.parse(data2) 
+                $('#grid-product').html(info2.trademark);
+                $('.number').hide();
             }
        });
     });

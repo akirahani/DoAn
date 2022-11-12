@@ -77,13 +77,14 @@ class HomeController extends Controller
             ->get();
         }
         else if(isset($_GET['category_id'])){
+            $thongtin_cate = '';
             $id = $_GET['category_id'];
-            $product = DB::table('products')
+            $product_cate = DB::table('products')
             ->select('*')
             ->where('category_id','=',$id)
             ->get();
-            foreach($product as $val){
-                echo'
+            foreach($product_cate as $val){
+                $thongtin_cate .='
                     <div class="product-click">
                         <a href="/product/detail/'.$val->id.'">
                             <div class="product-thumb " style="">
@@ -101,15 +102,19 @@ class HomeController extends Controller
                     </div>
             ';
             }
+            return json_encode([
+                'cate' =>  $thongtin_cate
+            ]);
         }
         else if(isset($_GET['trademark_id'])){
+            $thongtin_trade_mark = '';
             $id = $_GET['trademark_id'];
-            $product = DB::table('products')
+            $products = DB::table('products')
             ->select('*')
             ->where('trademark_id','=',$id)
             ->get();
-            foreach($product as $val){
-                echo'
+            foreach($products as $val){
+                $thongtin_trade_mark .= '
                     <div class="product-click">
                         <a href="/product/detail/'.$val->id.'">
                             <div class="product-thumb " style="">
@@ -130,7 +135,9 @@ class HomeController extends Controller
    
         }
      
-        return view('frontend.content.list_navbar.product',compact('admin','config','menu','trademark','cate','product'));
+        return json_encode([
+            'trademark' => $thongtin_trade_mark
+        ]);
     }
 
 

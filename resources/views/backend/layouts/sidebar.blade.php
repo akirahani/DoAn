@@ -130,7 +130,10 @@
                         <i data-feather="users"></i>
                         <span data-key="t-dashboard">Khách <i class="fa fa-weibo" aria-hidden="true"></i></span>
                     </a>
-        
+                    <a href="{{url('/admin/customer/loai')}}">
+                        <i data-feather="users"></i>
+                        <span data-key="t-dashboard">Nhóm khách hàng <i class="fa fa-weibo" aria-hidden="true"></i></span>
+                    </a>
                 </li>
                  {{-- list-detail-3 --}}
                 <li class="menu-title" data-key="t-menu">Khác</li>

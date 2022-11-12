@@ -213,11 +213,15 @@
                         @foreach(Session::get('cart')->products as  $value)
                         <tr  class="check-cart" >
                             <input name="product_id[]" type="text" id="product-id" hidden value="{{$value['infoProduct']->id}}">
+                            @php
+                                $chi_tiet_quanti = DB::table('products')->select('quantity')->where('id',$value['infoProduct']->id)->first();
+                            @endphp 
                             <td></td>
                             <td style="width:270px; height: 140px;"><img style="width:100%" src="../../../assets/image/upload/{{$value['infoProduct']->image}}" alt="" ><p></p> </td>
                             <td><b>{{$value['infoProduct']->name}}</b></td>
-                            <td><input name="quantity[]" class="form-control" data-id="{{$value['infoProduct']->id}}" max="{{number_format($value['infoProduct']->quantity)}}" id="quantity-{{$value['infoProduct']->id}}" type="number" min="1" value="{{$value['quantity']}}" ></td>
-                            <td style="color:red"><b>{{number_format($value['infoProduct']->price)}}</b></td>
+                            <td><div style="display:flex; align-items:center"><input class="quantity-product" name="quantity[]" class="form-control" data-id="{{$value['infoProduct']->id}}" max="{{$chi_tiet_quanti->quantity}}" id="quantity-{{$value['infoProduct']->id}}" type="number" min="1" value="{{$value['quantity']}}" ><b style="color:red">Kg</b></div></td>
+                            <td><div style="display:flex; align-items:center"><input name="price[]" type="hidden" class="form-control" data-id="{{$value['infoProduct']->id}}"  value="{{$value['infoProduct']->price}}" ><b style="color:red;display:none">đ</b></div></td>
+                            
                             <td ><a href="{{url('/cart/delete',$value['infoProduct']->id)}}"  class="btn btn-danger"><i class="fas fa-trash-alt"></i></a></td>
                          
                         </tr>
@@ -299,10 +303,12 @@
                                
                             </div>
                             <div class="chitiet-chuyenkhoan" style="display:none">
-                                {{-- <input type="text" class="form-control" placeholder="Ngân hàng" name="nganhang" /> --}}
-                                {{-- <input type="text" class="form-control" placeholder="Số tài khoản" name="sotaikhoan" /> --}}
-                                <input type="file" name="anh" />
-                                <div class="loadanh"></div>
+                                <div class="img-main " style="border: 2px dashed #0087F7; border-radius: 5px; width:320px">
+                                    <img  class="img-display"/> 
+                                </div>
+                                <label for="partner-img" class="btn btn-info mt-2 "><i class="fas fa-upload"></i>Chọn ảnh
+                                    <input type='file' id="partner-img" name="anh" accept="image/*"   class=" mb-2"  multiple hidden />
+                                </label> 
                             </div>
                         </div>
                         <div class="form-text col-lg-12">
@@ -331,7 +337,7 @@
                                 <td>
                                     <p>{{$value['infoProduct']->name}}  <b>x</b>  {{$value['quantity']}}</p>
                                 </td> 
-                                <td ><b style="color: red">{{number_format($value['infoProduct']->price)}}</b> </td>
+                                <td ><b style="color: red">{{number_format($value['infoProduct']->price)}}</b><span style="color:red"> đ</span></td>
                             </tr>
                             @endforeach
                             <tr>
@@ -344,7 +350,34 @@
                                 <td>
                                     <h3 style="color: green;"><b>Tổng tiền: </b></h3>
                                 </td> 
-                                <td ><p class="total-price"><h3 style="color: green;"><input type="text" name="price-all" value="{{Session::get('cart')->totalPrice}}" hidden> {{number_format(Session::get('cart')->totalPrice)}}</h3></p></td>  
+                                @php
+                                    $khach_hien_tai = Session::get('khachid');
+                                    $dien_thoai = Session::get('khachtaikhoan');
+                                    $all_order = DB::table('orders')->select('total_price')->where('tel','=',$dien_thoai)->get();
+                                    $tong_tien_khach = 0;
+                                    foreach($all_order as $val_gia){
+                                        $tong_tien_khach += $val_gia->total_price;
+                                    }
+                                    $nhom_khach_hang = DB::table('loaikhach')->get();
+                                    $tong_gia_can_pay = Session::get('cart')->totalPrice;
+                                    if($tong_tien_khach < 5000000){
+                                        echo'<td ><p class="total-price"><h3 style="padding-right: 20px; display:flex;color: green;"><input type="text" name="price-all" value="'.$tong_gia_can_pay.'" hidden>'.number_format($tong_gia_can_pay).' <b style="color:green"> đ</b></h3></p></td>';
+                                    }else if($tong_tien_khach >= $nhom_khach_hang[0]->tien && $tong_tien_khach < $nhom_khach_hang[1]->tien ){
+                                        
+                                        $tong_giam = (int) (Session::get('cart')->totalPrice * (($nhom_khach_hang[0]->giam)/100));
+                                        $dagiam = (int) $tong_gia_can_pay - (int) $tong_giam;
+                                        echo '<h2 style="color:red">Khách '.$nhom_khach_hang[0]->ten.'</h2>';
+                                        echo'<td ><p class="total-price"><h3 style="padding-right: 20px; display:flex;color: green;"><input type="text" name="price-all" value="'.$dagiam.'" hidden>'.number_format($dagiam).' <b style="color:green"> đ</b></h3></p></td>';
+                                    }else if( $tong_tien_khach >= $nhom_khach_hang[1]->tien ){
+                                            $tong_giam1 = (int) (Session::get('cart')->totalPrice * (($nhom_khach_hang[1]->giam)/100));
+                                            $dagiam1 = (int) $tong_gia_can_pay - (int) $tong_giam1;
+                                            echo 'Khách '.$nhom_khach_hang[1]->ten.'';
+                                            echo'<td ><p class="total-price"><h3 style="padding-right: 20px; display:flex;color: green;"><input type="text" name="price-all" value="'.$dagiam1.'" hidden>'.number_format($dagiam1).' <b style="color:green"> đ</b></h3></p></td>';
+                                        } 
+
+                                     
+                                @endphp
+                                
                             </tr>
                             @endif
                         </table>
@@ -377,31 +410,30 @@
                 $('#saveCart').on("click",function(){
                     let id = $('#product-id').val();
                     let arr = [];
-                    $(".quantity-table tr td input").each(function(){
-                        let obj = {key: $(this).data("id"), value: $(this).val() };
+                    $('.quantity-table tr td .quantity-product').each(function(){
+                        let obj = {key: $(this).data("id"), value: $(this).val() , max: $(this).attr('max') };
                         arr.push(obj);
-                       
                     });
-                    let quantity = parseInt($('.quantity-table tr td input').attr('max'));
-                    let number = parseInt($('.quantity-table tr td input').val());
-                    if(number <= quantity ){
-                        $.ajax({
-                            url: '/cart/update',
-                            method: 'POST', 
-                            data :{
-                                "_token" :"{{csrf_token()}}",
-                                "data" : arr,
-                            },  
-                            success:function(response){
-                                window.location.href= '{{route('cart')}}'
-                            }
-                        });
-                    }
-                    else{
-                        alert('Số lượng không đủ');
-                    }
-                 
+                    // arr.map(function(i,item){
+                    //     if(i.value <= i.max){
+                            $.ajax({
+                                url: '/cart/update',
+                                method: 'POST', 
+                                data :{
+                                    "_token" :"{{csrf_token()}}",
+                                    "data" : arr,
+                                },  
+                                success:function(response){
+                                    window.location.href= '{{route('cart')}}'
+                                }
+                            });
+                    //     }
+                    //     else{
+                    //         alert('Số lượng không đủ');
+                    //     }
+                    // })
                    
+
                     if($('#quantity-'+id).val() <=0){
                         $.ajax({
                         url: '/cart/delete/'+id,
@@ -423,25 +455,66 @@
                     </div>
                     
                     <div class="img-cartnull">
-                        Không có sản phẩm nào
                     </div>
-                
-                <h3 style="text-align: center;" >  <b>Không có sản phẩm nào </b></h3>
+                    @if (\Session::has('success'))
+                    <script>
+                         Swal.fire(
+                            "",
+                            "Chúng tôi sẽ liên lạc sớm nhất",
+                            "success"
+                        );
+                    </script>
+                    <div class="alert alert-success">
+                        <ul>
+                            <li>{!! \Session::get('success') !!}</li>
+                        </ul>
+                    </div>
+                    @endif
                 <a href="{{url('/')}}"  class="btn btn-default">Quay lại mua hàng </a> 
                 </div>
             @endif
          
         </div>
-        @if (\Session::has('success'))
-        <div class="alert alert-success">
-            <ul>
-                <li>{!! \Session::get('success') !!}</li>
-            </ul>
-        </div>
-        @endif
+       
+        <script>
+        //     $('.choose').change(function(){
+        //        $(".loadanh").html('<img src="'+window.URL.createObjectURL(this.files[0])+'" width="400px" />&nbsp;&nbsp;&nbsp;');
+        //    });
+                function readURL(input) {
+                if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#blah').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]); // convert to base64 string
+                }
+            }
+            $("#partner-img").change(function() {
+                readURL(this);
+            });
+            $(function() {
+                // Multiple images preview in browser
+                var imagesPreview = function(input, placeToInsertImagePreview) {
+
+                    if (input.files) {
+                        var filesAmount = input.files.length;
+
+                        for (i = 0; i < filesAmount; i++) {
+                            var reader = new FileReader();
+
+                            reader.onload = function(event) {
+                                $($.parseHTML('<img  class="img-display" style=" width:200px; padding:10px">')).attr('src', event.target.result).appendTo(placeToInsertImagePreview);
+                            }
+
+                            reader.readAsDataURL(input.files[i]);
+                        }
+                    }
+
+                };
+
+                $('#partner-img').change(function(){
+                    imagesPreview(this,'div.img-main');
+                });
+            });
+       </script>
         @endsection
-<script>
-    $('input[name="anh"]').change(function() {
-        $(".loadanh").html('<img src="'+window.URL.createObjectURL(this.files[0])+'" width="50px" />');
-    });
-</script>

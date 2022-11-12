@@ -142,6 +142,13 @@ Route::middleware('auth:admin')->group(function(){
         Route::post('sell/insert','Admin\SellController@insert_order_offline');
         Route::get('sell/edit/{id}','Admin\SellController@edit');
         Route::get('sell/update','Admin\SellController@update');
+        //Loai khach
+        Route::get('customer/loai','Admin\LoaiKhachController@index')->name('loai.index');
+        Route::get('customer/loai/add','Admin\LoaiKhachController@add');
+        Route::post('customer/loai/insert','Admin\LoaiKhachController@insert');
+        Route::get('customer/loai/edit/{id}','Admin\LoaiKhachController@edit');
+        Route::post('customer/loai/update','Admin\LoaiKhachController@update');
+        Route::get('customer/loai/delete/{id}','Admin\LoaiKhachController@delete');
     // });
  
 });
