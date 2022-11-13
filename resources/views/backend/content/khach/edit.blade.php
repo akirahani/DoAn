@@ -12,19 +12,22 @@
                 <div class="row insert-khach">
                     <div class="mb-3">
                         <label for="input-6">Tên</label>
-                        <input name="name" type="text" value="{{$khach->name}}" class="form-control form-control-rounded" id="input-6" required>
+                        <input name="name" readonly type="text" value="{{$khach->name}}" class="form-control form-control-rounded" id="input-6" required>
                     </div>
                     <div class="mb-3">
                         <label for="input-6">Email</label>
-                        <input name="name" type="text" value="{{$khach->email}}" class="form-control form-control-rounded" id="input-6" required>
+                        <input name="email" type="text" value="{{$khach->email}}" class="form-control form-control-rounded" id="input-6" required>
                     </div>
                     <div class="mb-3">
                         <label for="input-6">Điện thoại</label>
-                        <input name="name" type="text" value="{{$khach->phone}}" class="form-control form-control-rounded" id="input-6" required>
+                        <input name="phone" readonly type="text" value="{{$khach->phone}}" class="form-control form-control-rounded" id="input-6" required>
                     </div>
                     <div class="mb-3">
                         <label for="input-6">Địa chỉ</label>
-                        <input name="name" type="text" value="{{$khach->address}}" class="form-control form-control-rounded" id="input-6" required>
+                        <input name="address" type="text" value="{{$khach->address}}" class="form-control form-control-rounded" id="input-6" required>
+                    </div>
+                    <div class="mb-3">
+                        <input name="submit" type="submit" value="Cập nhật" class="btn btn-success form-control-rounded" id="input-6" required>
                     </div>
                 </div>
             </form>

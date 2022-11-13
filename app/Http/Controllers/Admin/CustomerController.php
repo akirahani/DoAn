@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\TuVan;
+use App\Models\Role;
 Use DB;
 
 
@@ -26,7 +27,10 @@ class CustomerController extends Controller
         $account = new User;
         $account->name = $input['name'];
         $account->email = $input['email'];
-        $account->password = bcrypt($input['password']);
+        $account->phone = $input['phone'];
+        $account->address = $input['address'];
+        $account->username = $input['phone'];
+        $account->password = bcrypt($input['phone']);
         $account->save(); 
         return redirect()->route('khach.index');
     }
@@ -37,16 +41,17 @@ class CustomerController extends Controller
     public function update(User $account,Request $request,Role $role){
         $input = $request->all();
         $id = $request['id'];
-        $role = $input['role'];
+        // $role = $input['role'];
         $data =[
             'name' =>$input['name'],
             'email'=> $input['email'],
-            'password'=>bcrypt($input['password']),
-            'role'=> $role
+            'password'=>bcrypt($input['phone']),
+            'address'=>$input['address'],
+            // 'role'=> $role
         ];
         $accounts = $account->find($id);
         $accounts->update($data);
-        $accounts->role()->sync($role);
+        // $accounts->role()->sync($role);
         return redirect()->route('account.index');
     }
     public function delete($id, User $account){
