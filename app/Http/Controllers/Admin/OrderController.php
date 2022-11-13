@@ -90,7 +90,7 @@ class OrderController extends Controller
             ->where('id','=',$val_tien['product_id'])
             ->first();
             $product_chitiet->quantity -= $val_tien['soluong'];
-            $order->order_product()->attach($val_tien['product_id'],['quantity'=>$val_tien['soluong']]);
+            $order->order_product()->attach($val_tien['product_id'],['quantity'=>$val_tien['soluong'],'price'=> $val_tien['dongia']]);
             $arr_final_update[$k] = [
                 'quantity'=>$product_chitiet->quantity,
                 'id'=> $val_tien['product_id']
@@ -211,6 +211,7 @@ class OrderController extends Controller
         date_default_timezone_set('Asia/Ho_Chi_Minh');
         $input= $request->all();
         $id = $input['id'];
+        $storage_new = new Storage;
         $order_confirm = Order::find($id);
         $product = DB::table('products')
         ->select('*')
@@ -236,16 +237,17 @@ class OrderController extends Controller
             }
         }else{
             $arr = [];
+            $arr_final =[];
             foreach($input['sanpham'] as $key=>$val){
                 // foreach($storage as $k => $value){
                 //     if($value->quantity >= $input['soluong'][$key]){
                         $arr[$key]['product'] = $input['sanpham'][$key];
                         $arr[$key]['quantity'] = $input['soluong'][$key];
 
-                        $order_confirm->status = 5;
-                        $order_confirm->updated_at = Carbon\Carbon::now();
-                        $order_confirm->lydohuy = $input['lydo'];
-                        $order_confirm->save();
+                        // $order_confirm->status = 5;
+                        // $order_confirm->updated_at = Carbon\Carbon::now();
+                        // $order_confirm->lydohuy = $input['lydo'];
+                        // $order_confirm->save();
                         $order_cancel = DB::table('orders')
                         ->select('*')
                         ->where('status',5)
@@ -264,16 +266,30 @@ class OrderController extends Controller
                 } 
                            
             }  
-            // dd($arr_final);
+            // dd($input);
             foreach($arr_final as $keyrlt=> $result){
                 $arr_final_update[$keyrlt] = [
                     'quantity' => $result['quantity']
                 ];
             }
             foreach($arr_final as $keyrlt=> $result){
-                $storage_update->where('product','=',$result['product'])->update($arr_final_update[$keyrlt]);
+                // dd($result['product']);
+                $detail_product_kho = DB::table('storage')->where('product','=',$result['product'])->first();
+                // dd($detail_product_kho);
+                if(!empty($detail_product_kho)){
+                    dd('san pham da ton tai');
+                    $storage_update->where('product','=',$result['product'])->update($arr_final_update[$keyrlt]);
+                }else{
+                    dd('san pham moi');
+                    $storage_new->product = $result['product'];
+                    $storage_new->quantity = $result['quantity'];
+                    $storage_new->unit = 5; 
+                    dd($storage_new);
+                    $storage_new->save();
+                }
+               
             }
-            return view('backend.content.order.huy',compact('order_cancel'));
+            // return view('backend.content.order.huy',compact('order_cancel'));
         }
     }
 

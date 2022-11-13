@@ -140,7 +140,7 @@ Route::middleware('auth:admin')->group(function(){
         Route::get('sell','Admin\SellController@index')->name('sell.index');
         Route::get('sell/add','Admin\SellController@add');
         Route::post('sell/insert','Admin\SellController@insert_order_offline');
-        Route::get('sell/edit/{id}','Admin\SellController@edit');
+        Route::get('sell/detail/{id}','Admin\SellController@detail');
         Route::get('sell/update','Admin\SellController@update');
         //Loai khach
         Route::get('customer/loai','Admin\LoaiKhachController@index')->name('loai.index');

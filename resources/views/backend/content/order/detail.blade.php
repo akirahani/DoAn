@@ -29,9 +29,9 @@
                     @endforeach
                 </tbody>
                 <input type="submit" name="goi" class="btn btn-info" value="Gọi"> 
-                <i class="fas fa-phone"></i>
-                <input type="submit" name="huy" class="btn btn-danger" value="Hủy"> 
-                <i class="fas fa-trash"></i>
+                {{-- <i class="fas fa-phone"></i> --}}
+                {{-- <input type="submit" name="huy" class="btn btn-danger" value="Hủy"> 
+                <i class="fas fa-trash"></i> --}}
             </table>
         </div>
     </form>

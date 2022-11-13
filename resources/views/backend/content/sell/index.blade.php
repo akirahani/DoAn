@@ -20,12 +20,11 @@
                 <tr id="order{{$val->id}}">
                     <td  scope="row">{{$key+1}}</td>
                     <td  scope="row">{{$val->name}}</td>
-                    <td  scope="row">{{number_format($val->total_price)}}</td>
+                    <td  scope="row">{{number_format($val->total_price)}}đ</td>
                     <td  scope="row">{{$val->note}}</td>
-                    <td></td>
-                    {{-- <td>
-                        <a href="{{url('/admin/order/detail',$val->id)}}" class="btn btn-warning"><i class="fas fa-eye"></i></a>
-                    </td> --}}
+                    <td>
+                        <a href="{{url('/admin/sell/detail',$val->id)}}" class="btn btn-warning"><i class="fas fa-eye"></i></a>
+                    </td>
                 </tr>
                 @endforeach
 

@@ -17,6 +17,11 @@ class SellController extends Controller
         $product = DB::table('products')->get();
         return view('backend.content.sell.insert',compact('product'));
     }
+    public function detail($id){
+        $order_detail = DB::table('orders')->where('id',$id)->first();
+        $product_order = DB::table('order_products')->select('product_id','quantity')->where('order_id',$order_detail->id)->get();
+        return view('backend.content.sell.detail',compact('order_detail','product_order'));
+    }
     // public function insert(Request $request, Product $product_capnhat){
     //     date_default_timezone_set('Asia/Ho_Chi_Minh');
     //     $input = $request->all();
@@ -189,7 +194,7 @@ class SellController extends Controller
                         ->where('id','=',$val_tien['product_id'])
                         ->first();
                         $product_chitiet->quantity -= $val_tien['soluong'];
-                        $order->order_product()->attach($val_tien['product_id'],['quantity'=>$val_tien['soluong']]);
+                        $order->order_product()->attach($val_tien['product_id'],['quantity'=>$val_tien['soluong'],['price'=> $val_tien['dongia'] ]]);
                         $arr_final_update[$k] = [
                             'quantity'=>$product_chitiet->quantity,
                             'id'=> $val_tien['product_id']

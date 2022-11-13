@@ -11,6 +11,6 @@ class Order extends Model
     protected $table = 'orders';
     protected $fillable = ['id','name','tel','address','receive','note','mail','status','total_price','lydohuy','giohoanthanh','giovanchuyen','hinhthucthanhtoan','nganhang','sotaikhoan','sanphamtuvan','loai','anhchuyenkhoan'];
     public function order_product(){
-        return  $this->belongsToMany(Product::class,'order_products','order_id','product_id')->withPivot('quantity');
+        return  $this->belongsToMany(Product::class,'order_products','order_id','product_id')->withPivot('quantity','price');
     }
 }

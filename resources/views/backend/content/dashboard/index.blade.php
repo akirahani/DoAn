@@ -187,4 +187,49 @@
                 </div><!-- end card -->
             </div>
         </div><!-- end row-->
+        <div>
+            <?php 
+                
+                $arr_sp = [];
+                $product =  DB::table('products')->select('id','name')->get();
+                foreach($product as $val){
+                    $arr_sp[$val->id]['ten'] = $val->name;
+                    $sanpham_ban_chay = DB::table('order_products')->select('product_id','quantity','order_id')->where('product_id','=',$val->id)->get();
+                    if(!empty($sanpham_ban_chay)){
+                        $tong_sl_sp = 0;
+                        foreach($sanpham_ban_chay as $valb_seller){
+                            $donhang_status = DB::table('orders')->select('status')->where('id','=',$valb_seller->order_id)->first();
+                            if($donhang_status->status == 4){
+                                $tong_sl_sp += $valb_seller->quantity;
+                            }
+                        }
+                        if( $tong_sl_sp >0){
+                            $arr_sp[$val->id]['soluong'] = $tong_sl_sp;
+                        }else{
+                            unset($arr_sp[$val->id]);
+                        }
+                    }
+                }
+                $arr_sort =[];
+                foreach ($arr_sp as $key => $row_sort)
+                {
+                    $arr_sort[$key] = $row_sort['soluong'];
+                }
+                $arr_final = array_multisort($arr_sort, SORT_DESC, $arr_sp);
+            ?>
+            <table class="table">
+                <h3>Sản phẩm bán chạy</h3>
+                <tr>
+                    {{-- <th>STT</th> --}}
+                    <th>Sản phẩm</th>
+                    <th>Số lượng bán ra</th>
+                </tr>
+                <?php foreach($arr_sp as $key => $val_spbanchay){ $a = array_keys($arr_sp);?>
+                <tr>
+                    <td><?=$val_spbanchay['ten']?></td>
+                    <td><?=$val_spbanchay['soluong']?></td>
+                </tr>
+                <?php } ?>
+            </table>
+        </div>
 @endsection
