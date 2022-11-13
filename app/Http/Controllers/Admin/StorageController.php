@@ -105,7 +105,7 @@ class StorageController extends Controller
                     
                     foreach($input['product_id'] as $key_product =>$val){
                         $check_storage[$key_product] = DB::table('storage')->select('product','quantity')->where('product','=',$val)->first();
-                        if($check_storage[$key_product] != null){
+                        if(!empty($check_storage[$key_product])){
                             $soluong_capnhap =  $check_storage[$key_product]->quantity +  $arr_sp[$key_product]['quantity'];
                             $arr_update_nhap = [
                                 'quantity' => $soluong_capnhap,
