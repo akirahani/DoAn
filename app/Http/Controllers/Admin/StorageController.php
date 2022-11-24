@@ -492,6 +492,63 @@ class StorageController extends Controller
                 $sheet->setCellValue('L7', 'TIỀN');
                 $x = 8;
                 $list_ton = DB::table('storage')->get();
+                $nhap_hang = DB::table('imports')->get();
+                $arr_sp_nhap = [];
+                $tong_final = 0;
+                foreach($nhap_hang as $key_nhap => $val_nhap){
+                    foreach(json_decode($val_nhap->sanpham) as $key_chitietnhap => $val_sp_nhap){
+                        $arr_sp_nhap[$key_nhap][$val_sp_nhap->product] = $val_sp_nhap;
+                    }
+                }
+
+                $arr_chitiet_sp_nhap = [];
+                foreach($arr_sp_nhap as $key_sp => $val_luongnhap){
+                    foreach($val_luongnhap as $k =>$val_final_nhap){
+                        $arr_chitiet_sp_nhap[$k][$key_sp]= $val_final_nhap;
+                    }
+                }
+                $soluong = [];
+                
+                foreach($arr_chitiet_sp_nhap as $spk => $val_kqnhap){
+                    $soluong[$spk]['soluong'] = 0;
+                    $soluong[$spk]['dongia']= 0;
+                    foreach($val_kqnhap as $ks => $result_quanti){
+                        $soluong[$spk]['soluong'] += $result_quanti->quantity;
+                        $soluong[$spk]['dongia'] = $result_quanti->price;
+                    }
+                    $arr_chitiet_sp_nhap[$spk] = $soluong[$spk];
+                }
+              
+                $arr_price_sp = [];
+                $product_detail = DB::table('products')->select('price','id')->get();
+                foreach($product_detail as $val_gia){
+                    $arr_price_sp[$val_gia->id] = $val_gia->price;
+                } 
+                $xuat_hang = DB::table('exports')->select('sanpham')->get();
+                $arr_sp_xuat= [];
+                $tong_xuat_final = 0;
+                foreach($xuat_hang as $key_xuat => $val_xuat){
+                    foreach(json_decode($val_xuat->sanpham) as $key_chitietxuat => $val_sp_xuat){
+                        $arr_sp_xuat[$key_xuat][$val_sp_xuat->product_id] = $val_sp_xuat;
+                    }
+                }
+                $arr_chitiet_sp_xuat = [];
+                foreach($arr_sp_xuat as $key_sp_xuat => $val_luongxuat){
+                    foreach($val_luongxuat as $k =>$val_final_xuat){
+                        $arr_chitiet_sp_xuat[$k][$key_sp_xuat]= $val_final_xuat;
+                    }
+                }
+                $soluong_xuat = [];
+                foreach($arr_chitiet_sp_xuat as $spx => $val_kqxuat){
+                    $soluong_xuat[$spx]['soluong'] = 0;
+                    $soluong_xuat[$spx]['dongia']= 0;
+                    foreach($val_kqxuat as $ksx => $result_quanti_xuat){
+                        $soluong_xuat[$spx]['soluong'] += $result_quanti_xuat->soluong;
+                        $soluong_xuat[$spx]['dongia'] = $arr_price_sp[$spx];
+                    }
+                    $arr_chitiet_sp_xuat[$spx] = $soluong_xuat[$spx];
+                }
+     
                 $arr_sp_gets = [];
                 $product_list = DB::table('products')->get();
                 foreach($product_list as $val){
@@ -504,16 +561,39 @@ class StorageController extends Controller
                 }
                 foreach($list_ton as $key => $val){
                     $key++;
-                    // if($month_in == $month ){
+
                         $sheet->setCellValue('A'.$x, $key);
                         $sheet->setCellValue('B'.$x, $val->product);
                         $sheet->setCellValue('C'.$x, $arr_sp_gets[$val->product]->name );
                         $sheet->setCellValue('D'.$x, $arr_unit[$arr_sp_gets[$val->product]->unit_id]);
-                        $sheet->setCellValue('E'.$x,'');
-                    // }
+                        
+                        $sheet->setCellValue('G'.$x,$arr_chitiet_sp_nhap[$val->product]['soluong']);
+                        $sheet->setCellValue('H'.$x,$arr_chitiet_sp_nhap[$val->product]['dongia']);
+                        if(array_key_exists($val->product,$arr_chitiet_sp_xuat)){
+                            $tongdau = $val->quantity + $arr_chitiet_sp_xuat[$val->product]['soluong']-  $arr_chitiet_sp_nhap[$val->product]['soluong']; 
+                            $sheet->setCellValue('E'.$x,$tongdau);
+                            $sheet->setCellValue('F'.$x,$arr_chitiet_sp_nhap[$val->product]['dongia']);
+                            $sheet->setCellValue('I'.$x,$arr_chitiet_sp_xuat[$val->product]['soluong']);
+                            $sheet->setCellValue('J'.$x,$arr_chitiet_sp_xuat[$val->product]['dongia']);
+                        }else{
+                            $sheet->setCellValue('E'.$x,'');
+                            $sheet->setCellValue('F'.$x,'');
+                            $sheet->setCellValue('I'.$x,'');
+                            $sheet->setCellValue('J'.$x,'');
+                        }
+                        $sheet->setCellValue('K'.$x,$val->quantity);
+                        $sheet->setCellValue('L'.$x,$val->price);
+
+            
 
                     $x++;
                 }
+            $sheet->setCellValue('C14','TỔNG CỘNG');
+            $sheet->setCellValue('I15','Ngày .... Tháng....Năm....');
+            $sheet->setCellValue('C16','Người lập');
+            $sheet->setCellValue('C17','(Kí, Họ tên)');
+            $sheet->setCellValue('J16','Thủ kho');
+            $sheet->setCellValue('J17','(Kí, Họ tên)');
             $filename = 'BaoCaoTon';
             ob_end_clean();
             header("Content-Type: application/ms-excel");

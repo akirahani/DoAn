@@ -62,6 +62,11 @@
         <br>
         <input type="submit" class="btn btn-warning mt-2" value="Cập nhật đơn" />
     </form>
+    <form action="{{url('admin/order/getback')}}" method="POST">
+        @csrf
+        <input type="hidden" value="{{$order->id}}" name="id">
+        <input type="submit" class="btn btn-danger mt-2" value="Trả đơn gọi về đơn mới" />
+    </form>
     <script>
         $('input[type="radio"]').click(function(){
             if($(this).val() == 0){

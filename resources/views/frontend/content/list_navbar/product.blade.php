@@ -82,7 +82,7 @@
                 </div>
                 @foreach($trademark as $val)
                 <li>
-                    <input type="checkbox" name="trademark" value="{{$val->id}}" >{{$val->name}}
+                    <input style="margin-left:5px" type="checkbox" name="trademark" value="{{$val->id}}" > {{$val->name}}
                 </li>
                 @endforeach
                 <hr>
@@ -91,7 +91,7 @@
                 </div>
                 @foreach($cate as $val)
                 <li>
-                    <input type="checkbox" name="category" value="{{$val->id}}" >{{$val->name}}
+                    <input style="margin-left:5px" type="checkbox" name="category" value="{{$val->id}}" > {{$val->name}}
                 </li>
                 @endforeach
             </ul>

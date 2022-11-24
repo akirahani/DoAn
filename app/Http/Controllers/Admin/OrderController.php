@@ -111,6 +111,17 @@ class OrderController extends Controller
         $order_id = $id;
         return view('backend.content.order.detail',compact('order','order_id'));
     }
+
+    public function get_back(Request $request,Order $order_get_back){
+        $order_id = $request->id;
+        $arr = [
+            'status' => 1
+        ];
+        $order_get_back->where('id', $order_id)->update($arr);
+
+        return redirect()->route('admin.order');
+    }
+
     public function get_call(Order $order,Request $request){
         $input = $request->all();
         date_default_timezone_set('Asia/Ho_Chi_Minh');

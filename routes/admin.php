@@ -91,6 +91,7 @@ Route::middleware('auth:admin')->group(function(){
         Route::get('/order/finish','Admin\OrderController@order_finish')->name('admin.order.finish');
         Route::get('order/all','Admin\OrderController@order_all')->name('admin.order.all');
         Route::get('order/view/{id}','Admin\OrderController@order_view')->name('admin.order.view');
+        Route::post('/order/getback','Admin\OrderController@get_back')->name('admin.order.getback');
         // cancel
         Route::get('/cancel','Admin\OrderController@cancel')->name('admin.cancel');
         Route::get('/cancel/insert','Admin\OrderController@cancel_add')->name('admin.cancel.insert');
