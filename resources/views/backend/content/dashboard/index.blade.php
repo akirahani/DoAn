@@ -198,10 +198,13 @@
                     if(!empty($sanpham_ban_chay)){
                         $tong_sl_sp = 0;
                         foreach($sanpham_ban_chay as $valb_seller){
-                            $donhang_status = DB::table('orders')->select('status')->where('id','=',$valb_seller->order_id)->first();
-                            if($donhang_status->status == 4){
-                                $tong_sl_sp += $valb_seller->quantity;
+                            if(!empty($donhang_status)){
+                                $donhang_status = DB::table('orders')->select('status')->where('id','=',$valb_seller->order_id)->first();
+                                if($donhang_status->status == 4){
+                                    $tong_sl_sp += $valb_seller->quantity;
+                                }
                             }
+                       
                         }
                         if( $tong_sl_sp >0){
                             $arr_sp[$val->id]['soluong'] = $tong_sl_sp;

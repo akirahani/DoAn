@@ -34,3 +34,5 @@ Route::get('logout','Frontend\HomeController@logout')->name('logout');
 Route::post('doimatkhau','Frontend\HomeController@reset_passd');
 Route::post('doithongtin','Frontend\HomeController@reset_info');
 
+
+

@@ -52,6 +52,7 @@
     color: red;
   }
 </style>
+
 <div class="head-start-news mb-3">
   <h1>Danh sách sản phẩm trong kho</h1>
 </div>
@@ -96,5 +97,8 @@
       </tbody>
   </table>
 </div>
-
+<form action="{{url('admin/hangton')}}" method="POST">
+  @csrf
+  <input type="submit" name="export " class="btn btn-warning" value="Xuất file">
+</form>
 @endsection

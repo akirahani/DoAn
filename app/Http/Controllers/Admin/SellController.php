@@ -19,7 +19,7 @@ class SellController extends Controller
     }
     public function detail($id){
         $order_detail = DB::table('orders')->where('id',$id)->first();
-        $product_order = DB::table('order_products')->select('product_id','quantity')->where('order_id',$order_detail->id)->get();
+        $product_order = DB::table('order_products')->select('product_id','quantity','price')->where('order_id',$order_detail->id)->get();
         return view('backend.content.sell.detail',compact('order_detail','product_order'));
     }
     // public function insert(Request $request, Product $product_capnhat){
@@ -161,6 +161,7 @@ class SellController extends Controller
         {
             $tong_gia_final += $val_tien['dongia'] * $val_tien['soluong'];
         }
+
         $order->total_price = $tong_gia_final;
 
         foreach($input['product_id'] as $key=>$val){
@@ -187,6 +188,7 @@ class SellController extends Controller
                     // Don hang offline
                     $order->loai = 2;   
                     $order->save();
+                    $arr_final_update = [];
                     foreach($arr_tong_gia as $k=> $val_tien)
                     {
                         $product_chitiet = DB::table('products')
@@ -194,13 +196,12 @@ class SellController extends Controller
                         ->where('id','=',$val_tien['product_id'])
                         ->first();
                         $product_chitiet->quantity -= $val_tien['soluong'];
-                        $order->order_product()->attach($val_tien['product_id'],['quantity'=>$val_tien['soluong'],['price'=> $val_tien['dongia'] ]]);
+                        $order->order_product()->attach($val_tien['product_id'],['quantity'=>$val_tien['soluong'],'price'=> $val_tien['dongia'] ]);
                         $arr_final_update[$k] = [
                             'quantity'=>$product_chitiet->quantity,
                             'id'=> $val_tien['product_id']
                         ];
                     }
-
                     foreach($arr_final_update as $val_id_pro){
                         $product_capnhat->where('id',$val_id_pro['id'])->update($val_id_pro);
                     }

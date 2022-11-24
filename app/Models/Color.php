@@ -9,5 +9,5 @@ class Color extends Model
 {
     use HasFactory;
     protected $table = 'colors';
-    protected $fillable = ['id','name'];
+    protected $fillable = ['id','name','ma','updated_at','created_at'];
 }

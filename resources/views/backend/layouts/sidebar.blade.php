@@ -77,6 +77,7 @@
                         <li><a href="{{url('/admin/order/finish')}}" data-key="t-alerts">Đơn hàng hoàn thành</a></li>
                         <li><a href="{{url('/admin/order/cancel')}}" data-key="t-alerts">Đơn hàng hủy</a></li>
                         <li><a href="{{url('/admin/cancel')}}" data-key="t-alerts">Lý do hủy đơn</a></li>
+                        <li><a href="{{url('/admin/order/all')}}" data-key="t-alerts">Tất cả đơn hàng</a></li>
                     </ul>
                 </li>
 
@@ -141,6 +142,13 @@
                     <a href="{{url('/admin/news')}}">
                         <i data-feather="home"></i>
                         <span data-key="t-dashboard">Tin tức <i class="fa fa-weibo" aria-hidden="true"></i></span>
+                    </a>
+        
+                </li>
+                <li>
+                    <a href="{{url('/admin/paint')}}">
+                        <i data-feather="home"></i>
+                        <span data-key="t-dashboard">Màu sơn <i class="fa fa-weibo" aria-hidden="true"></i></span>
                     </a>
         
                 </li>

@@ -13,6 +13,9 @@ use App\Models\Supplier;
 use App\Models\ThongKeChi;
 use App\Models\Storage;
 use DB;
+use Maatwebsite\Excel\Facades\Excel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class StorageController extends Controller
 {
 
@@ -144,7 +147,10 @@ class StorageController extends Controller
         $sanpham = json_decode($input['sanpham']);
         $product = DB::table('products')
         ->get();
-
+        $arr_unit = [];
+        foreach($unit as $vals){
+           $arr_unit[$vals->id] = $vals->name;
+        }
         foreach($sanpham as $key=>$val){
             $id = (int)$val->product;
             foreach($product as $k=>$value){
@@ -153,26 +159,33 @@ class StorageController extends Controller
                     $arr[$key]->soluongnhap  = $sanpham[$key]->quantity;
                     $arr[$key]->gianhap  = $sanpham[$key]->price;
                 }
-                foreach($unit as $val){
-                    if($sanpham[$key]->unit == $val->id){
-                        $value->unit = $val->name;
-                    }
-                }
+  
             }   
         }
+
+        foreach($arr as $val_arr){
+            foreach($unit as $vals){
+                if($val_arr->unit_id == $vals->id){
+                    $val_arr->unit_id = $vals->name;
+                }
+            }
+        }
+        
         foreach($account as $val){
             if($input['nguoinhap'] == $val->id){
                 $input['nguoinhap'] = $val->name;
             }
         }
-
-        // dd($arr);
+        
         return response()->json([
             "sanpham"=> json_encode($arr),
             "ma"=> $input['ma'],
             "nguoinhap"=>$input['nguoinhap'],
             "id"=>$input['id'],
             "thoigian"=>$input['thoigian'],
+            "ngay" => date('d',strtotime($input['thoigian'])),
+            "thang" => date('m',strtotime($input['thoigian'])),
+            "nam" => date('Y',strtotime($input['thoigian'])),
             "ghichu"=>$input['ghichu'],
             "noidung"=>$input['noidung'],
             "thoigian"=> $input['thoigian'],
@@ -263,29 +276,33 @@ class StorageController extends Controller
         $storage = DB::table('storage')
         ->select('product','quantity')
         ->get();
+        // dd($input);
         foreach($input['product_id'] as $key =>$val){
+            
             $arr_sp[$key]['product_id'] =  $input['product_id'][$key];
             $arr_sp[$key]['soluong'] = $input['soluong'][$key];
             $soluong =    (int) $arr_sp[$key]['soluong'];
             $id = (int) $arr_sp[$key]['product_id'];   
-            foreach($storage as $keys=>$value){
-                if($soluong >0 && $soluong <= $value->quantity  ){
-                    if($value->product == $id ){
-                        $value->quantity -=  $soluong;
-                        $storages->where('product',$id)->update(['quantity'=>$value->quantity]);
-                    }
-                }
-                else{
-                    $soluong = 0;
-                    // $value->quantity = $value->quantity;
-                    // echo "<script type='text/javascript'>alert('$mess');</script>";
-                    return redirect()->route('admin.storage.export.add');
-                }
-            }
+  
             foreach($product as $keyproduct => $val_product){
                 if($val_product->id == $id ){
                     $val_product->quantity +=  $soluong;
                     $products->where('id',$id)->update(['quantity'=>$val_product->quantity]);
+                }
+            }
+        }
+        foreach($arr_sp as $key=> $val){
+            foreach($storage as $keys=>$value){
+                if($value->product == $val['product_id'] ){
+                    $value->quantity -=   $val['soluong'];
+                    $storages->where('product',$val['product_id'])->update(['quantity'=>$value->quantity]);
+                    if($value->quantity < 0){
+                        return redirect()->route('admin.storage.export.add');
+                    }
+                    else{
+                        
+                    }
+                    
                 }
             }
         }
@@ -322,18 +339,21 @@ class StorageController extends Controller
         }
         foreach($account as $val){
             if($input['nguoixuat'] == $val->id){
-                $input['nguoixuat'] = $val->name;
+               $nguoixuat = $val->name;
+         
             }
         }
         return response()->json([
             "sanpham"=> json_encode($arr),
             "ma"=> $input['ma'],
-            "nguoixuat"=>$input['nguoixuat'],
+            "nguoixuat"=>$nguoixuat,
             "id"=>$input['id'],
+            "ngay" => date('d',strtotime($input['thoigian'])),
+            "thang" => date('m',strtotime($input['thoigian'])),
+            "nam" => date('Y',strtotime($input['thoigian'])),
             "thoigian"=>$input['thoigian'],
             "ghichu"=>$input['ghichu'],
             "noidung"=>$input['noidung'],
-            "thoigian"=> $input['thoigian'],
         ]);   
     }
     //Hiển thị danh sách sản phẩm sau khi chọn nhà cung cấp
@@ -430,8 +450,55 @@ class StorageController extends Controller
             "thieu"=>$con_thieu,
             "idchi"=>$id_chi,
             "thoigian"=>$thoigian,
+            "ngay"=> date('d',strtotime($thoigian)),
+            "thang"=> date('m',strtotime($thoigian)),
+            "nam"=> date('Y',strtotime($thoigian)),
             "dachi"=> $tienchi
         ]);   
+    }
+
+    public function hangton(Request $request){
+
+            $spreadsheet = new Spreadsheet();
+            
+            $sheet = $spreadsheet->getActiveSheet();
+            $writer = new Xlsx($spreadsheet);
+            $title_baocao = 'BÁO CÁO TỔNG HỢP TỒN KHO';
+            $spreadsheet->getActiveSheet()->mergeCells('E3:M4');
+            $spreadsheet->getActiveSheet()
+            ->getCell('A3')
+            ->setValue($title_baocao);
+            foreach(range('A', 'M') as $columnID) {
+            $spreadsheet->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+            }
+            // set the names of header cells
+                $sheet->setCellValue('C1', 'Đơn vị.......');
+                $sheet->setCellValue('C2', 'Địa chỉ........');
+                $sheet->setCellValue('D2', 'Đơn vị.......');
+                $sheet->setCellValue('C2', 'Địa chỉ........');
+                $x = 4;
+                // if($month_in == $month ){
+                    $sheet->setCellValue('A'.$x, 1);
+                    $sheet->setCellValue('B'.$x,2 );
+                    $sheet->setCellValue('C'.$x, 3);
+                    $sheet->setCellValue('D'.$x,4);
+                    $sheet->setCellValue('E'.$x, 5);
+                        // $day_out_final = date_format($date_out,"d-m-Y");
+                        // $sheet->setCellValue('F'.$x, $day_out_final);
+                    // 	$sheet->setCellValue('F'.$x, '');
+                    // }
+            //     }
+            //   $x++;
+            // }
+            $filename = 'BaoCaoTon';
+            ob_end_clean();
+            header("Content-Type: application/ms-excel");
+            header('Content-Disposition: attachment;filename="'.$filename.'.xlsx"');
+            header('Cache-Control: max-age=0');
+            $writer->save('php://output'); 
+            $writer->save('BaoCaoTonKho.xlsx');
+            return Excel::download(new ExportUser, 'users.xlsx');
+                    
     }
 
    

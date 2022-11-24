@@ -16,8 +16,7 @@
 	#modal_chi form{
 			background-color: #ffffff;
 			width: 800px;
-      margin: 0 auto;
-      margin: 100px auto;
+      margin: 10px auto;
 			padding: 30px 10px 50px 10px;
   }
   #modal_chi h1{
@@ -126,41 +125,52 @@ $('.tien_chi_detail').click(function(){
         $('.modal'+id_pchi).html(`
           <div class="exit-chi" id=""></div>
           <div class="content-chi">
-            <h1 style="position:absolute; z-index:1; left:0; right: 0; padding-top: 15px; ">Phiếu chi ${data.ma}</h1>
-            <form action="" style="margin-left:auto 249px; position:relative; padding: 80px ;">
-              <div class="rows">
-                <div class="item-chi-paper">
-                  <b>Nhà cung cấp</b>
-                  <p>${data.nhacungcap}</p>
+            <form action="" style="margin-left:auto 249px; position:relative; padding: 30px ;">
+              <div class="head-import" style="display:flex; justify-content:space-between; width: 800px;">
+                <div class="left-himport">
+                  <b>Đơn vị:.......</b>
+                  <br>
+                  <b>Bộ phận:........</b> 
                 </div>
-                <div class="item-chi-paper">
-                  <b>Ngày chi</b>
-                  <p>${data.thoigian}</p>
-                </div>
-                <div class="item-chi-paper">
-                  <b>Phiếu nhập</b>
-                  <p>${data.phieunhap}</p>
-                </div>
-                <div class="item-chi-paper">
-                  <b>Số tiền đã chi</b>
-                  <p>${formatter.format(data.dachi)}</p>
+                <div class="left-himport" style="text-align:center; padding-left:300px">
+                  <b>Mẫu số 02 - TT<b>
+                  <p>(Ban hành theo Thông tư số .../2014/TT-BTC)<br>Ngày 22/12/2014 của Bộ Tài chính</p> 
                 </div>
               </div>
-              <div>Nội dung chi</div>   
-              <table class="table" >
-                <thead>
-                  <tr>
-                    <th>Sản phẩm</th>
-                    <th>Số lượng</th>
-                    <th>Đơn giá</th>
-                    <th>Đơn vị tính</th>
-                  </tr>
-                </thead>
-                <tbody>
-                    ${products}
-                </tbody>  
-              </table>
-              <b style="float: right">Còn thiếu: ${formatter.format(data.thieu)}</b>
+              <h4 style=" text-align:center; text-transform: uppercase">Phiếu chi</h4>
+              <div class="phieu-chi-flex" style=" display:flex; justify-content: center; ">
+                <p style=" text-align:center;">....Ngày ${data.ngay} tháng ${data.thang} năm ${data.nam}....</p>
+                <div style="disply: flex; flex-flow: column; align-items: center">
+                  <p style="text-align:center; padding-left:50px">Quyển Số: .....${data.phieunhap}</p>
+                  <p style="text-align:center; padding-left:50px">Số: ..... ${id_pchi}</p>
+                  <p style="text-align:center; padding-left:50px">Nợ: .....${formatter.format(data.thieu)}</p>
+                </div>
+              </div>
+              <div class="thong-tin-xuat">
+                <p>- Họ và tên người nhận tiền: ....................(Đại diện cho NCC: ${data.nhacungcap} )...... </p>
+                <p>- Địa chỉ:.......................</p>  
+                <p>- Lý do chi:.......................</p>  
+                <p>- Số tiền:..........${formatter.format(data.dachi)}.............</p>  
+              </div>
+              <b style="float: right">Ngày ${data.ngay} tháng ${data.thang} năm ${data.nam}</b>
+              <br>
+              <div class="ky-ten" style="display: flex; justify-content: space-between; width:500px; padding-bottom: 30px;">
+                  <div>
+                      <b>Thủ quỹ</b>
+                      <br> <br> <br> <br> 
+                      <p>(Ký, Họ tên)</p>
+                  </div>
+                  <div>
+                    <b>Người lập phiếu</b>
+                    <br> <br> <br> <br>
+                    <p>(Ký, Họ tên)</p>
+                  </div>
+                  <div>
+                    <b>Người nhận tiền</b>
+                    <br> <br> <br> <br>
+                    <p>(Ký, Họ tên)</p>  
+                  </div>
+              </div>
               <button onclick="window.print()"><i class="fa fa-print"></i></button> 
             </form>
           </div>`);

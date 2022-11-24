@@ -137,13 +137,17 @@ $('.view_import').click(function(){
         var tong_nhap = 0;
         var products = '';
     
-        arr_get.forEach((item)=>{
+        arr_get.forEach((item,i)=>{
+          i++;
           products += `
                 <tr>
+                  <td>${i}</td>
                   <td>${item.name}</td>
+                  <td>${item.id}</td>
+                  <td>${item.unit_id}</td>
                   <td>${item.soluongnhap}</td>
                   <td>${formatter.format(item.gianhap)}</td>
-                  <td>${item.unit}</td>
+                  
                 </tr>`
                 tong_nhap += item.soluongnhap * item.gianhap; 
               
@@ -151,41 +155,63 @@ $('.view_import').click(function(){
         $('.modal'+id).show();
         $('.modal'+id).html(`
           <div class="exit" id=""></div>
-          <div class="content-import">
-            <h1 style="position:absolute; z-index:1; left:0; right: 0; padding-top: 15px; ">Phiếu nhập ${data.ma}</h1>
-            <form action="" style="margin-left:auto 249px; position:relative; padding: 80px ;">
-              <div class="rows">
-                <div class="item-import-paper">
-                  <b>Người nhập</b>
-                  <p>${data.nguoinhap}</p>
+          <div class="content-import" style="height:100%; overflow-y:scroll">
+            <form action="" style="margin-left:auto 249px; position:relative; padding: 30px ;">
+              <div class="head-import" style="display:flex; justify-content:space-between; width: 800px;">
+                <div class="left-himport">
+                  <b>Đơn vị:.......</b>
+                  <br>
+                  <b>Bộ phận:........</b> 
                 </div>
-                <div class="item-import-paper">
-                  <b>Nội dung</b>
-                  <p>${data.noidung}</p>
-                </div>
-                <div class="item-import-paper">
-                  <b>Ghi chú</b>
-                  <p>${data.ghichu}</p>
-                </div>
-                <div class="item-import-paper">
-                  <b>Ngày nhập</b>
-                  <p>${data.thoigian}</p>
+                <div class="left-himport" style="text-align:center; padding-left: 300px;">
+                  <b>Mẫu số 01 - VT<b>
+                  <p>(Ban hành theo Thông tư số 200/2014/TT-BTC)<br>Ngày 22/12/2014 của Bộ Tài chính</p> 
                 </div>
               </div>
+              <h4 style=" text-align:center; text-transform: uppercase">Phiếu nhập kho</h4>
+              <p style=" text-align:center;">Ngày ${data.ngay} tháng ${data.thang} năm ${data.nam}</p>
+              <p style="text-align:center;">Số  ${id}</p>
+              <div class="thong-tin-xuat">
+                <p>- Họ và tên người giao: .......................... </p>
+                <p>- Nhập tại kho:....................... Địa điểm........................</p>  
+              </div>
+              
               <table class="table" >
                 <thead>
                   <tr>
-                    <th>Sản phẩm</th>
+                    <th>STT</th>
+                    <th>Tên, nhãn hiệu sản phẩm</th>
+                    <th>Mã số</th>
+                    <th>ĐVT</th>
                     <th>Số lượng</th>
                     <th>Đơn giá</th>
-                    <th>Đơn vị tính</th>
                   </tr>
                 </thead>
                 <tbody>
                 ${products}
                 </tbody>  
               </table>
-              <b style="float: right">Tổng nhập: ${formatter.format(tong_nhap)}</b>
+              <b style="float: left">Tổng số tiền: .....${formatter.format(tong_nhap)}...........</b>
+              <br>
+              <b style="float: right">Ngày ${data.ngay} tháng ${data.thang} năm ${data.nam}</b>
+              <br>
+              <div class="ky-ten" style="display: flex; justify-content: space-between; width: 500px; padding-bottom: 30px;">
+                  <div>
+                      <b>Người lập phiếu</b>
+                      <br>
+                      <p>(Ký, Họ tên)</p>
+                  </div>
+                  <div>
+                    <b>Người giao hàng</b>
+                    <br>
+                    <p>(Ký, Họ tên)</p>
+                  </div>
+                  <div>
+                    <b>Thủ kho</b>
+                      <br>
+                      <p>(Ký, Họ tên)</p>  
+                  </div>
+              </div>
               <button onclick="window.print()"><i class="fa fa-print"></i></button> 
             </form>
           </div>`);

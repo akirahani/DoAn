@@ -277,19 +277,19 @@ class OrderController extends Controller
                 $detail_product_kho = DB::table('storage')->where('product','=',$result['product'])->first();
                 // dd($detail_product_kho);
                 if(!empty($detail_product_kho)){
-                    dd('san pham da ton tai');
+                    // dd('san pham da ton tai');
                     $storage_update->where('product','=',$result['product'])->update($arr_final_update[$keyrlt]);
                 }else{
-                    dd('san pham moi');
+                    // dd('san pham moi');
                     $storage_new->product = $result['product'];
                     $storage_new->quantity = $result['quantity'];
                     $storage_new->unit = 5; 
-                    dd($storage_new);
+                    // dd($storage_new);
                     $storage_new->save();
                 }
                
             }
-            // return view('backend.content.order.huy',compact('order_cancel'));
+            return view('backend.content.order.huy',compact('order_cancel'));
         }
     }
 
@@ -393,6 +393,21 @@ class OrderController extends Controller
         ->where('status','=',4)
         ->get();
         return view('backend.content.order.finish',compact('order_finish'));
+
+    }
+    public function order_all(){
+        $order_finish= DB::table('orders')
+        ->get();
+        return view('backend.content.order.list',compact('order_finish'));
+
+    }
+    public function order_view($id){
+       
+        $order_detail= DB::table('orders')
+        ->where('id','=',$id)
+        ->first();
+        $product_order = DB::table('order_products')->select('product_id','quantity','price')->where('order_id',$order_detail->id)->get();
+        return view('backend.content.order.view',compact('order_detail','product_order'));
 
     }
     

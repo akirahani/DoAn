@@ -89,6 +89,8 @@ Route::middleware('auth:admin')->group(function(){
 
         Route::get('/order/cancel','Admin\OrderController@order_cancel')->name('admin.order.cancel');
         Route::get('/order/finish','Admin\OrderController@order_finish')->name('admin.order.finish');
+        Route::get('order/all','Admin\OrderController@order_all')->name('admin.order.all');
+        Route::get('order/view/{id}','Admin\OrderController@order_view')->name('admin.order.view');
         // cancel
         Route::get('/cancel','Admin\OrderController@cancel')->name('admin.cancel');
         Route::get('/cancel/insert','Admin\OrderController@cancel_add')->name('admin.cancel.insert');
@@ -149,6 +151,17 @@ Route::middleware('auth:admin')->group(function(){
         Route::get('customer/loai/edit/{id}','Admin\LoaiKhachController@edit');
         Route::post('customer/loai/update','Admin\LoaiKhachController@update');
         Route::get('customer/loai/delete/{id}','Admin\LoaiKhachController@delete');
+         //Sơn
+         Route::get('paint','Admin\PaintColorController@index')->name('paint.index');
+         Route::get('paint/add','Admin\PaintColorController@add');
+         Route::post('paint/insert','Admin\PaintColorController@insert');
+         Route::get('paint/edit/{id}','Admin\PaintColorController@edit');
+        //  Route::post('paint/update','Admin\PaintColorController@update');
+         Route::get('paint/delete/{id}','Admin\PaintColorController@delete');
+         Route::post('paint/capnhat','Admin\PaintColorController@update');
+         Route::post('color/product','Admin\PaintColorController@color_product');
+
+         Route::post('hangton','Admin\StorageController@hangton');
     // });
  
 });

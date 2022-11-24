@@ -11,6 +11,7 @@
                         <th  scope="col">Tổng giá</th>
                         <th  scope="col">Ghi chú</th>
                         <th  scope="row">Thời gian hoàn thành</th>
+                        <th  scope="col">Xem chi tiết</th>
                     </tr>
                 </thead>
             <tbody>
@@ -20,6 +21,9 @@
                         <td  scope="row">{{number_format($item->total_price)}}</td>
                         <td  scope="row">{{$item->note}}</td>
                         <td  scope="row">{{$item->updated_at}}</td>
+                        <td  scope="row">
+                            <a href="{{url('/admin/order/view',$item->id)}}" class="btn btn-warning"><i class="fas fa-eye"></i></a>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

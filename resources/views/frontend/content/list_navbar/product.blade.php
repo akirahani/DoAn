@@ -159,6 +159,9 @@
     $('input[name="trademark"]').click(function(){
        var id = $(this).val();
        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
             type: "GET",
             data : {'trademark_id':id},
             url: "{{route('product.ajax')}}",
