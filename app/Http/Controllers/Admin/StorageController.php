@@ -463,33 +463,57 @@ class StorageController extends Controller
             
             $sheet = $spreadsheet->getActiveSheet();
             $writer = new Xlsx($spreadsheet);
-            $title_baocao = 'BÁO CÁO TỔNG HỢP TỒN KHO';
-            $spreadsheet->getActiveSheet()->mergeCells('E3:M4');
-            $spreadsheet->getActiveSheet()
-            ->getCell('A3')
-            ->setValue($title_baocao);
-            foreach(range('A', 'M') as $columnID) {
-            $spreadsheet->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
-            }
-            // set the names of header cells
-                $sheet->setCellValue('C1', 'Đơn vị.......');
-                $sheet->setCellValue('C2', 'Địa chỉ........');
-                $sheet->setCellValue('D2', 'Đơn vị.......');
-                $sheet->setCellValue('C2', 'Địa chỉ........');
-                $x = 4;
-                // if($month_in == $month ){
-                    $sheet->setCellValue('A'.$x, 1);
-                    $sheet->setCellValue('B'.$x,2 );
-                    $sheet->setCellValue('C'.$x, 3);
-                    $sheet->setCellValue('D'.$x,4);
-                    $sheet->setCellValue('E'.$x, 5);
-                        // $day_out_final = date_format($date_out,"d-m-Y");
-                        // $sheet->setCellValue('F'.$x, $day_out_final);
-                    // 	$sheet->setCellValue('F'.$x, '');
+  
+                $sheet->setCellValue('E3', 'BÁO CÁO TỔNG HỢP TỒN KHO');
+                $sheet->setCellValue('C1', 'Địa chỉ........');
+                $sheet->setCellValue('C2', 'Đơn vị.......');
+                $sheet->setCellValue('F4', 'KHO........');
+                $sheet->setCellValue('F5', 'TỪ NGÀY...... ĐẾN NGÀY.......');
+
+                $sheet->setCellValue('A7', 'STT');
+                $sheet->setCellValue('B7', 'MÃ SỐ');
+                $sheet->setCellValue('C7', 'TÊN SẢN PHẨM');
+                $sheet->setCellValue('D7', 'ĐVT');
+
+                $sheet->setCellValue('E6', 'TỒN ĐẦU');
+                $sheet->setCellValue('E7', 'SỐ LƯỢNG');
+                $sheet->setCellValue('F7', 'TIỀN');
+
+                $sheet->setCellValue('G6', 'NHẬP');
+                $sheet->setCellValue('G7', 'SỐ LƯỢNG');
+                $sheet->setCellValue('H7', 'TIỀN');
+
+                $sheet->setCellValue('I6', 'XUẤT');
+                $sheet->setCellValue('I7', 'SỐ LƯỢNG');
+                $sheet->setCellValue('J7', 'TIỀN');
+
+                $sheet->setCellValue('K6', 'TỒN CUỐI');
+                $sheet->setCellValue('K7', 'SỐ LƯỢNG');
+                $sheet->setCellValue('L7', 'TIỀN');
+                $x = 8;
+                $list_ton = DB::table('storage')->get();
+                $arr_sp_gets = [];
+                $product_list = DB::table('products')->get();
+                foreach($product_list as $val){
+                    $arr_sp_gets[$val->id] = $val;
+                }
+                $unit_list = DB::table('units')->get();
+                $arr_unit = [];
+                foreach($unit_list as $val_unit){
+                    $arr_unit[$val_unit->id] = $val_unit->name;
+                }
+                foreach($list_ton as $key => $val){
+                    $key++;
+                    // if($month_in == $month ){
+                        $sheet->setCellValue('A'.$x, $key);
+                        $sheet->setCellValue('B'.$x, $val->product);
+                        $sheet->setCellValue('C'.$x, $arr_sp_gets[$val->product]->name );
+                        $sheet->setCellValue('D'.$x, $arr_unit[$arr_sp_gets[$val->product]->unit_id]);
+                        $sheet->setCellValue('E'.$x,'');
                     // }
-            //     }
-            //   $x++;
-            // }
+
+                    $x++;
+                }
             $filename = 'BaoCaoTon';
             ob_end_clean();
             header("Content-Type: application/ms-excel");

@@ -22,7 +22,7 @@
                         <td  scope="row">{{$item->note}}</td>
                         <td  scope="row">{{$item->updated_at}}</td>
                         <td>
-                            <a href="{{url('/admin/order/detail',$val->id)}}" class="btn btn-warning"><i class="fas fa-eye"></i></a>
+                            <a href="{{url('/admin/order/view',$item->id)}}" class="btn btn-warning"><i class="fas fa-eye"></i></a>
                         </td>
                     </tr>
                 @endforeach
