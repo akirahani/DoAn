@@ -41,8 +41,8 @@
                             <div class="tensp">
                                 <p>Tên sản phẩm</p>
                                 <select id= "inputState"  class ="form-select" name="product_id[]">
-                                    @foreach($product as $val)
-                                        <option value="{{$val['id']}}" price="{{$val['price']}}" donvitinh = "{{$val['unit_id']}}">{{$val['name']}}</option>
+                                    @foreach($sanpham_ton as $val)
+                                        <option value="{{$val->product}}" price="{{$val->price}}" donvitinh = "{{$val->unit}}">{{ $arr_sp_ton[$val->product]->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -79,8 +79,8 @@
             <div class="tensp">
                 <p>Tên sản phẩm</p>
                 <select id= "inputState" class ="form-select" name="product_id[]">
-                    @foreach($product as $val)
-                        <option  value="{{$val['id']}}" price="{{$val['price']}}" donvitinh = "{{$val['unit_id']}}">{{$val['name']}}</option>
+                    @foreach($sanpham_ton as $val)
+                        <option value="{{$val->product}}" price="{{$val->price}}" donvitinh = "{{$val->unit}}">{{ $arr_sp_ton[$val->product]->name}}</option>
                     @endforeach
                 </select>
             </div>

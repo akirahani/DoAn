@@ -261,8 +261,15 @@ class StorageController extends Controller
     {
         $account = Admin::all();
         $product = Product::all();
+        $sanpham_ton = DB::table('storage')->get();
+        $arr_sp_ton = [];
+        foreach($product as $val){
+            $arr_sp_ton[$val->id] = $val;
+        }
+
+
         $info = json_encode($product);
-        return view('backend.content.storage.export.insert',compact('account','product','info'));
+        return view('backend.content.storage.export.insert',compact('account','product','info','sanpham_ton','arr_sp_ton'));
     }
     // Thêm phiếu xuất
     public function export_insert(Request $request, Product $products,Storage $storages)
